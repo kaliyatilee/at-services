@@ -1,0 +1,149 @@
+<?php
+
+namespace App\Http\Controllers\Insurance;
+
+use App\Http\Controllers\Controller;
+use App\Models\InsuranceBroker;
+use App\Models\InsuranceTransaction;
+use App\Models\VehicleClass;
+use Illuminate\Http\Request;
+
+class InsuranceTransactionController extends Controller
+{
+
+    public function view(Request $request)
+    {
+
+        $insurance_transaction = InsuranceTransaction::all();
+
+        $data['insurance_transactions'] = $insurance_transaction;
+        return view('insurance.transaction.list', $data);
+    }
+
+    public function add(Request $request, $id = null)
+    {
+
+        if ($id != null) {
+            $insurance_transaction = InsuranceTransaction::findOrFail($id);
+            $data['insurance_transaction'] = $insurance_transaction;
+        } else {
+            $data['insurance_transaction'] = new InsuranceTransaction();
+        }
+
+        $data['vehicle_classes'] = VehicleClass::all();
+        $data['insurance_brokers'] = InsuranceBroker::all();
+        return view('insurance.transaction.add', $data);
+    }
+
+    public function create_insurance_transaction(Request $request)
+    {
+        $validator = validator()->make($request->all(), [
+            "name" => ['nullable', 'string'],
+            "phone" => ['nullable', 'string'],
+            "class" => "nullable|numeric",
+            "insurance_broker" => "nullable|numeric",
+            "reg_no" => "nullable|string|min:7|max:7",
+            "vehicle_type" => "nullable|string",
+            "expiry_date" => "nullable|date",
+            "amount_paid" => "nullable|numeric",
+            "expected_amount" => "nullable|numeric",
+            "rate" => "nullable|nullable|numeric",
+            "currency_id" => "nullable|numeric",
+            "notes" => "nullable|string",
+            "created_by" => "numeric",
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'The given data was invalid.',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        $data = $validator->validated();
+
+        $insurancePayment = new InsuranceTransaction();
+        $insurancePayment->create($data);
+
+        return response()->json([
+            'message' => "Saved successfully",
+            'success' => true
+        ]);
+    }
+
+    public function update_insurance_transaction(Request $request, $id)
+    {
+        $validator = validator()->make($request->all(), [
+            "name" => ['nullable', 'string'],
+            "phone" => ['nullable', 'string'],
+            "class" => "nullable|numeric",
+            "insurance_broker" => "nullable|numeric",
+            "reg_no" => "nullable|string|min:7|max:7",
+            "vehicle_type" => "nullable|string",
+            "expiry_date" => "nullable|date",
+            "amount_paid" => "nullable|numeric",
+            "expected_amount" => "nullable|numeric",
+            "rate" => "nullable|numeric",
+            "currency_id" => "nullable|numeric",
+            "notes" => "nullable|string",
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'The given data was invalid.',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        $data = $validator->validated();
+
+        $insurancePayment = InsuranceTransaction::findOrFail($id);
+        $insurancePayment->update($data);
+
+        return response()->json([
+            'message' => "Updated successfully",
+            'success' => true
+        ]);
+    }
+
+    public function list_insurance_transaction(Request $request, $id = null)
+    {
+        if ($id == null) {
+            $data = InsuranceTransaction::all();
+        } else {
+            $data = InsuranceTransaction::query()->where("id", $id)->first();
+        }
+
+        return response()->json([
+            'data' => $data,
+            'message' => "Success",
+            'success' => true
+        ]);
+    }
+
+    public function list_insurance_transaction_by_user(Request $request, $user_id = null)
+    {
+        if ($user_id == null) {
+            $data = InsuranceTransaction::all();
+        } else {
+            $data = InsuranceTransaction::query()->where("user_id", $user_id)->get();
+        }
+
+        return response()->json([
+            'data' => $data,
+            'message' => "Success",
+            'success' => true
+        ]);
+    }
+
+    public function delete_insurance_transaction(Request $request, $id)
+    {
+        $insurancePayment = InsuranceTransaction::findOrFail($id);
+        $insurancePayment->delete();
+
+        return response()->json([
+            'message' => "Deleted successfully",
+            'success' => true
+        ]);
+    }
+}
