@@ -42,6 +42,15 @@ class InsuranceTransaction extends Model
         return $user;
     }
 
+    public function getUser(){
+        $user = Client::query()->where("id_number",$this->user_id)->first();
+        if($user == null){
+            $user = new Client();
+        }
+
+        return $user;
+    }
+
     public function getVehicleClass(){
         $vehicle_class = VehicleClass::query()->where("id",$this->class)->first();
         if($vehicle_class == null){

@@ -69,7 +69,7 @@
                                             </td>
                                             <td>
                                                 <div class="d-flex px-2 py-1">
-                                                    <div class="d-flex flex-column justify-content-center">
+                                                    <div class="d-flex flex-column justify-content-center"> 
                                                         <p class="mb-0 text-sm">{{ $insurance_transaction->getUser()->name }} ({{ $insurance_transaction->getUser()->phone1 }})</p>
                                                     </div>
                                                 </div>
