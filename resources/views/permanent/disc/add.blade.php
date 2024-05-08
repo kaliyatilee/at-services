@@ -3,7 +3,7 @@
     <x-navbars.sidebar activePage="company_registration_add"></x-navbars.sidebar>
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         <!-- Navbar -->
-        <x-navbars.navs.auth titlePage="Add Company Registration"></x-navbars.navs.auth>
+        <x-navbars.navs.auth titlePage="Add Permanant Disc"></x-navbars.navs.auth>
         <!-- End Navbar -->
         <div class="container-fluid px-2 px-md-4">
             <div class="page-header min-height-300 border-radius-xl mt-4"
@@ -16,15 +16,29 @@
                         <form id="add_permanent_disc_form" method='POST' action='{{ route('api_create_permanent_disc') }}'>
                             @csrf
                             <div class="row">
+                            <div class="mb-3 col-md-6">
+                                    <label class="form-label">Search Client</label>
+                                    <input type="text" id="name" name="name" class="form-control border border-2 p-2"
+                                           value='{{ old('name') }}'>
+                                    <div id="suggestionsPopup" class="form-control border border-2 p-2" style="z-index: 1"></div>
+                                    <input type="hidden" name="user_id" id="user_id" value="{{ old('user_id') }}" />
+                                </div>
 
                                 <div class="mb-3 col-md-6">
-                                    <label class="form-label">Select Currency</label>
-                                    <select class="form-control border border-2 p-2" name="currency">
+                                    <label class="form-label">Phone</label>
+                                    <input type="text" name="phone" class="form-control border border-2 p-2"
+                                           value='{{ old('phone') }}'>
+                                </div>
+
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Currency</label>
+                                    <select class="form-control border border-2 p-2" name="currency_id">
                                         @foreach($currencies as $currency)
                                             <option value="{{ $currency->id }}">{{ $currency->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
+
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Cash Paid</label>

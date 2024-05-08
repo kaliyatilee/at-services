@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Currency;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -26,15 +27,25 @@ class PermanentDisc extends Model
       'name',
       'phone',
     ];
+    
 
-    public function currency(){
-        $currency = Currency::find($this->currency);
-        if($currency == null){
-            $currency = new Currency();
+    public function currency()
+    {
+        // Check if currency_id is not zero and is not null
+        if ($this->currency_id !== 0 && $this->currency_id !== null) {
+            // Attempt to find the Currency object by its ID
+            $currency = Currency::find($this->currency_id);
+            // If Currency object is found, return it
+            if ($currency !== null) {
+                return $currency;
+            }
         }
-
-        return $currency;
+    
+        // If currency_id is zero or null, or if Currency object is not found, return a new instance of Currency
+        return new Currency();
     }
+    
+
 
     public function createdBy(){
         $user = User::find($this->created_by);
