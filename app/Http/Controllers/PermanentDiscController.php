@@ -7,6 +7,7 @@ use App\Models\DSTVPackage;
 use App\Models\DSTVTransaction;
 use App\Models\PermanentDisc;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PermanentDiscController extends Controller
 {
@@ -30,12 +31,15 @@ class PermanentDiscController extends Controller
     }
     public function create_permanent_disc(Request $request)
     {
+      
+
+    
         $validator = validator()->make($request->all(), [
             "cash_paid" => ['nullable','numeric'],
             "quantity_sold" => "nullable|numeric",
             "quantity_received" => "nullable|numeric",
             "name" => "nullable|string",
-            "currency" => "nullable|numeric",
+            "currency_id" => "required|numeric",
             "phone" => "nullable|string",
             "order_price" => "nullable|numeric",
             "notes" => "nullable|string",
@@ -50,6 +54,14 @@ class PermanentDiscController extends Controller
         }
 
         $data = $validator->validated();
+
+        $data = [
+            'cash_paid' => isset($data['cash_paid']) ? $data['cash_paid'] : 0.00,
+            'quantity_sold' => isset($data['quantity_sold']) ? $data['quantity_sold'] : 0,
+            'quantity_received' => isset($data['quantity_received']) ? $data['quantity_received'] : 0,
+            'order_price' => isset($data['order_price']) ? $data['order_price'] : 0.00,
+            'created_by' => isset($data['created_by']) ? $data['created_by'] : Auth::user()->id,
+        ];
 
         $permanentDisc = new PermanentDisc();
         $permanentDisc->create($data);
