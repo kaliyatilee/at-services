@@ -57,15 +57,14 @@
                                 </div>
 
                                 <div class="mb-3 col-md-6">
-                                    <label class="form-label">Amount</label>
-                                    <input type="text" name="amount" class="form-control border border-2 p-2"
-                                           value='{{ old('amount') }}'>
-                                </div>
-
-                                <div class="mb-3 col-md-6">
                                     <label class="form-label">Amount Paid</label>
                                     <input type="text" name="amount_paid" class="form-control border border-2 p-2"
                                            value='{{ old('amount_paid') }}'>
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Expected Amount</label>
+                                    <input type="text" name="expected_amount" class="form-control border border-2 p-2"
+                                           value='{{ old('expected_amount') }}'>
                                 </div>
 
                                 <div class="mb-3 col-md-6">

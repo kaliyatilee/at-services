@@ -9,6 +9,7 @@ use App\Models\Ecocash\EcocashAgentLine;
 use App\Models\Ecocash\EcocashTransactionType;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 
 class EcocashController extends Controller
 {
@@ -40,15 +41,13 @@ class EcocashController extends Controller
     {
         $validator = validator()->make($request->all(), [
             "name" => ["nullable","string"],
-            "description" => ["nullable","string"],
-            "currency" => ["nullable","numeric"],
-            "amount_paid" => ["nullable","numeric"],
+            "currency" => ["required","numeric"],
+            "amount_paid" => ["required","numeric"],
             "expected_amount" => ["nullable","numeric"],
             "phone" => ["nullable","string"],
-            "agent_line" => ["nullable","numeric"],
-            "transaction_type" => ["nullable","numeric"],
+            "agent_line" => ["required","numeric"],
+            "transaction_type" => ["required","numeric"],
             "notes" => "nullable|string",
-            "created_by" => "numeric"
         ]);
 
 // Check if validation fails
@@ -61,6 +60,14 @@ class EcocashController extends Controller
         }
 
         $data = $validator->validated();
+        if (!isset($data['created_by'])) {
+            $data['created_by'] = Auth::user()->id;
+        }
+
+        if(!isset($data['expected_amount'])){
+            $data['expected_amount'] = '0';
+        }
+        
 
         $ecocash = new Ecocash();
         $ecocash->create($data);
