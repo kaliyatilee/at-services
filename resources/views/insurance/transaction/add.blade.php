@@ -13,7 +13,7 @@
             <div class="card card-body mx-3 mx-md-4 mt-n6">
                 <div class="card card-plain h-100">
                     <div class="card-body p-3">
-                        <form id="add_insurance_transaction_form" method='POST' action='{{ route('api_create_insurance_transaction') }}'>
+                        <form id="add_insurance_transaction_form" method='POST' action='{{ route('api_create_insurance_transaction') }}'> 
                             @csrf
                             <div class="row">
                                 <div class="mb-3 col-md-6">
@@ -23,6 +23,11 @@
                                     <div id="suggestionsPopup" class="form-control border border-2 p-2" style="z-index: 1"></div>
                                     <input type="hidden" name="user_id" id="user_id" value="{{ old('user_id') }}" />
                                 </div>
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Phone</label>
+                                    <input type="text" name="phone" class="form-control border border-2 p-2"
+                                           value='{{ old('phone') }}'>
+                                </div>
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Select Vehicle Class</label>
@@ -31,6 +36,12 @@
                                             <option value="{{ $vehicle_class->id }}">{{ $vehicle_class->name }} - {{ $vehicle_class->currency()->name }}{{ $vehicle_class->amount }}</option>
                                         @endforeach
                                     </select>
+                                </div>
+
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Vehicle Type</label>
+                                    <input type="text" name="vehicle_type" class="form-control border border-2 p-2"
+                                           value='{{ old('vehicle_type') }}'>
                                 </div>
 
                                 <div class="mb-3 col-md-6">
@@ -53,11 +64,29 @@
                                     <input type="date" name="expiry_date" class="form-control border border-2 p-2"
                                            value='{{ old('expiry_date') }}'>
                                 </div>
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Exchange Rate</label>
+                                    <input type="text" name="rate" class="form-control border border-2 p-2"
+                                           value='{{ old('rate') }}'>
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Currency</label>
+                                    <select class="form-control border border-2 p-2" name="currency_id">
+                                        @foreach($currencies as $currency)
+                                            <option value="{{ $currency->id }}">{{ $currency->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Expected Amount</label>
+                                    <input type="text" name="expected_amount" class="form-control border border-2 p-2"
+                                           value='{{ old('expected_amount') }}'>
+                                </div>
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Amount in USD</label>
-                                    <input type="text" name="amount" class="form-control border border-2 p-2"
-                                           value='{{ old('amount') }}'>
+                                    <input type="text" name="amount_paid" class="form-control border border-2 p-2"
+                                           value='{{ old('amount_paid') }}'>
                                 </div>
 
                                 <div class="mb-3 col-md-6">
