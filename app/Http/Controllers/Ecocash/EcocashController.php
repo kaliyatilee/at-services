@@ -13,10 +13,9 @@ use Illuminate\Support\Facades\Auth;
 
 class EcocashController extends Controller
 {
-    public function view(Request $request){
+    public function view(Request $request){ 
 
         $ecocashs = Ecocash::all();
-
         $data['ecocashs'] = $ecocashs;
         return view('ecocash.transaction.list',$data);
     }
@@ -36,6 +35,17 @@ class EcocashController extends Controller
 
         return view('ecocash.transaction.add',$data);
     }
+
+	public function ecocash_edit($id){
+		$ecocash = Ecocash::findOrFail($id);
+		$data['ecocash'] = $ecocash;
+		$data['currencies'] = Currency::all();
+        $data['transaction_types'] = EcocashTransactionType::all();
+        $data['ecocash_agent_lines'] = EcocashAgentLine::all();
+
+        return view('ecocash.transaction.edit',$data);
+
+	}
 
     public function create_ecocash(Request $request)
     {
@@ -60,14 +70,8 @@ class EcocashController extends Controller
         }
 
         $data = $validator->validated();
-        if (!isset($data['created_by'])) {
-            $data['created_by'] = Auth::user()->id;
-        }
-
-        if(!isset($data['expected_amount'])){
-            $data['expected_amount'] = '0';
-        }
-        
+		$data['created_by']=isset($data['created_by']) ? $data['created_by'] : Auth::user()->id;
+		$data['expected_amount']= doubleval(isset($data['expected_amount'])) ? $data['expected_amount'] : 0;
 
         $ecocash = new Ecocash();
         $ecocash->create($data);

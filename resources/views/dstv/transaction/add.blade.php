@@ -3,7 +3,7 @@
     <x-navbars.sidebar activePage="dstv/add"></x-navbars.sidebar>
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         <!-- Navbar -->
-        <x-navbars.navs.auth titlePage="Add Client"></x-navbars.navs.auth>
+        <x-navbars.navs.auth titlePage="Add DSTv Subscription"></x-navbars.navs.auth>
         <!-- End Navbar -->
         <div class="container-fluid px-2 px-md-4">
             <div class="page-header min-height-300 border-radius-xl mt-4"
@@ -17,7 +17,6 @@
                         <form id="add_dstv_transaction_form" method='POST'
                               action='{{ route('api_create_dstv_transaction') }}'>
                             @csrf
-
                             <div class="row">
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Search Client</label>
@@ -68,6 +67,11 @@
                                     <label class="form-label">Amount Paid</label>
                                     <input type="text" name="amount_paid" class="form-control border border-2 p-2"
                                            value='{{ old('amount_paid') }}'>
+                                </div>
+								<div class="mb-3 col-md-6">
+                                    <label class="form-label">Transaction Date</label>
+                                    <input type="date" name="transaction_date" class="form-control border border-2 p-2"
+                                           value='{{ old('transaction_date') }}'>
                                 </div>
                                 
                                 <div class="mb-3 col-md-6">

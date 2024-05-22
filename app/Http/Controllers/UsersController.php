@@ -29,6 +29,13 @@ class UsersController extends Controller
 
         return view('user.add',$data);
     }
+	public function user_edit($id){
+            $user = User::findOrFail($id);
+            $data['user'] = $user;
+
+        return view('user.edit',$data);
+
+	}
     public function create_user(Request $request)
     {
 

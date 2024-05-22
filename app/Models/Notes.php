@@ -14,4 +14,13 @@ class Notes extends Model
       "notes",
       "date"
     ];
+
+	public function currency(){
+        $currency = Currency::find($this->currency_id);
+        if($currency == null){
+            $currency = new Currency();
+        }
+
+        return $currency;
+    }
 }

@@ -12,6 +12,18 @@ use Illuminate\Validation\Rule;
 
 class ClientController extends Controller
 {
+	// CREATE TABLE `clients` (
+	// 	`id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+	// 	`id_number` varchar(20) NOT NULL,
+	// 	`name` varchar(50) NOT NULL,
+	// 	`phone1` varchar(20) NOT NULL,
+	// 	`phone2` varchar(20) DEFAULT NULL,
+	// 	`credit_allowed` int(11) NOT NULL DEFAULT 0 COMMENT '0 is false, 1 is true',
+	// 	`created_by` int(11) NOT NULL,
+	// 	`created_at` timestamp NULL DEFAULT NULL,
+	// 	`updated_at` timestamp NULL DEFAULT NULL,
+	// 	PRIMARY KEY (`id`)
+	//   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
     public function view(Request $request){
 
         $clients = Client::all();
@@ -31,6 +43,13 @@ class ClientController extends Controller
 
         return view('client.add',$data);
     }
+
+	public function client_edit($id){
+		$client = Client::findOrFail($id);
+            $data['client'] = $client;
+        return view('client.edit',$data);
+
+	}
 
     public function create_client(Request $request)
     {
@@ -52,23 +71,23 @@ class ClientController extends Controller
         ]);
     }
 
-    public function update_client(Request $request,$id)
-    {
-        $data = $request->validate([
-            "id_number" => ['required','string','min:5'],
-            "name" => "required|string|min:1",
-            "phone1" => "required|string|min:5",
-            "phone2" => "string|min:5",
-        ]);
+    public function update_client(Request $request, $id){
+    $data = $request->validate([
+        "id_number" => ['required', 'string', 'min:5'],
+        "name" => "required|string|min:1",
+        "phone1" => "required|string|min:5",
+		"phone2" => "required|numeric|min:5",
+    ]);
 
-        $client = Client::findOrFail($id);
-        $client->update($data);
+	$client = Client::findOrFail($id);
+    $client->update($data);
 
-        return response()->json([
-            'message' => "Updated successfully",
-            'success' => true
-        ]);
-    }
+    return response()->json([
+        'message' => "Updated successfully",
+        'success' => true
+    ]);
+}
+
 
     public function list_clients(Request $request,$id = null){
         if($id == null) {
@@ -92,7 +111,7 @@ class ClientController extends Controller
             'message' => "Deleted successfully",
             'success' => true
         ]);
-    }
+    } 
 
     //Ajax
     public function searchClient(Request $request,$search){

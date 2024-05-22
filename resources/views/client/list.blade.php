@@ -16,7 +16,7 @@
                         </div>
                         <div class="card-body px-0 pb-2">
                             <div class="table-responsive p-0">
-                                <table class="table align-items-center mb-0">
+                                <table class="table align-items-center mb-0" id="dt-nested-object">
                                     <thead>
                                     <tr>
                                         <th
@@ -75,7 +75,7 @@
                                             </td>
                                             <td class="align-middle text-center">
                                                 <div class="d-flex flex-column justify-content-center">
-                                                    <p class="mb-0 text-sm">{{ $client->created_by }}</p>
+                                                    <p class="mb-0 text-sm">{{ $client->createdBy()->name }}</p>
                                                 </div>
                                             </td>
                                             <td class="align-middle text-center">
@@ -85,18 +85,22 @@
                                             </td>
                                             <td class="align-middle">
                                                 <a rel="tooltip" class="btn btn-success btn-link"
-                                                   href="" data-original-title=""
+												href="{{ route("client_edit", ['id' => $client->id]) }}"
+												   data-original-title=""
                                                    title="">
                                                     <i class="material-icons">edit</i>
                                                     <div class="ripple-container"></div>
                                                 </a>
 
-                                                <button type="button" class="btn btn-danger btn-link"
-                                                        data-original-title="" title="">
-                                                    <i class="material-icons">close</i>
-                                                    <div class="ripple-container"></div>
-                                                </button>
-                                            </td>
+												<a class="btn btn-danger btn-link delete-button"
+													href="{{ route("api_delete_client", ['id' => $client->id]) }}"
+													data-client-id="{{ $client->id }}"
+													data-original-title=""
+													title="">
+														<i class="material-icons">close</i>
+														<div class="ripple-container"></div>
+												</a>
+											</td>
                                         </tr>
                                     @endforeach
                                     </tbody>

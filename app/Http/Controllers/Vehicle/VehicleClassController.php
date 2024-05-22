@@ -34,6 +34,15 @@ class VehicleClassController extends Controller
         return view('vehicle.class.add',$data);
     }
 
+	public function vehicle_class_edit($id){
+        $vehicle_class = VehicleClass::findOrFail($id);
+		$data['vehicle_class'] = $vehicle_class;
+        $data['currencies'] = Currency::all();
+
+        return view('vehicle.class.edit',$data);
+
+	}
+
     public function create_vehicle_class(Request $request)
     {
         $data = $request->validate([
@@ -59,11 +68,11 @@ class VehicleClassController extends Controller
             "amount" => "required|numeric|min:1"
         ]);
 
-        $insurancePayment = InsurancePayment::findOrFail($id);
-        $insurancePayment->update($data);
+        $vehicleClass = VehicleClass::findOrFail($id);
+        $vehicleClass->update($data);
 
         return response()->json([
-            'message' => "Can't update",
+            'message' => "Updated successfully",
             'success' => false
         ]);
     }

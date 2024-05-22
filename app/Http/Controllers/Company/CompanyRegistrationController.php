@@ -7,7 +7,10 @@ use App\Models\Company\CompanyRegistration;
 use App\Models\Company\CompanyRegistrationSupplier;
 use App\Models\InsuranceBroker;
 use App\Models\Zinara\ZinaraTransaction;
+use App\Models\Currency;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class CompanyRegistrationController extends Controller
 {
@@ -29,21 +32,35 @@ class CompanyRegistrationController extends Controller
         }else{
             $data['company_registration'] = new CompanyRegistration();
         }
-
+		$data['currencies'] = Currency::all();
         $data['company_registration_suppliers'] = CompanyRegistrationSupplier::all();
         return view('company.registration.add',$data);
     }
+
+	public function company_registration_edit($id){
+
+		$data['company_registration'] = CompanyRegistration::findOrFail($id);
+		$data['currencies'] = Currency::all();
+		$data['company_registration_suppliers'] = CompanyRegistrationSupplier::all();
+		return view('company.registration.edit',$data);
+
+	}
 
     public function create_company_registration(Request $request)
     {
         $validator = validator()->make($request->all(), [
             "name" => "nullable|string|min:1",
             "phone" => "nullable|string|min:1",
-            "charge" => "nullable|numeric|min:1",
-            "currency_id" => "nullable|numeric|min:1",
-            "amount_paid" => "nullable|numeric|min:1",
+            "charge" => "required|numeric|min:1",
+            "currency_id" => "required|numeric|min:1",
+            "amount_paid" => "required|numeric|min:1",
             "notes" => "nullable|string",
-            "created_by" => "nullable|numeric"
+            "created_by" => "nullable|numeric",
+			"expenses" => "required|numeric",
+			"supplier" => "nullable|numeric",
+			"commission" => "required|numeric",
+			"transaction_date" => "nullable|date",
+			"charge" => "nullable|numeric",
         ]);
 
         if ($validator->fails()) {
@@ -54,10 +71,8 @@ class CompanyRegistrationController extends Controller
         }
 
         $data = $validator->validated();
-
-        $data['expenses'] = 0;
-        $data['supplier'] = 0;
-        $data['commission'] = 0;
+        $data['created_by'] = auth()->user()->id;
+      
 
         $companyRegistration = new CompanyRegistration();
         $companyRegistration->create($data);
@@ -71,12 +86,18 @@ class CompanyRegistrationController extends Controller
     public function update_company_registration(Request $request, $id)
     {
         $data = $request->validate([
-            "name" => "nullable|string|min:1",
+			"name" => "nullable|string|min:1",
             "phone" => "nullable|string|min:1",
-            "charge" => "nullable|numeric|min:1",
-            "currency_id" => "nullable|numeric|min:1",
-            "amount_paid" => "nullable|numeric|min:1",
+            "charge" => "required|numeric|min:1",
+            "currency_id" => "required|numeric|min:1",
+            "amount_paid" => "required|numeric|min:1",
             "notes" => "nullable|string",
+            "created_by" => "nullable|numeric",
+			"expenses" => "required|numeric",
+			"supplier" => "nullable|numeric",
+			"commission" => "required|numeric",
+			"transaction_date" => "nullable|date",
+			"charge" => "nullable|numeric",
         ]);
 
         $companyRegistration = CompanyRegistration::findOrFail($id);

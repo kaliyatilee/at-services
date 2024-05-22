@@ -32,6 +32,13 @@ class CompanyRegistrationSupplierController extends Controller
         return view('company.registration.supplier.add', $data);
     }
 
+	public function edit_company_registration_supplier($id){
+            $company_registration_supplier = CompanyRegistrationSupplier::findOrFail($id);
+            $data['company_registration_supplier'] = $company_registration_supplier;
+
+        	return view('company.registration.supplier.edit', $data);
+	}
+
     public function create_company_registration_supplier(Request $request)
     {
         $data = $request->validate([
@@ -64,6 +71,9 @@ class CompanyRegistrationSupplierController extends Controller
             "location" => "nullable|string",
             "notes" => "nullable|string",
         ]);
+
+
+        $data['created_by'] = auth()->user()->id;
 
         $companyRegistrationSupplier = CompanyRegistrationSupplier::findOrFail($id);
         $companyRegistrationSupplier->update($data);

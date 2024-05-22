@@ -18,10 +18,15 @@
                             <div class="row">
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Search Client</label>
-                                    <input type="text" id="client_name" name="client_name" class="form-control border border-2 p-2"
-                                           value='{{ old('client_name') }}'>
+                                    <input type="text" id="name" name="name" class="form-control border border-2 p-2"
+                                           value='{{ old('name') }}'>
                                     <div id="suggestionsPopup" class="form-control border border-2 p-2" style="z-index: 1"></div>
                                     <input type="hidden" name="user_id" id="user_id" value="{{ old('user_id') }}" />
+                                </div>
+								<div class="mb-3 col-md-6">
+                                    <label class="form-label">Phone Number</label>
+                                    <input type="text" name="phone" class="form-control border border-2 p-2"
+                                           value='{{ old('phone') }}'>
                                 </div>
 
                                 <div class="mb-3 col-md-6">
@@ -52,10 +57,14 @@
                                 </div>
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Collateral</label>
-                                    <input type="file" name="collateral" class="form-control border border-2 p-2"
+                                    <input type="text" name="collateral" class="form-control border border-2 p-2"
                                            value='{{ old('collateral') }}'>
                                 </div>
-
+								<div class="mb-3 col-md-6">
+                                    <label class="form-label">Transaction Date</label>
+                                    <input type="date" name="transaction_date" class="form-control border border-2 p-2"
+                                           value='{{ old('transaction_date') }}'>
+                                </div>
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Notes</label>
                                     <input type="text" name="notes" class="form-control border border-2 p-2"

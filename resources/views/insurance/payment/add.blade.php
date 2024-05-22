@@ -39,7 +39,7 @@
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Repayment Date</label>
                                     <input type="date" name="repayment_date" class="form-control border border-2 p-2"
-                                           value='{{ old('phone2') }}'>
+                                           value='{{ old('repayment_date') }}'>
                                 </div>
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Collateral</label>

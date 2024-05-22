@@ -32,6 +32,14 @@ class CurrencyController extends Controller
         return view('currency.add', $data);
     }
 
+	public function currency_edit($id){
+            $currency = Currency::findOrFail($id);
+            $data['currency'] = $currency;
+
+        return view('currency.edit', $data);
+
+	}
+
     public function getCurrency(Request $request, $currency = null)
     {
 
@@ -106,4 +114,18 @@ class CurrencyController extends Controller
             'success' => true
         ]);
     }
+
+
+	public function delete_currency(Request $request, $id)
+    {
+        $currency = Currency::findOrFail($id);
+        $currency->delete();
+
+        return response()->json([
+            'message' => "Deleted successfully",
+            'success' => true
+        ]);
+    }
+
+
 }

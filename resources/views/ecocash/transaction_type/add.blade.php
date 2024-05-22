@@ -23,12 +23,6 @@
                                            value='{{ old('name') }}'>
                                 </div>
 
-                                <div class="mb-3 col-md-6">
-                                    <label class="form-label">Notes</label>
-                                    <input type="text" name="notes" class="form-control border border-2 p-2"
-                                           value='{{ old('notes') }}'>
-                                </div>
-
                             </div>
                             <button type="submit" class="btn bg-gradient-dark">Submit</button>
                             <div class='' id="success_error_message"></div>

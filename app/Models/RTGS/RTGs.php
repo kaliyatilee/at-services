@@ -18,7 +18,8 @@ class RTGs extends Model
       'name',
       'phone',
       'notes',
-      'created_by'
+      'created_by',
+	  'transaction_date'
     ];
 
     protected $casts = [
@@ -38,7 +39,7 @@ class RTGs extends Model
     }
 
     public function transactionType(){
-        $transactionType = $this->type == 1 ? "Amount In" : "Amount Out";
+        $transactionType = $this->transaction_type == 1 ? "Amount In" : "Amount Out";
 
         return $transactionType;
     }

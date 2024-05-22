@@ -16,13 +16,43 @@
                         <form id="add_eggs_form" method='POST' action='{{ route('api_create_eggs') }}'>
                             @csrf
                             <div class="row">
+							<div class="mb-3 col-md-6">
+                                    <label class="form-label">Name</label>
+                                    <input type="text" id="name" name="name" class="form-control border border-2 p-2"
+                                           value='{{ old('client_name') }}'>
+                                    <div id="suggestionsPopup" class="form-control border border-2 p-2" style="z-index: 1"></div>
+                                    <input type="hidden" name="user_id" id="user_id" value="{{ old('user_id') }}" />
+                                </div>
+								<div class="mb-3 col-md-6">
+                                    <label class="form-label">Phone</label>
+                                    <input type="text" name="phone" class="form-control border border-2 p-2"
+                                           value='{{ old('phone') }}'>
+                                </div>
+
+								<div class="mb-3 col-md-6">
+                                    <label class="form-label">Select Currency</label>
+                                    <select class="form-control border border-2 p-2" name="currency">
+                                        @foreach($currencies as $currency)
+                                            <option value="{{ $currency->id }}">{{ $currency->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Cash Paid</label>
                                     <input type="text" name="cash_paid" class="form-control border border-2 p-2"
                                            value='{{ old('cash_paid') }}'>
                                 </div>
-
+								<div class="mb-3 col-md-6">
+                                    <label class="form-label">Breakages</label>
+                                    <input type="number" name="breakages" class="form-control border border-2 p-2"
+                                           value='{{ old('breakages') }}'>
+                                </div>
+								<div class="mb-3 col-md-6">
+                                    <label class="form-label">Quantity Sold</label>
+                                    <input type="number" name="quantity_sold" class="form-control border border-2 p-2"
+                                           value='{{ old('quantity_sold') }}'>
+                                </div>
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Quantity Received</label>
                                     <input type="number" name="quantity_received" class="form-control border border-2 p-2"
@@ -34,6 +64,12 @@
                                     <input type="text" name="order_price" class="form-control border border-2 p-2"
                                            value='{{ old('order_price') }}'>
                                 </div>
+
+								<div class="mb-3 col-md-6">
+									<label class="form-label">Transaction Date</label>
+									<input type="date" name="transaction_date" class="form-control border border-2 p-2"
+											value='{{ old('transaction_date') }}'>
+								</div>
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Notes</label>

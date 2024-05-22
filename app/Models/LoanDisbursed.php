@@ -26,6 +26,7 @@ class LoanDisbursed extends Model
         'created_by',
         'notes',
         'currency_id',
+		'transaction_date'
     ];
 
     public function getUser(){

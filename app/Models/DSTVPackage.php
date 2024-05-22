@@ -17,6 +17,17 @@ class DSTVPackage extends Model
 
     protected $fillable = [
         "name",
+		"amount_rand",
+		"commission_usd",
         "created_by"
     ];
+
+	public function createdBy(){
+        $user = User::find($this->created_by);
+        if($user == null){
+            $user = new User();
+        }
+
+        return $user;
+    }
 }

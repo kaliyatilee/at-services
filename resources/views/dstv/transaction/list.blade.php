@@ -15,7 +15,7 @@
                         </div>
                         <div class="card-body px-0 pb-2">
                             <div class="table-responsive p-0">
-                                <table class="table align-items-center mb-0">
+                                <table class="table align-items-center mb-0" id="dt-nested-object">
                                     <thead>
                                     <tr>
                                         <th
@@ -40,7 +40,7 @@
                                         </th>
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Created At
+                                            Transaction Date
                                         </th>
                                         <th class="text-secondary opacity-7"></th>
                                     </tr>
@@ -58,43 +58,46 @@
                                             <td>
                                                 <div class="d-flex px-2 py-1">
                                                     <div class="d-flex flex-column justify-content-center">
-                                                        <p class="mb-0 text-sm">{{ $subscription->getUser()->name }} ({{ $subscription->getUser()->phone1 }})</p>
+                                                        <p class="mb-0 text-sm">{{ $subscription->name }}</p>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="d-flex flex-column justify-content-center">
-                                                    <p class="mb-0 text-sm">{{ $subscription->package_id }}</p>
+                                                    <p class="mb-0 text-sm">{{ $subscription->package->name}}</p>
                                                 </div>
                                             </td>
                                             <td class="align-middle text-center text-sm">
                                                 <div class="d-flex flex-column justify-content-center">
-                                                    <p class="mb-0 text-sm">{{ $subscription->package_id }}</p>
+                                                    <p class="mb-0 text-sm">{{ $subscription->currency()->name }}{{ $subscription->amount_paid }}</p>
                                                 </div>
                                             </td>
                                             <td class="align-middle text-center">
                                                 <div class="d-flex flex-column justify-content-center">
-                                                    <p class="mb-0 text-sm">{{ $subscription->created_by }}</p>
+                                                    <p class="mb-0 text-sm">{{ $subscription->createdBy()->name}}</p>
                                                 </div>
                                             </td>
                                             <td class="align-middle text-center">
                                                 <div class="d-flex flex-column justify-content-center">
-                                                    <p class="mb-0 text-sm">{{ $subscription->created_at }}</p>
+                                                    <p class="mb-0 text-sm">{{ $subscription->transaction_date }}</p>
                                                 </div>
                                             </td>
                                             <td class="align-middle">
                                                 <a rel="tooltip" class="btn btn-success btn-link"
-                                                   href="" data-original-title=""
+												href="{{ route("dstv_transaction_edit", $subscription->id) }} " data-original-title=""
                                                    title="">
                                                     <i class="material-icons">edit</i>
                                                     <div class="ripple-container"></div>
                                                 </a>
 
-                                                <button type="button" class="btn btn-danger btn-link"
-                                                        data-original-title="" title="">
-                                                    <i class="material-icons">close</i>
-                                                    <div class="ripple-container"></div>
-                                                </button>
+												<a class="btn btn-danger btn-link delete-button"
+													href="{{ route("api_delete_dstv_transaction", ['id' => $subscription->id]) }}"
+													data-subscription-id="{{ $subscription->id }}"
+													data-original-title=""
+													title="">
+														<i class="material-icons">close</i>
+														<div class="ripple-container"></div>
+												</a>
                                             </td>
                                         </tr>
                                     @endforeach

@@ -26,6 +26,7 @@ class CompanyRegistration extends Model
       'commission',
       'created_by',
       'notes',
+	  'transaction_date'
     ];
     protected $table = "company_registration";
     use HasFactory;

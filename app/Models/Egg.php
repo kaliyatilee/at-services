@@ -26,6 +26,7 @@ class Egg extends Model
       'order_price',
       'created_by',
       'notes',
+	  'transaction_date'
     ];
 
     public function createdBy(){

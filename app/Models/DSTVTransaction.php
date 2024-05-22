@@ -26,7 +26,8 @@ class DSTVTransaction extends Model
         'phone',
         'expected_amount',
         'currency_id',
-        'dstv_account_number'
+        'dstv_account_number',
+		'transaction_date'
     ];
 
     public function getUser(){
@@ -57,9 +58,23 @@ class DSTVTransaction extends Model
         return $amount_paid;
     }
 
+	public function package()
+    {
+        return $this->belongsTo(DSTVPackage::class, 'package_id');
+    }
+
     public function getPayments(){
         $dstvPayments = DSTVPayment::query()->where("dstv_transaction_id",$this->id)->get();
 
         return $dstvPayments;
+    }
+
+	public function currency(){
+        $currency = Currency::find($this->currency_id);
+        if($currency == null){
+            $currency = new Currency();
+        }
+
+        return $currency;
     }
 }
