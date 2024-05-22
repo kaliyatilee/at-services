@@ -613,7 +613,7 @@ CREATE TABLE `insurance_transaction` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `name` text DEFAULT NULL,
   `phone` text DEFAULT NULL,
-  `rate` text NOT NULL DEFAULT '0',
+  `rate` varchar(255) DEFAULT '0', 
   `currency_id` int(11) NOT NULL,
   `expected_amount` text NOT NULL,
   `vehicle_type` varchar(50) NOT NULL,
@@ -916,7 +916,7 @@ CREATE TABLE `rtgs` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `description` text DEFAULT NULL,
   `expected_amount` text NOT NULL DEFAULT '0',
-  `rate` text NOT NULL DEFAULT '0',
+  `rate` varchar(255) DEFAULT '0', 
   `transaction_date` datetime DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
