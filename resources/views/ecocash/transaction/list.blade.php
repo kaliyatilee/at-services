@@ -112,6 +112,7 @@
                                                     <div class="ripple-container"></div>
                                                 </a>
 
+<<<<<<< HEAD
                                                 <a rel="tooltip" class="btn btn-primary btn-link"
 												href="{{ route("api_ecocash_view", $ecocash->id) }} " data-original-title=""
                                                    title="">
@@ -119,6 +120,8 @@
                                                     <div class="ripple-container"></div>
                                                 </a>
 
+=======
+>>>>>>> refs/remotes/origin/main
                                                 <a class="btn btn-danger btn-link delete-button"
 													href="{{ route("api_delete_ecocash", ['id' => $ecocash->id]) }}"
 													data-ecocash-id="{{ $ecocash->id }}"

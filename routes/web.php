@@ -160,6 +160,9 @@ Route::get('eggs/edit/{id}', [EggsController::class, "edit_eggs"])->name("eggs_e
 Route::get('eggs/view/{id}', [EggsController::class, "view_eggs"])->name("api_eggs_view");
 
 
+Route::get('eggs/edit/{id}', [EggsController::class, "edit_eggs"])->name("eggs_edit");
+
+
 Route::post('api/company/registration/new', [CompanyRegistrationController::class, "create_company_registration"])->name("api_create_company_registration");
 //confirm with mobile on
 Route::post('api/company/registration/{id}', [CompanyRegistrationController::class, "update_company_registration"])->name("api_update_company_registration");
@@ -178,6 +181,10 @@ Route::get('api/company/registration/supplier/get/{id}', [CompanyRegistrationSup
 Route::delete('api/company/registration/supplier/{id}', [CompanyRegistrationSupplierController::class, "delete_company_registration_supplier"])->name("api_delete_company_registration_supplier");
 Route::get('api/edit/company/registration/supplier/get/{id}', [CompanyRegistrationSupplierController::class, "edit_company_registration_supplier"])->name("api_edit_company_registration_supplier");
 Route::get('api/edit/company/registration/supplier/view/{id}', [CompanyRegistrationSupplierController::class, "view_company_registration_supplier"])->name("api_view_company_registration_supplier");
+
+
+
+Route::get('api/edit/company/registration/supplier/get/{id}', [CompanyRegistrationSupplierController::class, "edit_company_registration_supplier"])->name("api_edit_company_registration_supplier");
 
 
 
