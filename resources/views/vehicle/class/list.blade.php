@@ -15,7 +15,7 @@
                         </div>
                         <div class="card-body px-0 pb-2">
                             <div class="table-responsive p-0">
-                                <table class="table align-items-center mb-0">
+                                <table class="table align-items-center mb-0" id="dt-nested-object">
                                     <thead>
                                     <tr>
                                         <th
@@ -84,17 +84,29 @@
                                             </td>
                                             <td class="align-middle">
                                                 <a rel="tooltip" class="btn btn-success btn-link"
-                                                   href="" data-original-title=""
+												href="{{ route("vehicle_class_edit", ['id' => $vehicle_class->id]) }}"
+												   data-original-title=""
                                                    title="">
                                                     <i class="material-icons">edit</i>
                                                     <div class="ripple-container"></div>
                                                 </a>
 
-                                                <button type="button" class="btn btn-danger btn-link"
-                                                        data-original-title="" title="">
-                                                    <i class="material-icons">close</i>
+												<a rel="tooltip" class="btn btn-primary btn-link"
+												href="{{ route("api_vehicle_class_view", ['id' => $vehicle_class->id]) }}"
+												   data-original-title=""
+                                                   title="">
+                                                    <i class="material-icons">view_module</i>
                                                     <div class="ripple-container"></div>
-                                                </button>
+                                                </a>
+
+                                                <a class="btn btn-danger btn-link delete-button"
+													href="{{ route("api_delete_vehicle_class", ['id' => $vehicle_class->id]) }}"
+													data-vehicle_class-id="{{ $vehicle_class->id }}"
+													data-original-title=""
+													title="">
+														<i class="material-icons">close</i>
+														<div class="ripple-container"></div>
+												</a>
                                             </td>
                                         </tr>
                                     @endforeach

@@ -38,11 +38,34 @@ class InsuranceTransactionController extends Controller
         return view('insurance.transaction.add', $data);
     }
 
+	public function insurance_transaction_edit($id){
+
+		$insurance_transaction = InsuranceTransaction::findOrFail($id);
+		$data['insurance_transaction'] = $insurance_transaction;
+        $data['vehicle_classes'] = VehicleClass::all();
+        $data['insurance_brokers'] = InsuranceBroker::all();
+        $data['currencies'] = Currency::all();
+        return view('insurance.transaction.edit', $data);
+
+	}
+
+	public function insurance_transaction_view($id){
+
+		$insurance_transaction = InsuranceTransaction::findOrFail($id);
+		$data['insurance_transaction'] = $insurance_transaction;
+        $data['vehicle_classes'] = VehicleClass::all();
+        $data['insurance_brokers'] = InsuranceBroker::all();
+        $data['currencies'] = Currency::all();
+        return view('insurance.transaction.view', $data);
+
+	}
+
+
     public function create_insurance_transaction(Request $request)
 
     {
         $validator = validator()->make($request->all(), [
-            "name" => ['nullable', 'string'],
+			"name" => ['nullable', 'string'],
             "phone" => ['nullable', 'string'],
             "class" => "required|numeric",
             "insurance_broker" => "required|numeric",
@@ -51,8 +74,8 @@ class InsuranceTransactionController extends Controller
             "expiry_date" => "required|date",
             "amount_paid" => "required|numeric",
             "expected_amount" => "nullable|numeric",
-            "rate" => "nullable|nullable|numeric",
-            "currency_id" => "nullable|numeric",
+            "rate" => "required|numeric",
+            "currency_id" => "required|numeric",
             "notes" => "nullable|string",
             "created_by" => "numeric",
         ]);
@@ -64,16 +87,9 @@ class InsuranceTransactionController extends Controller
             ], 422);
         }
         // Set a default value of zero for "expected_amount" if not provided
-     
 
-        $data = $validator->validated();
-        if (!isset($data['expected_amount'])) {
-            $data['expected_amount'] = 0;
-        }
-        
-        if (!isset($data['created_by'])) {
-            $data['created_by'] = Auth::user()->id;
-        }
+		$data = $validator->validated();
+		$data['created_by'] = auth()->user()->id;
         
 
         $insurancePayment = new InsuranceTransaction();
@@ -90,15 +106,15 @@ class InsuranceTransactionController extends Controller
         $validator = validator()->make($request->all(), [
             "name" => ['nullable', 'string'],
             "phone" => ['nullable', 'string'],
-            "class" => "nullable|numeric",
-            "insurance_broker" => "nullable|numeric",
+            "class" => "required|numeric",
+            "insurance_broker" => "required|numeric",
             "reg_no" => "nullable|string|min:7|max:7",
-            "vehicle_type" => "nullable|string",
-            "expiry_date" => "nullable|date",
-            "amount_paid" => "nullable|numeric",
+            "vehicle_type" => "required|string",
+            "expiry_date" => "required|date",
+            "amount_paid" => "required|numeric",
             "expected_amount" => "nullable|numeric",
-            "rate" => "nullable|numeric",
-            "currency_id" => "nullable|numeric",
+            "rate" => "required|numeric",
+            "currency_id" => "required|numeric",
             "notes" => "nullable|string",
         ]);
 

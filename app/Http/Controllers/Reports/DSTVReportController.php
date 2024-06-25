@@ -27,7 +27,7 @@ class DSTVReportController extends Controller
             $end_date = $request->input("end_date");
         }
 
-        $DSTV_TRANSACTIONS = DSTVTransaction::whereBetween('created_at', [$start_date . " 00:00:00", $end_date . " 23:59:59"])->get();
+        $DSTV_TRANSACTIONS = DSTVTransaction::whereBetween('transaction_date', [$start_date . " 00:00:00", $end_date . " 23:59:59"])->get();
         $DSTV_PACKAGES = DSTVPackage::all();
 
         $DSTV_PACKAGES_TITLES = [];
@@ -57,7 +57,8 @@ class DSTVReportController extends Controller
             $commissions += $transaction->commission_usd;
 
             //amount paid
-            $amount_paid += $transaction->getAmountPaid();
+            // $amount_paid += $transaction->getAmountPaid();
+			$amount_paid += $transaction->amount_paid;
 
             //amount not paid
             $amount_not_paid += $transaction->balance;

@@ -13,7 +13,7 @@
             <div class="card card-body mx-3 mx-md-4 mt-n6">
                 <div class="card card-plain h-100">
                     <div class="card-body p-3">
-                        <form id="add_company_registration_supplier_form" method='POST' action='{{ route('api_create_company_registration') }}'>
+                        <form id="add_company_registration_form" method='POST' action='{{ route('api_create_company_registration') }}'>
                             @csrf
                             <div class="row">
 
@@ -27,7 +27,7 @@
                                 </div>
 
                                 <div class="mb-3 col-md-6">
-                                    <label class="form-label">Client Name</label>
+                                    <label class="form-label">Name</label>
                                     <input type="text" name="name" class="form-control border border-2 p-2"
                                            value='{{ old('name') }}'>
                                 </div>
@@ -40,15 +40,39 @@
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Charge</label>
-                                    <input type="text" name="charge" class="form-control border border-2 p-2"
-                                           value='{{ old('charge') }}'>
+                                    <input type="number" name="charge" class="form-control border border-2 p-2" value='{{ old('charge') }}'>
+
                                 </div>
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Expenses</label>
-                                    <input type="text" name="expenses" class="form-control border border-2 p-2"
+                                    <input type="number" name="expenses" class="form-control border border-2 p-2"
                                            value='{{ old('expenses') }}'>
                                 </div>
+								<div class="mb-3 col-md-6">
+                                    <label class="form-label">Commission</label>
+                                    <input type="number" name="commission" class="form-control border border-2 p-2"
+                                           value='{{ old('commission') }}'>
+                                </div>
+
+								<div class="mb-3 col-md-6">
+                                    <label class="form-label">Select Currency</label>
+                                    <select class="form-control border border-2 p-2" name="currency_id">
+                                        @foreach($currencies as $currency)
+                                            <option value="{{ $currency->id }}">{{ $currency->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+								<div class="mb-3 col-md-6">
+                                    <label class="form-label">Amount Paid</label>
+                                    <input type="number" name="amount_paid" class="form-control border border-2 p-2"
+                                           value='{{ old('amount_paid') }}'>
+                                </div>
+								<div class="mb-3 col-md-6">
+								<label class="form-label">Transaction Date</label>
+								<input type="date" name="transaction_date" class="form-control border border-2 p-2"
+										value='{{ old('transaction_date') }}'>
+							</div>
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Notes</label>
@@ -72,7 +96,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
-        $('#add_company_registration_supplier_form').submit(function (e) {
+        $('#add_company_registration_form').submit(function (e) {
             $('#success_error_message').html('');
 
             e.preventDefault();

@@ -11,11 +11,11 @@
                     <div class="card my-4">
                         <div class=" me-3 my-3 text-end">
                             <a class="btn bg-gradient-dark mb-0" href="{{ route("insurance_payment_add") }}"><i
-                                    class="material-icons text-sm">add</i>&nbsp;&nbsp;Add New Insurance Transaction</a>
+                                    class="material-icons text-sm">add</i>&nbsp;&nbsp;Add New Insurance Transaction</a> 
                         </div>
                         <div class="card-body px-0 pb-2">
                             <div class="table-responsive p-0">
-                                <table class="table align-items-center mb-0">
+                                <table class="table align-items-center mb-0" id="dt-nested-object">
                                     <thead>
                                     <tr>
                                         <th
@@ -42,18 +42,16 @@
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Expiry Date
                                         </th>
-                                        <th
-                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Payment Date
-                                        </th>
+                                       
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Created By
                                         </th>
-                                        <th
+										<th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Created At
+                                            Transaction Date
                                         </th>
+                    
                                         <th class="text-secondary opacity-7"></th>
                                     </tr>
                                     </thead>
@@ -68,11 +66,12 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="d-flex px-2 py-1">
-                                                    <div class="d-flex flex-column justify-content-center"> 
-                                                        <p class="mb-0 text-sm">{{ $insurance_transaction->getUser()->name }} ({{ $insurance_transaction->getUser()->phone1 }})</p>
+											<div class="d-flex px-2 py-1">
+                                                    <div class="d-flex flex-column justify-content-center">
+                                                        <p class="mb-0 text-sm">{{ $insurance_transaction->name }} / {{ $insurance_transaction->phone }}</p>
                                                     </div>
                                                 </div>
+                                             
                                             </td>
                                             <td>
                                                 <div class="d-flex flex-column justify-content-center">
@@ -94,11 +93,6 @@
                                                     <p class="mb-0 text-sm">{{ $insurance_transaction->expiry_date }}</p>
                                                 </div>
                                             </td>
-                                            <td class="align-middle text-center text-sm">
-                                                <div class="d-flex flex-column justify-content-center">
-                                                    <p class="mb-0 text-sm">{{ $insurance_transaction->payment_date }}</p>
-                                                </div>
-                                            </td>
                                             <td class="align-middle text-center">
                                                 <div class="d-flex flex-column justify-content-center">
                                                     <p class="mb-0 text-sm">{{ $insurance_transaction->createdBy()->name }}</p>
@@ -106,22 +100,33 @@
                                             </td>
                                             <td class="align-middle text-center">
                                                 <div class="d-flex flex-column justify-content-center">
-                                                    <p class="mb-0 text-sm">{{ $insurance_transaction->created_at }}</p>
+                                                    <p class="mb-0 text-sm">{{ $insurance_transaction->transaction_date }}</p>
                                                 </div>
                                             </td>
                                             <td class="align-middle">
                                                 <a rel="tooltip" class="btn btn-success btn-link"
-                                                   href="" data-original-title=""
+												href="{{ route("insurance_transaction_edit", $insurance_transaction->id) }}" data-original-title=""
                                                    title="">
                                                     <i class="material-icons">edit</i>
                                                     <div class="ripple-container"></div>
                                                 </a>
 
-                                                <button type="button" class="btn btn-danger btn-link"
-                                                        data-original-title="" title="">
-                                                    <i class="material-icons">close</i>
+												<a rel="tooltip" class="btn  btn-primary btn-link"
+												href="{{ route("api_insurance_transaction_view", $insurance_transaction->id) }}" data-original-title=""
+                                                   title="">
+                                                    <i class="material-icons">view_module</i>
                                                     <div class="ripple-container"></div>
-                                                </button>
+                                                </a>
+
+
+                                                <a class="btn btn-danger btn-link delete-button"
+													href="{{ route("api_delete_insurance_transaction", ['id' => $insurance_transaction->id]) }}"
+													data-insurance_transaction-id="{{ $insurance_transaction->id }}"
+													data-original-title=""
+													title="">
+														<i class="material-icons">close</i>
+														<div class="ripple-container"></div>
+												</a>
                                             </td>
                                         </tr>
                                     @endforeach

@@ -3,6 +3,7 @@
 namespace App\Models\Company;
 
 use App\Models\User;
+use App\Models\Currency;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -26,6 +27,7 @@ class CompanyRegistration extends Model
       'commission',
       'created_by',
       'notes',
+	  'transaction_date'
     ];
     protected $table = "company_registration";
     use HasFactory;
@@ -47,4 +49,13 @@ class CompanyRegistration extends Model
 
         return $companyRegistrationSupplier;
     }
+
+	// public function currency(){
+    //     $currency = Currency::find($this->currency);
+    //     if($currency == null){
+    //         $currency = new Currency();
+    //     }
+
+    //     return $currency;
+    // }
 }

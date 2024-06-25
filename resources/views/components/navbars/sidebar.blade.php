@@ -36,7 +36,7 @@
                     <span class="nav-link-text ms-1">Insurance</span>
                 </a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link text-white {{ $activePage == 'report_loan' ? 'active bg-gradient-primary' : '' }} "
                    href="{{ route('user') }}">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -44,8 +44,8 @@
                     </div>
                     <span class="nav-link-text ms-1">Loan</span>
                 </a>
-            </li>
-            <li class="nav-item">
+            </li> -->
+            <!-- <li class="nav-item">
                 <a class="nav-link text-white {{ $activePage == 'report_loan' ? 'active bg-gradient-primary' : '' }} "
                    href="{{ route('user') }}">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -53,8 +53,8 @@
                     </div>
                     <span class="nav-link-text ms-1">Loan</span>
                 </a>
-            </li>
-            <li class="nav-item">
+            </li> -->
+            <!-- <li class="nav-item">
                 <a class="nav-link text-white {{ $activePage == 'report_ecocash' ? 'active bg-gradient-primary' : '' }} "
                    href="{{ route('user') }}">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -62,8 +62,8 @@
                     </div>
                     <span class="nav-link-text ms-1">Ecocash</span>
                 </a>
-            </li>
-            <li class="nav-item">
+            </li> -->
+            <!-- <li class="nav-item">
                 <a class="nav-link text-white {{ $activePage == 'report_rtgs' ? 'active bg-gradient-primary' : '' }} "
                    href="{{ route('user') }}">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -71,8 +71,8 @@
                     </div>
                     <span class="nav-link-text ms-1">RTGs</span>
                 </a>
-            </li>
-            <li class="nav-item">
+            </li> -->
+            <!-- <li class="nav-item">
                 <a class="nav-link text-white {{ $activePage == 'report_eggs' ? 'active bg-gradient-primary' : '' }} "
                    href="{{ route('user') }}">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -80,8 +80,8 @@
                     </div>
                     <span class="nav-link-text ms-1">Eggs</span>
                 </a>
-            </li>
-            <li class="nav-item">
+            </li> -->
+            <!-- <li class="nav-item">
                 <a class="nav-link text-white {{ $activePage == 'report_permanent_disc' ? 'active bg-gradient-primary' : '' }} "
                    href="{{ route('user') }}">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -89,7 +89,7 @@
                     </div>
                     <span class="nav-link-text ms-1">Permanent Disc</span>
                 </a>
-            </li>
+            </li> -->
             {{--            REPORTS END--}}
             {{--            USERS START--}}
             <li class="nav-item mt-3">
@@ -177,7 +177,7 @@
             {{--            LOAN END--}}
             {{--            NOTES START--}}
             <li class="nav-item mt-3">
-                <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">LOAN</h6>
+                <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">NOTES</h6>
             </li>
             <li class="nav-item">
                 <a class="nav-link text-white {{ $activePage == 'notes' ? 'active bg-gradient-primary' : '' }} "

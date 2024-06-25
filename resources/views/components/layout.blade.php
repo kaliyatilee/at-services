@@ -73,11 +73,42 @@
 
 
 {{ $slot }}
+<style>
+    #dt-nested-object_wrapper {
+    padding: 20px; /* Add padding to the entire DataTable wrapper */
+}
+        </style>
+<script>
+	$(document).ready(function() {
+		$('#dt-nested-object').DataTable({
+			dom: 'Bfrtip', 
+			buttons: [
+            {
+                extend: 'excel',
+                className: 'btn btn-success', // Add a class to the button
+                text: '<i class="fas fa-download"></i> Download Excel', // You can also add an icon to the button
+                title: 'Your Title Here' // Optionally, set a custom title for the Excel file
+            }
+        ]
+   		 });
+    });
+</script>
 
 <script src="{{ asset('assets') }}/js/core/popper.min.js"></script>
 <script src="{{ asset('assets') }}/js/core/bootstrap.min.js"></script>
 <script src="{{ asset('assets') }}/js/plugins/perfect-scrollbar.min.js"></script>
 <script src="{{ asset('assets') }}/js/plugins/smooth-scrollbar.min.js"></script>
+<script src="{{ asset('assets') }}/js/jquery_utils.js"></script>
+<!-- DataTables CSS -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.1.2/css/buttons.dataTables.min.css">
+<script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
+
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script> 
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
+
 @stack('js')
 <script>
     var win = navigator.platform.indexOf('Win') > -1;

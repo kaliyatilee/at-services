@@ -26,7 +26,7 @@ class InsuranceReportController extends Controller
             $end_date = date("Y-m-d");
         }
 
-        $INSURANCE_TRANSACTIONS = InsuranceTransaction::whereBetween('created_at', [$start_date . " 00:00:00", $end_date . " 23:59:59"])->get();
+        $INSURANCE_TRANSACTIONS = InsuranceTransaction::whereBetween('transaction_date', [$start_date . " 00:00:00", $end_date . " 23:59:59"])->get();
         $INSURANCE_BROKERS = InsuranceBroker::all();
 
         $INSURANCE_BROKERS_TITLES = [];
@@ -53,10 +53,12 @@ class InsuranceReportController extends Controller
             }
 
             //commission
-            $commissions += $transaction->commission;
+            // $commissions += $transaction->commission;
+			$commissions += $transaction->getInsuranceBroker()->commission;
 
             //amount paid
-            $amount_paid += $transaction->getAmountPaid();
+            // $amount_paid += $transaction->getAmountPaid();
+			$amount_paid += $transaction->amount_paid;
 
             //amount not paid
             $amount_not_paid += $transaction->balance;

@@ -3,7 +3,7 @@
     <x-navbars.sidebar activePage="users"></x-navbars.sidebar>
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         <!-- Navbar -->
-        <x-navbars.navs.auth titlePage="Clients"></x-navbars.navs.auth>
+        <x-navbars.navs.auth titlePage="users"></x-navbars.navs.auth>
         <!-- End Navbar -->
         <div class="container-fluid py-4">
             <div class="row">
@@ -16,7 +16,7 @@
                         </div>
                         <div class="card-body px-0 pb-2">
                             <div class="table-responsive p-0">
-                                <table class="table align-items-center mb-0">
+                                <table class="table align-items-center mb-0" id="dt-nested-object">
                                     <thead>
                                     <tr>
                                         <th
@@ -85,9 +85,16 @@
                                             </td>
                                             <td class="align-middle">
                                                 <a rel="tooltip" class="btn btn-success btn-link"
-                                                   href="" data-original-title=""
+												href="{{ route("user_edit", ['id' => $user->id]) }}" data-original-title=""
                                                    title="">
                                                     <i class="material-icons">edit</i>
+                                                    <div class="ripple-container"></div>
+                                                </a>
+
+												<a rel="tooltip" class="btn btn-primary btn-link"
+												href="{{ route("api_user_view", ['id' => $user->id]) }}" data-original-title=""
+                                                   title="">
+                                                    <i class="material-icons">view_module</i>
                                                     <div class="ripple-container"></div>
                                                 </a>
 

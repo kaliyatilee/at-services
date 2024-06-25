@@ -26,6 +26,7 @@ class PermanentDisc extends Model
       'notes',
       'name',
       'phone',
+	  'transaction_date'
     ];
     
 

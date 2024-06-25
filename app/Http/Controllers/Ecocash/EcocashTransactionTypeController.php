@@ -32,11 +32,26 @@ class EcocashTransactionTypeController extends Controller
         return view('ecocash.transaction_type.add',$data);
     }
 
+	public function ecocash_transaction_type_edit($id){
+            $ecocash_transaction_type = EcocashTransactionType::findOrFail($id);
+            $data['ecocash_transaction_type'] = $ecocash_transaction_type;
+
+        return view('ecocash.transaction_type.edit',$data);
+    }
+
+	public function ecocash_transaction_type_view($id)
+	{
+		$ecocash_transaction_type = EcocashTransactionType::findOrFail($id);
+		$data['ecocash_transaction_type'] = $ecocash_transaction_type;
+		return view('ecocash.transaction_type.view',$data);
+	}
+
+	
+
     public function create_ecocash_transaction_type(Request $request)
     {
         $data = $request->validate([
             "name" => ["required","string",Rule::unique("ecocash_transaction_type")],
-            "notes" => "nullable|string",
         ]);
 
         $data['created_by'] = auth()->user()->id;
@@ -54,7 +69,6 @@ class EcocashTransactionTypeController extends Controller
     {
         $data = $request->validate([
             "name" => ["required","string"],
-            "notes" => "nullable|string",
         ]);
 
         $ecocashTransactionType = EcocashTransactionType::findOrFail($id);

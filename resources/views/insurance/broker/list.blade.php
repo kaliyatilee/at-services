@@ -3,7 +3,7 @@
     <x-navbars.sidebar activePage="insurance_broker"></x-navbars.sidebar>
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         <!-- Navbar -->
-        <x-navbars.navs.auth titlePage="Insurance Transactions"></x-navbars.navs.auth>
+        <x-navbars.navs.auth titlePage="Insurance Broker"></x-navbars.navs.auth>
         <!-- End Navbar -->
         <div class="container-fluid py-4">
             <div class="row">
@@ -15,7 +15,7 @@
                         </div>
                         <div class="card-body px-0 pb-2">
                             <div class="table-responsive p-0">
-                                <table class="table align-items-center mb-0">
+                                <table class="table align-items-center mb-0" id="dt-nested-object">
                                     <thead>
                                     <tr>
                                         <th
@@ -26,13 +26,14 @@
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Name
                                         </th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Created By
-                                        </th>
+                                        
                                         <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                             Commission %
+                                        </th>
+										<th
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            Created By
                                         </th>
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -62,14 +63,15 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td>
-                                                <div class="d-flex flex-column justify-content-center">
-                                                    <p class="mb-0 text-sm">{{ $insurance_broker->created_by }}</p>
-                                                </div>
-                                            </td>
+                                           
                                             <td class="align-middle text-center text-sm">
                                                 <div class="d-flex flex-column justify-content-center">
                                                     <p class="mb-0 text-sm">{{ $insurance_broker->commission }}%</p>
+                                                </div>
+                                            </td>
+											<td>
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <p class="mb-0 text-sm">{{ $insurance_broker->createdBy()->name }}</p>
                                                 </div>
                                             </td>
                                             <td class="align-middle text-center">
@@ -84,9 +86,18 @@
                                             </td>
                                             <td class="align-middle">
                                                 <a rel="tooltip" class="btn btn-success btn-link"
-                                                   href="" data-original-title=""
+												href="{{ route("insurance_broker_edit", ['id' => $insurance_broker->id]) }}"
+												   data-original-title=""
                                                    title="">
                                                     <i class="material-icons">edit</i>
+                                                    <div class="ripple-container"></div>
+                                                </a>
+
+												<a rel="tooltip" class="btn btn-primary btn-link"
+												href="{{ route("api_insurance_broker_view", ['id' => $insurance_broker->id]) }}"
+												   data-original-title=""
+                                                   title="">
+                                                    <i class="material-icons">view_module</i>
                                                     <div class="ripple-container"></div>
                                                 </a>
 

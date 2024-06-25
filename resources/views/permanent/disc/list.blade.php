@@ -15,7 +15,7 @@
                         </div>
                         <div class="card-body px-0 pb-2">
                             <div class="table-responsive p-0">
-                                <table class="table align-items-center mb-0">
+                                <table class="table align-items-center mb-0" id="dt-nested-object">
                                     <thead>
                                     <tr>
                                         <th
@@ -44,7 +44,7 @@
                                         </th>
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Created At
+                                            Transaction Date
                                         </th>
                                         <th class="text-secondary opacity-7"></th>
                                     </tr>
@@ -71,6 +71,11 @@
                                                     <p class="mb-0 text-sm">{{ $permanent_disc->quantity_received }}</p>
                                                 </div>
                                             </td>
+											<td>
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <p class="mb-0 text-sm">{{ $permanent_disc->order_price }}</p>
+                                                </div>
+                                            </td>
                                             <td class="align-middle text-center">
                                                 <div class="d-flex flex-column justify-content-center">
                                                     <p class="mb-0 text-sm">{{ $permanent_disc->currency()->name }}{{ $permanent_disc->order_price }}</p>
@@ -83,22 +88,32 @@
                                             </td>
                                             <td class="align-middle text-center">
                                                 <div class="d-flex flex-column justify-content-center">
-                                                    <p class="mb-0 text-sm">{{ $permanent_disc->created_at }}</p>
+                                                    <p class="mb-0 text-sm">{{ $permanent_disc->transaction_date }}</p>
                                                 </div>
                                             </td>
                                             <td class="align-middle">
                                                 <a rel="tooltip" class="btn btn-success btn-link"
-                                                   href="" data-original-title=""
+													href="{{ route("permanent_disc_edit", $permanent_disc->id) }}" data-original-title=""
                                                    title="">
                                                     <i class="material-icons">edit</i>
                                                     <div class="ripple-container"></div>
                                                 </a>
 
-                                                <button type="button" class="btn btn-danger btn-link"
-                                                        data-original-title="" title="">
-                                                    <i class="material-icons">close</i>
+												<a rel="tooltip" class="btn btn-primary btn-link"
+													href="{{ route("api_view_permanent_disc", $permanent_disc->id) }}" data-original-title=""
+                                                   title="">
+                                                    <i class="material-icons">view_module</i>
                                                     <div class="ripple-container"></div>
-                                                </button>
+                                                </a>
+
+												<a class="btn btn-danger btn-link delete-button"
+													href="{{ route("api_delete_permanent_disc", ['id' => $permanent_disc->id]) }}"
+													data-permanent_disc-id="{{ $permanent_disc->id }}"
+													data-original-title=""
+													title="">
+														<i class="material-icons">close</i>
+														<div class="ripple-container"></div>
+												</a>
                                             </td>
                                         </tr>
                                     @endforeach

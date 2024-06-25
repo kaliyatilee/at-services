@@ -3,7 +3,7 @@
     <x-navbars.sidebar activePage="ecocash"></x-navbars.sidebar>
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         <!-- Navbar -->
-        <x-navbars.navs.auth titlePage="Ecocash Transaction Type"></x-navbars.navs.auth>
+        <x-navbars.navs.auth titlePage="Ecocash Transactions"></x-navbars.navs.auth>
         <!-- End Navbar -->
         <div class="container-fluid py-4">
             <div class="row">
@@ -15,7 +15,7 @@
                         </div>
                         <div class="card-body px-0 pb-2">
                             <div class="table-responsive p-0">
-                                <table class="table align-items-center mb-0">
+                                <table class="table align-items-center mb-0" id="dt-nested-object">
                                     <thead>
                                     <tr>
                                         <th
@@ -32,7 +32,7 @@
                                         </th>
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Amount
+                                            Expected Amount
                                         </th>
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -42,14 +42,15 @@
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Transaction Type
                                         </th>
+										<th
+                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Transaction Date
+</th>
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Created By
                                         </th>
-                                        <th
-                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Created At
-                                        </th>
+                                      >
                                         <th class="text-secondary opacity-7"></th>
                                     </tr>
                                     </thead>
@@ -79,17 +80,22 @@
                                             </td>
                                             <td class="align-middle text-center">
                                                 <div class="d-flex flex-column justify-content-center">
-                                                    <p class="mb-0 text-sm">{{ $ecocash->currency()->name }} {{ $ecocash->amount }}</p>
+                                                    <p class="mb-0 text-sm">{{ $ecocash->currency()->name }} {{ $ecocash->expected_amount }}</p>
                                                 </div>
                                             </td>
                                             <td class="align-middle text-center">
                                                 <div class="d-flex flex-column justify-content-center">
-                                                    <p class="mb-0 text-sm">{{ $ecocash->amount }}</p>
+                                                    <p class="mb-0 text-sm">{{ $ecocash->currency()->name }}{{ $ecocash->amount_paid }}</p>
                                                 </div>
                                             </td>
                                             <td class="align-middle text-center">
                                                 <div class="d-flex flex-column justify-content-center">
-                                                    <p class="mb-0 text-sm">{{ $ecocash->transactionType()->name }}</p>
+                                                    <p class="mb-0 text-sm">{{ $ecocash->name }}</p>
+                                                </div>
+                                            </td>
+											<td class="align-middle text-center">
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <p class="mb-0 text-sm">{{ $ecocash->transaction_date }}</p>
                                                 </div>
                                             </td>
                                             <td class="align-middle text-center text-sm">
@@ -97,24 +103,30 @@
                                                     <p class="mb-0 text-sm">{{ $ecocash->createdBy()->name }}</p>
                                                 </div>
                                             </td>
-                                            <td class="align-middle text-center">
-                                                <div class="d-flex flex-column justify-content-center">
-                                                    <p class="mb-0 text-sm">{{ $ecocash->created_at }}</p>
-                                                </div>
-                                            </td>
+                                         
                                             <td class="align-middle">
                                                 <a rel="tooltip" class="btn btn-success btn-link"
-                                                   href="" data-original-title=""
+												href="{{ route("ecocash_edit", $ecocash->id) }} " data-original-title=""
                                                    title="">
                                                     <i class="material-icons">edit</i>
                                                     <div class="ripple-container"></div>
                                                 </a>
 
-                                                <button type="button" class="btn btn-danger btn-link"
-                                                        data-original-title="" title="">
-                                                    <i class="material-icons">close</i>
+                                                <a rel="tooltip" class="btn btn-primary btn-link"
+												href="{{ route("api_ecocash_view", $ecocash->id) }} " data-original-title=""
+                                                   title="">
+                                                    <i class="material-icons">view_module</i>
                                                     <div class="ripple-container"></div>
-                                                </button>
+                                                </a>
+
+                                                <a class="btn btn-danger btn-link delete-button"
+													href="{{ route("api_delete_ecocash", ['id' => $ecocash->id]) }}"
+													data-ecocash-id="{{ $ecocash->id }}"
+													data-original-title=""
+													title="">
+														<i class="material-icons">close</i>
+														<div class="ripple-container"></div>
+												</a>
                                             </td>
                                         </tr>
                                     @endforeach

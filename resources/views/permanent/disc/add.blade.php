@@ -63,6 +63,11 @@
                                     <input type="text" name="order_price" class="form-control border border-2 p-2"
                                            value='{{ old('order_price') }}'>
                                 </div>
+								<div class="mb-3 col-md-6">
+									<label class="form-label">Transaction Date</label>
+									<input type="date" name="transaction_date" class="form-control border border-2 p-2"
+											value='{{ old('transaction_date') }}'>
+								</div>
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Notes</label>

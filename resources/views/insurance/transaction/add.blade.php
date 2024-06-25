@@ -18,7 +18,7 @@
                             <div class="row">
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Search Client</label>
-                                    <input type="text" id="client_name" name="client_name" class="form-control border border-2 p-2"
+                                    <input type="text" id="name" name="name" class="form-control border border-2 p-2"
                                            value='{{ old('client_name') }}'>
                                     <div id="suggestionsPopup" class="form-control border border-2 p-2" style="z-index: 1"></div>
                                     <input type="hidden" name="user_id" id="user_id" value="{{ old('user_id') }}" />
@@ -88,6 +88,11 @@
                                     <input type="text" name="amount_paid" class="form-control border border-2 p-2"
                                            value='{{ old('amount_paid') }}'>
                                 </div>
+								<div class="mb-3 col-md-6">
+									<label class="form-label">Transaction Date</label>
+									<input type="date" name="transaction_date" class="form-control border border-2 p-2"
+											value='{{ old('transaction_date') }}'>
+								</div>
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Notes</label>
@@ -110,10 +115,10 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
-        var searchInput = document.getElementById('client_name');
+        var searchInput = document.getElementById('name');
         var suggestionsPopup = document.getElementById('suggestionsPopup');
 
-        $('#client_name').on('input', function () {
+        $('#name').on('input', function () {
             // Get the input value
             var inputValue = $(this).val();
 

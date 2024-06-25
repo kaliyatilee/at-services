@@ -31,6 +31,7 @@ class InsuranceTransaction extends Model
             'currency_id',
             'expected_amount',
             'insurance_broker',
+			'transaction_date'
         ];
 
     public function createdBy(){

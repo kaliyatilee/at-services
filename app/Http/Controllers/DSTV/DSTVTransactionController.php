@@ -34,18 +34,43 @@ class DSTVTransactionController extends Controller
         return view('dstv.transaction.add',$data);
     }
 
+	public function dstv_transaction_edit($id){
+
+        $dstv_transaction = DSTVTransaction::findOrFail($id);
+        $data['dstv_transaction'] = $dstv_transaction;
+        $data['dstv_packages'] = DSTVPackage::all();
+        $data['currencies'] = Currency::all();
+        return view('dstv.transaction.edit',$data);
+
+	}
+
+	public function dstv_transaction_view($id){
+
+        $dstv_transaction = DSTVTransaction::findOrFail($id);
+        $data['dstv_transaction'] = $dstv_transaction;
+        $dstv_packages = DSTVPackage::all();
+        $currency = Currency::all();
+
+		$data['selected_currency']  = $currency->firstWhere('id', $dstv_transaction->currency_id);
+		$data['selected_dstv_package']  = $dstv_packages->firstWhere('id', $dstv_transaction->package_id);
+
+        return view('dstv.transaction.view',$data);
+
+	}
+
     public function create_dstv_transaction(Request $request)
     {
         $validator = validator()->make($request->all(), [
-            "name" => "nullable|min:1",
-            "phone" => "nullable|string|min:1",
-            "amount_paid" => "nullable|string|min:1",
+            "name" => "required|min:1",
+            "phone" => "required|string|min:1",
+            "amount_paid" => "required|string|min:1",
             "expected_amount" => "nullable|string|min:1",
             "rate" => "nullable|string",
             "currency_id" => "nullable|numeric|min:1",
             "dstv_account_number" => "nullable|string",
             "package_id" => "nullable|numeric",
-            "notes" => "nullable|string"
+            "notes" => "nullable|string",
+			"transaction_date" => "nullable|date"
         ]);
 
 // Check if validation fails
@@ -59,7 +84,9 @@ class DSTVTransactionController extends Controller
 
         $data = $validator->validated();
         $data['created_by'] = Auth::user()->id;
-        $data['commission_usd'] = 0;
+		$dstv_packages = DSTVPackage::findOrfail($data['package_id']);
+
+        $data['commission_usd'] = $dstv_packages['commission_usd'];
 
         $dstvTransaction = new DSTVTransaction();
         $dstvTransaction->create($data);
@@ -73,15 +100,16 @@ class DSTVTransactionController extends Controller
     public function update_dstv_transaction(Request $request,$id)
     {
         $validator = validator()->make($request->all(), [
-            "name" => "nullable|string|min:1",
-            "phone" => "nullable|string|min:1",
-            "amount_paid" => "nullable|string|min:1",
+            "name" => "required|string|min:1",
+            "phone" => "required|string|min:1",
+            "amount_paid" => "required|string|min:1",
             "expected_amount" => "nullable|string|min:1",
             "rate" => "nullable|string",
             "currency_id" => "nullable|numeric|min:1",
             "dstv_account_number" => "nullable|string|min:5",
             "package_id" => "nullable|numeric",
             "notes" => "nullable|string",
+			"transaction_date" => "required|date"
         ]);
 
 // Check if validation fails

@@ -18,6 +18,7 @@ class Ecocash extends Model
         'expected_amount',
         'amount_paid',
         'created_by',
+		'transaction_date',
         'notes',
     ];
 

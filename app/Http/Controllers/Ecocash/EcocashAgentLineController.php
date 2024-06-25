@@ -30,6 +30,22 @@ class EcocashAgentLineController extends Controller
         return view('ecocash.agent_line.add',$data);
     }
 
+	public function ecocash_line_edit($id){
+		$ecocash_agent_line = EcocashAgentLine::findOrFail($id);
+		$data['ecocash_agent_line'] = $ecocash_agent_line;
+	
+		return view('ecocash.agent_line.edit',$data);
+
+	}
+
+	public function ecocash_line_view($id)
+	{
+		$ecocash_agent_line = EcocashAgentLine::findOrFail($id);
+		$data['ecocash_agent_line'] = $ecocash_agent_line;
+	
+		return view('ecocash.agent_line.view',$data);
+	}
+
     public function create_ecocash_agent_line(Request $request)
     {
         $data = $request->validate([

@@ -39,6 +39,37 @@ class RTGsController extends Controller
         return view('rtgs.add', $data);
     }
 
+	public function edit_rtgs($id){
+            $rtgs = RTGs::findOrFail($id);
+            $data['rtgs'] = $rtgs;
+       
+        $transaction_types = [
+            "1" => "Amount In",
+            "2" => "Amount Out",
+        ];
+
+        $data['transaction_types'] = $transaction_types;
+
+        return view('rtgs.edit', $data);
+
+	}
+
+	public function view_rtgs($id)
+	{
+		$rtgs = RTGs::findOrFail($id);
+		$data['rtgs'] = $rtgs;
+   
+	$transaction_types = [
+		"1" => "Amount In",
+		"2" => "Amount Out",
+	];
+
+	$data['transaction_types'] = $transaction_types;
+
+	return view('rtgs.view', $data);
+
+	}
+
     public function create_rtgs(Request $request)
     {
         $validator = validator()->make($request->all(), [
@@ -50,7 +81,8 @@ class RTGsController extends Controller
             "expected_amount" => "nullable|numeric",
             "rate" => "nullable|numeric",
             "notes" => "nullable|string",
-            "created_by" => "numeric"
+            "created_by" => "numeric",
+			"transaction_date" => "required|date"
         ]);
 
 // Check if validation fails
@@ -62,8 +94,9 @@ class RTGsController extends Controller
             ], 422);
         }
 
-        $data = $validator->validated();
-
+        $data = $validator->validated(); 
+		$data['created_by'] = auth()->user()->id;
+		$data['expected_amount']= doubleval(isset($data['expected_amount'])) ? $data['expected_amount'] : 0;
         $rtgs = new RTGs();
         $rtgs->create($data);
 
@@ -73,15 +106,22 @@ class RTGsController extends Controller
         ]);
     }
 
+
     public function update_rtgs(Request $request, $id)
     {
         $data = $request->validate([
-            "type" => ['nullable', 'numeric'],
-            "amount" => "nullable|numeric",
+			"transaction_type" => ['required', 'numeric'],
+            "amount" => "required|numeric",
+            "description" => "nullable|string",
             "name" => "nullable|string",
             "phone" => "nullable|string",
+            "expected_amount" => "nullable|numeric",
+            "rate" => "nullable|numeric",
             "notes" => "nullable|string",
+            "created_by" => "numeric",
+			"transaction_date" => "date"
         ]);
+
 
         $rtgs = RTGs::findOrFail($id);
         $rtgs->update($data);

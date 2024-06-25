@@ -15,7 +15,7 @@
                         </div>
                         <div class="card-body px-0 pb-2">
                             <div class="table-responsive p-0">
-                                <table class="table align-items-center mb-0">
+                                <table class="table align-items-center mb-0" id="dt-nested-object">
                                     <thead>
                                     <tr>
                                         <th
@@ -34,14 +34,15 @@
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                             Order Price
                                         </th>
+										<th
+                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Transaction Date
+                                        </th>
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Created By
                                         </th>
-                                        <th
-                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Created At
-                                        </th>
+                                     
                                         <th class="text-secondary opacity-7"></th>
                                     </tr>
                                     </thead>
@@ -72,29 +73,37 @@
                                                     <p class="mb-0 text-sm">{{ $egg->order_price }}</p>
                                                 </div>
                                             </td>
+
+											<td class="align-middle text-center">
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <p class="mb-0 text-sm">{{ $egg->transaction_date }}</p>
+                                                </div>
+                                            </td>
                                             <td class="align-middle text-center text-sm">
                                                 <div class="d-flex flex-column justify-content-center">
                                                     <p class="mb-0 text-sm">{{ $egg->createdBy()->name }}</p>
                                                 </div>
                                             </td>
-                                            <td class="align-middle text-center">
-                                                <div class="d-flex flex-column justify-content-center">
-                                                    <p class="mb-0 text-sm">{{ $egg->created_at }}</p>
-                                                </div>
-                                            </td>
+                                        
                                             <td class="align-middle">
-                                                <a rel="tooltip" class="btn btn-success btn-link"
-                                                   href="" data-original-title=""
-                                                   title="">
+                                                <a rel="tooltip" class="btn btn-success btn-link" href="{{ route("eggs_edit", $egg->id) }}" data-original-title="" title="">
                                                     <i class="material-icons">edit</i>
                                                     <div class="ripple-container"></div>
                                                 </a>
 
-                                                <button type="button" class="btn btn-danger btn-link"
-                                                        data-original-title="" title="">
-                                                    <i class="material-icons">close</i>
+												<a rel="tooltip" class="btn btn-primary btn-link" href="{{ route("api_eggs_view", $egg->id) }}" data-original-title="" title="">
+                                                    <i class="material-icons">view_module</i>
                                                     <div class="ripple-container"></div>
-                                                </button>
+                                                </a>
+
+                                                <a class="btn btn-danger btn-link delete-button"
+													href="{{ route("api_delete_eggs", ['id' => $egg->id]) }}"
+													data-egg-id="{{ $egg->id }}"
+													data-original-title=""
+													title="">
+														<i class="material-icons">close</i>
+														<div class="ripple-container"></div>
+												</a>
                                             </td>
                                         </tr>
                                     @endforeach

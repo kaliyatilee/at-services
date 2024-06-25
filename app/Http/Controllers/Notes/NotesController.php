@@ -32,11 +32,21 @@ class NotesController extends Controller
         return view('notes.add',$data);
     }
 
+	public function notes_edit($id){
+
+            $notes = Notes::findOrFail($id);
+            $data['notes'] = $notes;
+
+        return view('notes.edit',$data);
+    }
+
     public function create_notes(Request $request)
     {
         $validator = validator()->make($request->all(), [
             "notes" => ["nullable","string"],
-            "date" => "nullable|date"]);
+            "date" => "nullable|date"
+			]
+		);
 
 // Check if validation fails
         if ($validator->fails()) {
@@ -64,6 +74,22 @@ class NotesController extends Controller
 
         return response()->json([
             'message' => "Saved successfully",
+            'success' => true
+        ]);
+    }
+
+	public function update_notes(Request $request, $id)
+    {
+        $data = $request->validate([
+			"notes" => ["nullable","string"],
+            "date" => "nullable|date"
+        ]);
+
+        $notes = Notes::findOrFail($id);
+        $notes->update($data);
+
+        return response()->json([
+            'message' => "Updated successfully",
             'success' => true
         ]);
     }

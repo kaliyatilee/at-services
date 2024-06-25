@@ -32,6 +32,22 @@ class InsuranceBrokerController extends Controller
         return view('insurance.broker.add',$data);
     }
 
+	public function insurance_broker_edit($id){
+        $insurance_broker = InsuranceBroker::findOrFail($id);
+        $data['insurance_broker'] = $insurance_broker;
+
+        return view('insurance.broker.edit',$data);
+
+	}
+
+	public function insurance_broker_view($id)
+	{
+		$insurance_broker = InsuranceBroker::findOrFail($id);
+        $data['insurance_broker'] = $insurance_broker;
+
+        return view('insurance.broker.view',$data);
+	}
+
     public function create_insurance_broker(Request $request)
     {
         $data = $request->validate([
