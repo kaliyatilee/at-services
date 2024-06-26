@@ -26,7 +26,7 @@
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Name
                                         </th>
-                                        
+
                                         <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                             Commission %
@@ -42,6 +42,22 @@
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Created At
+                                        </th>
+                                        <th
+                                            style="display: none;" class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Date of Remittance
+                                        </th>
+                                        <th
+                                            style="display: none;" class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Method of Remittance
+                                        </th>
+                                        <th
+                                            style="display: none;" class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Amount Remitted
+                                        </th>
+                                        <th
+                                            style="display: none;" class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Account Balance
                                         </th>
                                         <th class="text-secondary opacity-7"></th>
                                     </tr>
@@ -63,7 +79,7 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                           
+
                                             <td class="align-middle text-center text-sm">
                                                 <div class="d-flex flex-column justify-content-center">
                                                     <p class="mb-0 text-sm">{{ $insurance_broker->commission }}%</p>
@@ -82,6 +98,26 @@
                                             <td class="align-middle text-center">
                                                 <div class="d-flex flex-column justify-content-center">
                                                     <p class="mb-0 text-sm">{{ $insurance_broker->updated_at }}</p>
+                                                </div>
+                                            </td>
+                                            <td style="display: none;" class="align-middle text-center">
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <p class="mb-0 text-sm">{{ $insurance_broker->date_of_remittance }}</p>
+                                                </div>
+                                            </td>
+                                            <td style="display: none;" class="align-middle text-center">
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <p class="mb-0 text-sm">{{ $insurance_broker->method_of_remittance }}</p>
+                                                </div>
+                                            </td>
+                                            <td style="display: none;" class="align-middle text-center">
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <p class="mb-0 text-sm">{{ $insurance_broker->amount_remitted }}</p>
+                                                </div>
+                                            </td>
+                                            <td style="display: none;" class="align-middle text-center">
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <p class="mb-0 text-sm">{{ $insurance_broker->account_balance }}</p>
                                                 </div>
                                             </td>
                                             <td class="align-middle">

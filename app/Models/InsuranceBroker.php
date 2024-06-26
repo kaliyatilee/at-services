@@ -19,7 +19,11 @@ class InsuranceBroker extends Model
         'name',
         'commission',
         'notes',
-        'created_by'
+        'created_by',
+        'date_of_remittance',
+        'method_of_remittance',
+        'amount_remitted',
+        'account_balance'
     ];
 
 	public function createdBy(){

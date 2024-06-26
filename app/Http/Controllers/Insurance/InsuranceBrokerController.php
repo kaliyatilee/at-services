@@ -54,6 +54,10 @@ class InsuranceBrokerController extends Controller
             "name" => "required|string|min:1",
             "commission" => "required|numeric",
             "notes" => "nullable|string",
+            "date_of_remittance" => "required|date",
+            "method_of_remittance" => "required|string",
+            "amount_remitted" => "required|numeric",
+            "account_balance" => "required|numeric",
         ]);
 
         $data['created_by'] = auth()->user()->id;
@@ -73,6 +77,10 @@ class InsuranceBrokerController extends Controller
             "name" => "required|string|min:1",
             "commission" => "required|numeric",
             "notes" => "nullable|string",
+            "date_of_remittance" => "required|date",
+            "method_of_remittance" => "required|string",
+            "amount_remitted" => "required|numeric",
+            "account_balance" => "required|numeric",
         ]);
 
         $insuranceBroker = InsuranceBroker::findOrFail($id);

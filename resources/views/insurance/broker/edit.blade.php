@@ -34,6 +34,26 @@
                                     <input type="text" name="notes" class="form-control border border-2 p-2"
                                            value='{{$insurance_broker->notes }}'>
                                 </div>
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Date of Remittance</label>
+                                    <input type="date" name="date_of_remittance" class="form-control border border-2 p-2"
+                                           value='{{$insurance_broker->date_of_remittance }}'>
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Method of Remittance</label>
+                                    <input type="text" name="method_of_remittance" class="form-control border border-2 p-2"
+                                           value='{{$insurance_broker->method_of_remittance }}'>
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Amount Remitted</label>
+                                    <input type="text" name="amount_remitted" class="form-control border border-2 p-2"
+                                           value='{{$insurance_broker->amount_remitted }}'>
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Account Balance</label>
+                                    <input type="text" name="account_balance" class="form-control border border-2 p-2"
+                                           value='{{$insurance_broker->account_balance }}'>
+                                </div>
                             </div>
                             <button type="submit" class="btn bg-gradient-dark">Submit</button>
                             <div class='' id="success_error_message"></div>
@@ -49,13 +69,11 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-
         $('#add_insurance_broker_form').submit(function (e) {
             $('#success_error_message').html('');
 
             e.preventDefault();
             var formData = new FormData(this)
-            console.log(formData)
             $.ajax({
                 url: $(this).attr('action'),
                 type: 'POST',
@@ -63,11 +81,9 @@
                 processData: false,
                 contentType: false,
                 success: function (result) {
-                    console.log(result);
                     $('#success_error_message').append('<div class="text-success" style="font-size: larger">' + result.message + '</div');
                 },
                 error: function (xhr, status, err) {
-                    console.log(xhr);
                     if (xhr.status === 422) {
                         $.each(xhr.responseJSON.errors, function (key, value) {
                             $('#success_error_message').append('<div class="text-danger" style="font-size: larger">' + value + '</div');
