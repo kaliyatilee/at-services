@@ -18,7 +18,7 @@ class InsuranceTransactionController extends Controller
 
         $insurance_transaction = InsuranceTransaction::all();
 
-        $data['insurance_transactions'] = $insurance_transaction; 
+        $data['insurance_transactions'] = $insurance_transaction;
         return view('insurance.transaction.list', $data);
     }
 
@@ -90,7 +90,7 @@ class InsuranceTransactionController extends Controller
 
 		$data = $validator->validated();
 		$data['created_by'] = auth()->user()->id;
-        
+
 
         $insurancePayment = new InsuranceTransaction();
         $insurancePayment->create($data);
@@ -116,6 +116,13 @@ class InsuranceTransactionController extends Controller
             "rate" => "required|numeric",
             "currency_id" => "required|numeric",
             "notes" => "nullable|string",
+            "expected_amount_zig" => "nullable|numeric",
+            "received_date" => "required|date",
+            "commission_amount" => "nullable|numeric",
+            "amount_paid_zig" => "nullable|numeric",
+            "amount_remitted_usd" => "nullable|numeric",
+            "amount_remitted_zig" => "nullable|numeric",
+            "commission_percentage" => "nullable|numeric"
         ]);
 
         if ($validator->fails()) {

@@ -78,7 +78,12 @@
                                     </select>
                                 </div>
                                 <div class="mb-3 col-md-6">
-                                    <label class="form-label">Expected Amount</label>
+                                    <label class="form-label">Expected Amount (ZIG)</label>
+                                    <input type="text" name="expected_amount_zig" class="form-control border border-2 p-2"
+                                           value='{{ $insurance_transaction->expected_amount_zig }}'>
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Expected Amount (USD)</label>
                                     <input type="text" name="expected_amount" class="form-control border border-2 p-2"
                                            value='{{ $insurance_transaction->expected_amount }}'>
                                 </div>
@@ -87,11 +92,41 @@
 									<input type="date" name="transaction_date" class="form-control border border-2 p-2"
 									value='{{ isset($insurance_transaction->transaction_date) ? \Carbon\Carbon::parse($insurance_transaction->transaction_date)->format("Y-m-d") : "" }}'>
 								</div>
+                                <div class="mb-3 col-md-6">
+									<label class="form-label">Received Date</label>
+									<input type="date" name="received_date" class="form-control border border-2 p-2"
+									value='{{ isset($insurance_transaction->received_date) ? \Carbon\Carbon::parse($insurance_transaction->received_date)->format("Y-m-d") : "" }}'>
+								</div>
+                                <div class="mb-3 col-md-6">
+									<label class="form-label">Commission Amount</label>
+									<input type="text" name="commission_amount" class="form-control border border-2 p-2"
+                                           value='{{ $insurance_transaction->commission_amount }}'>
+								</div>
 
                                 <div class="mb-3 col-md-6">
-                                    <label class="form-label">Amount in USD</label>
+                                    <label class="form-label">Amount Paid (USD)</label>
                                     <input type="text" name="amount_paid" class="form-control border border-2 p-2"
                                            value='{{ $insurance_transaction->amount_paid }}'>
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Amount Paid (ZIG)</label>
+                                    <input type="text" name="amount_paid_zig" class="form-control border border-2 p-2"
+                                           value='{{ $insurance_transaction->amount_paid_zig }}'>
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Amount to be Remitted(ZIG)</label>
+                                    <input type="text" name="amount_remitted_zig" class="form-control border border-2 p-2"
+                                           value='{{ $insurance_transaction->amount_remitted_zig }}'>
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Amount to be Remitted (USD)</label>
+                                    <input type="text" name="amount_remitted_usd" class="form-control border border-2 p-2"
+                                           value='{{ $insurance_transaction->amount_remitted_usd }}'>
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Commission (%)</label>
+                                    <input type="text" name="commission_percentage" class="form-control border border-2 p-2"
+                                           value='{{ $insurance_transaction->commission_percentage }}'>
                                 </div>
 
                                 <div class="mb-3 col-md-6">

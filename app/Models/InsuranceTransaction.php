@@ -31,7 +31,14 @@ class InsuranceTransaction extends Model
             'currency_id',
             'expected_amount',
             'insurance_broker',
-			'transaction_date'
+			'transaction_date',
+            'expected_amount_zig',
+            'received_date',
+            'commission_amount',
+            'amount_paid_zig',
+            'amount_remitted_usd',
+            'amount_remitted_zig',
+            'commission_percentage'
         ];
 
     public function createdBy(){
