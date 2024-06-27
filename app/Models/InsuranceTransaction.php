@@ -79,6 +79,17 @@ class InsuranceTransaction extends Model
         return $insurance_broker;
     }
 
+    public function getCommissionPercentage()
+    {
+        $insuranceBroker = $this->getInsuranceBroker()->first();
+
+        if ($insuranceBroker) {
+            return $insuranceBroker->commission;
+        }
+
+        return 0; 
+    }
+
     public function getAmountPaid(){
         $payments = $this->getPayments();
         $amount_paid = 0;
