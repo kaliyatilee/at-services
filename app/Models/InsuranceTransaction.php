@@ -36,6 +36,8 @@ class InsuranceTransaction extends Model
             'received_date',
             'commission_amount',
             'amount_paid_zig',
+            'amount_received_zig',
+            'amount_received_usd',
             'amount_remitted_usd',
             'amount_remitted_zig',
             'commission_percentage'

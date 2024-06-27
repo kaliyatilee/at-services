@@ -120,6 +120,8 @@ class InsuranceTransactionController extends Controller
             "received_date" => "required|date",
             "commission_amount" => "nullable|numeric",
             "amount_paid_zig" => "nullable|numeric",
+            "amount_received_usd" => "nullable|numeric",
+            "amount_received_zig" => "nullable|numeric",
             "amount_remitted_usd" => "nullable|numeric",
             "amount_remitted_zig" => "nullable|numeric",
             "commission_percentage" => "nullable|numeric"
