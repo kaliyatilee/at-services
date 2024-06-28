@@ -3,22 +3,14 @@
 namespace App\Models\GeneralSales;
 
 use App\Models\Currency;
+use App\Models\SalesTransactionType;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class GeneralSale extends Model
 {
-    protected $fillable = [
-        'name',
-        'phone',
-        'currency',
-        'transaction_type',
-        'amount',
-        'payment_type',
-        'created_by',
-        'notes',
-    ];
+    protected $guarded = [];
 
     protected $casts = [
         'created_at' => 'date:Y-m-d H:i:s',
@@ -37,13 +29,13 @@ class GeneralSale extends Model
         return $user;
     }
 
-    public function currency(){
-        $currency = Currency::find($this->currency);
-        if($currency == null){
-            $currency = new Currency();
-        }
+    public function curr(){
+        return $this->belongsTo(Currency::class, 'currency', 'id');
+    }
 
-        return $currency;
+    public function type()
+    {
+        return $this->belongsTo(SalesTransactionType::class, 'transaction_type', 'sale_transaction_type_id');
     }
 
     public function transactionType(){

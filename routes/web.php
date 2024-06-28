@@ -88,7 +88,7 @@ Route::get("user/add", [UsersController::class, "add"])->name("user_add");
 Route::get("client", [ClientController::class, "view"])->name("client");
 Route::get("client/add", [ClientController::class, "add"])->name("client_add");
 
-Route::get("dstv", [DSTVTransactionController::class, "view"])->name("dstv"); 
+Route::get("dstv", [DSTVTransactionController::class, "view"])->name("dstv");
 Route::get("dstv/add", [DSTVTransactionController::class, "add"])->name("dstv_subscription_add");
 Route::get("dstv/package", [DSTVPackageController::class, "view"])->name("dstv_package");
 Route::get("dstv/package/add", [DSTVPackageController::class, "add"])->name("dstv_package_add");
@@ -289,7 +289,7 @@ Route::get('dstv/transaction/view/{id}', [DSTVTransactionController::class, 'dst
 
 
 Route::post('api/dstv/payment/add', [DSTVPaymentController::class, "create_dstv_payment"])->name("api_create_dstv_payment");
-Route::get('api/dstv/payment/{transaction_id}', [DSTVPaymentController::class, "list_dstv_payments"])->name("api_list_dstv_payments_by_transaction_id"); 
+Route::get('api/dstv/payment/{transaction_id}', [DSTVPaymentController::class, "list_dstv_payments"])->name("api_list_dstv_payments_by_transaction_id");
 Route::delete('api/dstv/payment/{id}', [DSTVPaymentController::class, "delete_dstv_payment"])->name("api_delete_dstv_payment");
 
 Route::post('api/insurance/payment/add', [InsurancePaymentController::class, "create_insurance_payment"])->name("api_create_insurance_payment");
@@ -382,3 +382,13 @@ Route::get('user-management', function () {
 Route::get('user-profile', function () {
     return view('pages.laravel-examples.user-profile');
 })->name('user-profile');
+
+
+Route::group([], function (){
+    Route::get('general-sales', [GeneralSalesController::class, 'viewTransactions'])->name('general-sales');
+    Route::get('create-general-sale', [GeneralSalesController::class, 'createTransaction'])->name('create-general-sale');
+    Route::get('edit-general-sale/{saleId}', [GeneralSalesController::class, 'editTransaction'])->name('edit-general-sale');
+    Route::post('store-general-sale', [GeneralSalesController::class, 'storeTransaction'])->name('store-general-sale');
+    Route::post('update-general-sale', [GeneralSalesController::class, 'updateTransaction'])->name('update-general-sale');
+    Route::get('delete-general-sale/{saleId}', [GeneralSalesController::class, 'deleteTransaction'])->name('delete-general-sale');
+});
