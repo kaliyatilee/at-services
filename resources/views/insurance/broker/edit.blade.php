@@ -46,13 +46,18 @@
                                 </div>
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Amount Remitted</label>
-                                    <input type="text" name="amount_remitted" class="form-control border border-2 p-2"
+                                    <input type="text" name="amount_remitted" id="amount_remitted" class="form-control border border-2 p-2"
                                            value='{{$insurance_broker->amount_remitted }}'>
                                 </div>
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Account Balance</label>
-                                    <input type="text" name="account_balance" class="form-control border border-2 p-2"
+                                    <input type="text" name="account_balance" id="account_balance" class="form-control border border-2 p-2"
                                            value='{{$insurance_broker->account_balance }}'>
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Total Remittance</label>
+                                    <input type="text" name="total_remittance" id="total_remittance" class="form-control border border-2 p-2"
+                                           value='{{$insurance_broker->total_remittance }}'>
                                 </div>
                             </div>
                             <button type="submit" class="btn bg-gradient-dark">Submit</button>
@@ -66,6 +71,20 @@
     <x-plugins></x-plugins>
 
 </x-layout>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        function calculateAccountBalance() {
+                    var totalRemittance = parseFloat(document.getElementById('total_remittance').value) || 0;
+                    var amountRemitted = parseFloat(document.getElementById('amount_remitted').value) || 0;
+
+                    var accountBalance = totalRemittance - amountRemitted;
+                    document.getElementById('account_balance').value = accountBalance.toFixed(2);
+        }
+        $('#amount_remitted').on('input', calculateAccountBalance);
+    });
+</script>
 
 <script type="text/javascript">
     $(document).ready(function () {

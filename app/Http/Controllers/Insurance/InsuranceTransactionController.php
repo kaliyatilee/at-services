@@ -100,7 +100,7 @@ class InsuranceTransactionController extends Controller
             'success' => true
         ]);
     }
-
+    
     public function update_insurance_transaction(Request $request, $id)
     {
         $validator = validator()->make($request->all(), [
@@ -136,14 +136,21 @@ class InsuranceTransactionController extends Controller
 
         $data = $validator->validated();
 
-        $insurancePayment = InsuranceTransaction::findOrFail($id);
-        $insurancePayment->update($data);
+        $insuranceTransaction = InsuranceTransaction::findOrFail($id);
+        $insuranceTransaction->update($data);
+
+        if (isset($data['amount_remitted_usd'])) {
+            $insuranceBroker = $insuranceTransaction->getInsuranceBroker();
+            $insuranceBroker->total_remittance += $data['amount_remitted_usd'];
+            $insuranceBroker->save();
+        }
 
         return response()->json([
             'message' => "Updated successfully",
             'success' => true
         ]);
     }
+
 
     public function list_insurance_transaction(Request $request, $id = null)
     {

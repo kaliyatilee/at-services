@@ -172,7 +172,7 @@
                                             </td>
                                             <td class="align-middle text-center" style="display: none;">
                                                 <div class="d-flex flex-column justify-content-center">
-                                                    <p class="mb-0 text-sm">{{ $insurance_transaction->amount_remitted }}</p>
+                                                    <p class="mb-0 text-sm">{{ $insurance_transaction->amount_remitted_usd }}</p>
                                                 </div>
                                             </td>
                                             <td class="align-middle text-center" style="display: none;">

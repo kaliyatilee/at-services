@@ -57,6 +57,10 @@
                                         </th>
                                         <th
                                             style="display: none;" class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Total Remittance
+                                        </th>
+                                        <th
+                                            style="display: none;" class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Account Balance
                                         </th>
                                         <th class="text-secondary opacity-7"></th>
@@ -113,6 +117,11 @@
                                             <td style="display: none;" class="align-middle text-center">
                                                 <div class="d-flex flex-column justify-content-center">
                                                     <p class="mb-0 text-sm">{{ $insurance_broker->amount_remitted }}</p>
+                                                </div>
+                                            </td>
+                                            <td style="display: none;" class="align-middle text-center">
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <p class="mb-0 text-sm">{{ $insurance_broker->total_remittance }}</p>
                                                 </div>
                                             </td>
                                             <td style="display: none;" class="align-middle text-center">

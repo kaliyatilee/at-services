@@ -23,7 +23,8 @@ class InsuranceBroker extends Model
         'date_of_remittance',
         'method_of_remittance',
         'amount_remitted',
-        'account_balance'
+        'account_balance',
+        'total_remittance'
     ];
 
 	public function createdBy(){
