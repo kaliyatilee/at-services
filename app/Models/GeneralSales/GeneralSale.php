@@ -7,9 +7,12 @@ use App\Models\SalesTransactionType;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class GeneralSale extends Model
 {
+    use HasFactory, SoftDeletes;
+
     protected $guarded = [];
 
     protected $casts = [
@@ -18,7 +21,6 @@ class GeneralSale extends Model
     ];
 
     protected $table = "general_sales";
-    use HasFactory;
 
     public function createdBy(){
         $user = User::find($this->created_by);

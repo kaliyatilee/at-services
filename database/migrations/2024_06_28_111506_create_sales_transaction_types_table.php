@@ -17,6 +17,7 @@ return new class extends Migration
 
                 $table->string('sale_transaction_type_id');
 				$table->string('name');
+				$table->string('effect');
 
                 $table->softDeletes();
                 $table->timestamps();

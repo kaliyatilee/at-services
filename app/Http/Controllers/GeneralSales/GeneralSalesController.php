@@ -63,41 +63,10 @@ class GeneralSalesController extends Controller
     public function updateTransaction(Request $request)
     {
         try {
-            $validated = $request->validate([
-                'name' => ['required', 'string'],
-                'phone' => ['required', 'string'],
-                'currency' => ['required', 'numeric', Rule::exists('currency', 'id')],
-                'transaction_type' => ['required', 'string', Rule::exists('sales_transaction_types', 'sale_transaction_type_id')],
-                'amount' => ['required', 'string'],
-                'notes' => ['nullable', 'string'],
-                'sale' => 'required',
-                'transaction_date' => 'nullable',
-                'classification' => 'nullable'
-            ]);
 
-            $original = GeneralSale::findOrFail($validated['sale']);
-
-            if (!$validated['transaction_date']){
-                $validated['transaction_date'] = $original->created_at;
-            }
-
-            $original->update([
-                'name' => $validated['name'],
-                'phone' => $validated['phone'],
-                'currency' => $validated['currency'],
-                'transaction_type' => $validated['transaction_type'],
-                'amount' => $validated['amount'],
-                'notes' => $validated['notes'],
-                'transaction_date' => $validated['transaction_date']
-            ]);
-
-//            if ($validated['classification'] == 'dstv') {
-//                DSTVPayment::create([]);
-//            }
 
             return redirect()->route('general-sales')->with('success', 'Transaction updated successfully');
         } catch (Exception $e) {
-            dd($e);
             return back()->with('error', 'Failed. Please try again');
         }
     }

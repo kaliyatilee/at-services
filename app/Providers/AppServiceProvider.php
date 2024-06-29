@@ -26,16 +26,25 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         $transactionTypes = [
-            'Amount Received',
-            'Amount Given'
+            [
+                'name' =>'Amount Received',
+                'effect' => 'adds'
+            ],
+            [
+                'name' => 'Amount Given',
+                'effect' => 'subtracts'
+            ]
         ];
 
         foreach ($transactionTypes as $transactionType) {
-            $exist = SalesTransactionType::where('name', $transactionType)->first();
+            $name = $transactionType['name'];
+            $effect = $transactionType['effect'];
+            $exist = SalesTransactionType::where('name', $name)->first();
             if ($exist) continue;
             SalesTransactionType::create([
                 'sale_transaction_type_id' => Str::orderedUuid(),
-                'name' => $transactionType,
+                'name' => $name,
+                'effect' => $effect
             ]);
         }
     }

@@ -32,6 +32,7 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\Vehicle\VehicleClassController;
 use App\Http\Controllers\Zinara\ZinaraTransactionController;
 use App\Http\Controllers\Zinara\ZinaraTransactionTypeController;
+use App\Http\Livewire\EditGeneralSale;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -387,7 +388,7 @@ Route::get('user-profile', function () {
 Route::group([], function (){
     Route::get('general-sales', [GeneralSalesController::class, 'viewTransactions'])->name('general-sales');
     Route::get('create-general-sale', [GeneralSalesController::class, 'createTransaction'])->name('create-general-sale');
-    Route::get('edit-general-sale/{saleId}', [GeneralSalesController::class, 'editTransaction'])->name('edit-general-sale');
+    Route::get('edit-general-sale/{saleId}', EditGeneralSale::class)->name('edit-general-sale');
     Route::post('store-general-sale', [GeneralSalesController::class, 'storeTransaction'])->name('store-general-sale');
     Route::post('update-general-sale', [GeneralSalesController::class, 'updateTransaction'])->name('update-general-sale');
     Route::get('delete-general-sale/{saleId}', [GeneralSalesController::class, 'deleteTransaction'])->name('delete-general-sale');
