@@ -12,7 +12,7 @@
                         <div class="me-3 my-3" style="display: flex; justify-content: space-between">
                             <div style="margin-left: 20px">
                                 @foreach($transactionTypes as $transactionType)
-                                    @if(!array_key_exists($transactionType->sale_transaction_type_id, $totals->toArray()))
+                                    @if(!array_key_exists($transactionType->sale_transaction_type_id, $totals))
                                         @continue
                                     @endif
                                     <div class="d-flex flex-column justify-content-center">

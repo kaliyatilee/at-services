@@ -23,9 +23,22 @@ class GeneralSalesController extends Controller
     {
         $transactions = GeneralSale::all();
         $transactionTypes = SalesTransactionType::all();
-        $totals = $transactions->groupBy('transaction_type')->map(function ($item) {
-            return $item->sum('amount');
-        });
+        $totals = [];
+        $groups = $transactions->groupBy('transaction_type');
+        foreach ($groups as $key => $groupTransactions) {
+            foreach ($groupTransactions as $groupTransaction) {
+                if (!$groupTransaction->amount) {
+                    $groupTransaction->amount = 0;
+                    $groupTransaction->save();
+                }
+                if (array_key_exists($key, $totals)) {
+                    $totals[$key] += $groupTransaction->amount;
+                } else {
+                    $totals[$key] = $groupTransaction->amount ?? 0;
+                }
+            }
+        }
+
         return view('general_sales.transaction.list', compact('transactions', 'transactionTypes', 'totals'));
     }
 
@@ -55,7 +68,8 @@ class GeneralSalesController extends Controller
             GeneralSale::create($validated);
 
             return redirect()->route('general-sales')->with('success', 'Transaction created successfully');
-        } catch (Exception) {
+        } catch (Exception $e) {
+            dd($e);
             return back()->with('error', 'Failed. Please try again');
         }
     }
