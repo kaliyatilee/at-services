@@ -14,25 +14,50 @@
                 <div class="card card-plain h-100">
                     <div class="card-body p-3">
                         <form id="add_insurance_broker_form" method='POST' action='{{ route('api_create_insurance_broker') }}'>
-                            @csrf
+                        @csrf
                             <div class="row">
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Name</label>
                                     <input type="text" name="name" class="form-control border border-2 p-2"
-                                           value='{{ old('name') }}'>
+                                           value='{{$insurance_broker->name }}'>
                                 </div>
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Commission</label>
                                     <input type="text" name="commission" class="form-control border border-2 p-2"
-                                           value='{{ old('commission') }}'>
+                                           value='{{$insurance_broker->commission }}'>
                                 </div>
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Notes</label>
                                     <input type="text" name="notes" class="form-control border border-2 p-2"
-                                           value='{{ old('notes') }}'>
+                                           value='{{$insurance_broker->notes }}'>
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Date of Remittance</label>
+                                    <input type="date" name="date_of_remittance" class="form-control border border-2 p-2"
+                                           value='{{$insurance_broker->date_of_remittance }}'>
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Method of Remittance</label>
+                                    <input type="text" name="method_of_remittance" class="form-control border border-2 p-2"
+                                           value='{{$insurance_broker->method_of_remittance }}'>
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Amount Remitted</label>
+                                    <input type="text" name="amount_remitted" required="true" id="amount_remitted" class="form-control border border-2 p-2"
+                                           value='{{$insurance_broker->amount_remitted }}'>
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Account Balance</label>
+                                    <input type="text" name="account_balance" id="account_balance" class="form-control border border-2 p-2"
+                                           value='{{$insurance_broker->account_balance }}'>
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Total Remittance</label>
+                                    <input type="text" name="total_remittance" id="total_remittance" class="form-control border border-2 p-2"
+                                           value='{{$insurance_broker->total_remittance }}'>
                                 </div>
                             </div>
                             <button type="submit" class="btn bg-gradient-dark">Submit</button>
@@ -46,6 +71,28 @@
     <x-plugins></x-plugins>
 
 </x-layout>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        function calculateAccountBalance() {
+                    var totalRemittance = parseFloat(document.getElementById('total_remittance').value) || 0;
+                    var amountRemitted = parseFloat(document.getElementById('amount_remitted').value) || 0;
+
+                    var accountBalance = totalRemittance - amountRemitted;
+                    document.getElementById('account_balance').value = accountBalance.toFixed(2);
+        }
+        $('#amount_remitted').on('input', calculateAccountBalance);
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+  
+    document.getElementById('total_remittance').value = 0;
+    document.getElementById('amount_remitted').value = 0;
+    document.getElementById('account_balance').value = 0;
+    });
+</script>
 
 <script type="text/javascript">
     $(document).ready(function () {

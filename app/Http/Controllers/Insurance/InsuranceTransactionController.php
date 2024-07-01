@@ -78,6 +78,15 @@ class InsuranceTransactionController extends Controller
             "currency_id" => "required|numeric",
             "notes" => "nullable|string",
             "created_by" => "numeric",
+            "expected_amount_zig" => "nullable|numeric",
+            "received_date" => "required|date",
+            "commission_amount" => "nullable|numeric",
+            "amount_paid_zig" => "nullable|numeric",
+            "amount_received_usd" => "nullable|numeric",
+            "amount_received_zig" => "nullable|numeric",
+            "amount_remitted_usd" => "nullable|numeric",
+            "amount_remitted_zig" => "nullable|numeric",
+            "commission_percentage" => "nullable|numeric"
         ]);
 
         if ($validator->fails()) {
