@@ -100,24 +100,13 @@
                                     <input type="text" name="amount_received_zig" id="amount_received_zig" class="form-control border border-2 p-2"
                                            value='{{ $insurance_transaction->amount_received_zig }}'>
                                 </div>
-                                <div class="mb-3 col-md-6">
-                                    <label class="form-label">Amount Paid (USD)</label>
-                                    <input type="text" name="amount_paid" id="amount_paid_usd" class="form-control border border-2 p-2"
-                                           value='{{ $insurance_transaction->amount_paid }}'>
-                                </div>
+                              
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Amount Received (USD)</label>
                                     <input type="text" name="amount_received_usd" id="amount_received_usd" class="form-control border border-2 p-2"
                                            value='{{ $insurance_transaction->amount_received_usd }}'>
                                 </div>
-                               
-                                <div class="mb-3 col-md-6">
-                                    <label class="form-label">Amount Paid (ZIG)</label>
-                                    <input type="text" name="amount_paid_zig" id="amount_paid_zig" class="form-control border border-2 p-2"
-                                           value='{{ $insurance_transaction->amount_paid_zig }}'>
-                                </div>
                                 
-                               
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Amount to be Remitted (ZIG)</label>
                                     <input type="text" name="amount_remitted_zig" id="amount_remitted_zig" class="form-control border border-2 p-2"
@@ -165,7 +154,6 @@
                 var expectedAmountUSD = parseFloat(document.getElementById('expected_amount_usd').value) || 0;
                 var amountReceivedZig = parseFloat(document.getElementById('amount_received_zig').value) || 0;
                 var amountReceivedUSD = parseFloat(document.getElementById('amount_received_usd').value) || 0;
-                var amountPaidUSD = parseFloat(document.getElementById('amount_paid_usd').value) || 0;
                 var commissionPercentage = parseFloat(document.getElementById('commission_percentage').value) || 0;
                 var rate = parseFloat(document.getElementById('rate').value) || 1;
 
@@ -262,7 +250,7 @@
          $('#expected_amount_usd').on('input', disableExpectedAmountZig);
          $('#amount_received_zig').on('mouseenter', enableAmountReceivedZig);
          $('#amount_received_usd').on('input', disableAmountReceivedZig);
-        $('#expected_amount_zig, #expected_amount_usd, #amount_received_zig, #amount_received_usd, #amount_paid_usd, #commission_percentage, #rate').on('input', calculateCommissionAmount);
+        $('#expected_amount_zig, #expected_amount_usd, #amount_received_zig, #amount_received_usd, #commission_percentage, #rate').on('input', calculateCommissionAmount);
     });
 </script>
 

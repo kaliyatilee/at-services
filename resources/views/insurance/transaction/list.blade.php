@@ -67,14 +67,7 @@
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Commission Amount
                                         </th>
-                                        <th style="display: none;"
-                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Amount Paid(USD)
-                                        </th>
-                                        <th style="display: none;"
-                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Amount Paid(ZIG)
-                                        </th>
+                                  
 
                                         <th style="display: none;"
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -160,16 +153,8 @@
                                                     <p class="mb-0 text-sm">{{ $insurance_transaction->commission_amount }}</p>
                                                 </div>
                                             </td>
-                                            <td class="align-middle text-center" style="display: none;">
-                                                <div class="d-flex flex-column justify-content-center">
-                                                    <p class="mb-0 text-sm">{{ $insurance_transaction->amount_paid }}</p>
-                                                </div>
-                                            </td>
-                                            <td class="align-middle text-center" style="display: none;">
-                                                <div class="d-flex flex-column justify-content-center">
-                                                    <p class="mb-0 text-sm">{{ $insurance_transaction->amount_pid_zig }}</p>
-                                                </div>
-                                            </td>
+                                            
+                                        
                                             <td class="align-middle text-center" style="display: none;">
                                                 <div class="d-flex flex-column justify-content-center">
                                                     <p class="mb-0 text-sm">{{ $insurance_transaction->amount_remitted_usd }}</p>
