@@ -64,6 +64,51 @@
 										</div>
 									</div>
                                 </div>
+								<div class="mb-3 col-md-6">
+									<div class="card card-frame">
+										<div class="card-body">
+										<p>Date of Remittance</p>
+										<hr>
+										{{ $insurance_broker->date_of_remittance }}
+										</div>
+									</div>
+                                </div>
+								<div class="mb-3 col-md-6">
+									<div class="card card-frame">
+										<div class="card-body">
+										<p>Method of Remittance</p>
+										<hr>
+										{{ $insurance_broker->method_of_remittance }}
+										</div>
+									</div>
+                                </div>
+								<div class="mb-3 col-md-6">
+									<div class="card card-frame">
+										<div class="card-body">
+										<p>Amount Remitted</p>
+										<hr>
+										{{ $insurance_broker->amount_remitted }}
+										</div>
+									</div>
+                                </div>
+								<div class="mb-3 col-md-6">
+									<div class="card card-frame">
+										<div class="card-body">
+										<p>Account Balance</p>
+										<hr>
+										{{ $insurance_broker->account_balance }}
+										</div>
+									</div>
+                                </div>
+								<div class="mb-3 col-md-6">
+									<div class="card card-frame">
+										<div class="card-body">
+										<p>Total Remittance</p>
+										<hr>
+										{{ $insurance_broker->total_remittance }}
+										</div>
+									</div>
+                                </div>
 
 </div>
                     </div>
