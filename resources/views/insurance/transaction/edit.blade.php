@@ -137,6 +137,7 @@
                             <div class="d-flex justify-content-end">
                                 <button type="submit" class="btn bg-gradient-primary m-0 ms-2">Save Changes</button>
                             </div>
+                            <div class='' id="success_error_message"></div>
                         </form>
                     </div>
                 </div>
@@ -337,6 +338,7 @@
                 contentType: false,
                 success: function (result) {
                     console.log(result);
+
                     $('#success_error_message').append('<div class="text-success" style="font-size: larger">' + result.message + '</div');
                 },
                 error: function (xhr, status, err) {

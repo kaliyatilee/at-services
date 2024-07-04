@@ -118,7 +118,7 @@
 										<div class="card-body">
 										<p>Expected Amount(USD)</p>
 										<hr>
-										{{ $insurance_transaction->expected_amount_usd }}
+										{{ $insurance_transaction->expected_amount }}
 										</div>
 									</div>
                                 </div>
