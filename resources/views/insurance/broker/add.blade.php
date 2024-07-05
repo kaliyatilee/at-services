@@ -59,6 +59,11 @@
                                     <input type="text" name="total_remittance" id="total_remittance" class="form-control border border-2 p-2"
                                            value='{{$insurance_broker->total_remittance }}'>
                                 </div>
+                                <div class="mb-3 col-md-6" style="display: none;">
+                                    <label class="form-label">Remittance</label>
+                                    <input type="text" name="total_remittance" id="remittance" class="form-control border border-2 p-2"
+                                           value='{{$insurance_broker-> remittance }}'>
+                                </div>
                             </div>
                             <button type="submit" class="btn bg-gradient-dark">Submit</button>
                             <div class='' id="success_error_message"></div>
@@ -91,6 +96,7 @@
     document.getElementById('total_remittance').value = 0;
     document.getElementById('amount_remitted').value = 0;
     document.getElementById('account_balance').value = 0;
+    document.getElementById('remittance').value = 0;
     });
 </script>
 

@@ -13,6 +13,11 @@ class InsuranceBroker extends Model
     protected $casts = [
         'created_at' => 'date:Y-m-d H:i:s',
         'updated_at' => 'date:Y-m-d H:i:s',
+        'remittance' => 'array',
+        'date_of_remittance' => 'array',
+        'method_of_remittance' => 'array',
+        'amount_remitted' => 'array',
+        'account_balance' => 'array',
     ];
 
     protected $fillable = [
@@ -24,10 +29,16 @@ class InsuranceBroker extends Model
         'method_of_remittance',
         'amount_remitted',
         'account_balance',
-        'total_remittance'
+        'total_remittance',
+        'remittance',
     ];
 
-	public function createdBy(){
+    public function transactions()
+    {
+        return $this->hasMany(InsuranceTransaction::class, 'insurance_broker', 'id');
+    }
+
+    public function createdBy(){
         $user = User::find($this->created_by);
         if($user == null){
             $user = new User();
