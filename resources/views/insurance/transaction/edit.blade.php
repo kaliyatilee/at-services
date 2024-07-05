@@ -134,9 +134,10 @@
                                            value='{{ $insurance_transaction->amount_remitted_usd }}'>
                                 </div>
                             </div>
-                            <div class="d-flex justify-content-end">
+                            <div class="d-flex justify-content-start">
                                 <button type="submit" class="btn bg-gradient-primary m-0 ms-2">Save Changes</button>
                             </div>
+
                             <div class='' id="success_error_message"></div>
                         </form>
                     </div>
