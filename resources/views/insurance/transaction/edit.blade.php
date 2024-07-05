@@ -135,7 +135,7 @@
                                 </div>
                             </div>
                             <div class="d-flex justify-content-start">
-                                <button type="submit" class="btn bg-gradient-primary m-0 ms-2">Save Changes</button>
+                                <button type="submit" class="btn bg-gradient-dark m-0 ms-2">Save Changes</button>
                             </div>
 
                             <div class='' id="success_error_message"></div>
