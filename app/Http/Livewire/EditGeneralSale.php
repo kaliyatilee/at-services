@@ -27,7 +27,7 @@ class EditGeneralSale extends Component
 
     public $currencies = [];
 
-    public $type = '';
+    public $type = 'general-sale';
 
     public $name = '';
     public $phone = '';
@@ -189,9 +189,11 @@ class EditGeneralSale extends Component
             ]);
         }
 
-        $original->delete();
+        if ($this->type != 'general-sale'){
+            $original->delete();
+        }
 
-        $this->redirectRoute('general-sales');
+        return redirect()->route('general-sales')->with('success', 'Transaction updated successfully');
     }
 
     public function render()

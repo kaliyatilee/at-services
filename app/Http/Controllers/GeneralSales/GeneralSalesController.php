@@ -19,6 +19,11 @@ use NumberFormatter;
 class GeneralSalesController extends Controller
 {
 
+    public function viewTransaction(GeneralSale $transaction, $del = 0)
+    {
+        return view('general_sales.transaction.view', compact('transaction', 'del'));
+    }
+
     public function viewTransactions()
     {
         $transactions = GeneralSale::all();
@@ -69,18 +74,6 @@ class GeneralSalesController extends Controller
 
             return redirect()->route('general-sales')->with('success', 'Transaction created successfully');
         } catch (Exception $e) {
-            dd($e);
-            return back()->with('error', 'Failed. Please try again');
-        }
-    }
-
-    public function updateTransaction(Request $request)
-    {
-        try {
-
-
-            return redirect()->route('general-sales')->with('success', 'Transaction updated successfully');
-        } catch (Exception $e) {
             return back()->with('error', 'Failed. Please try again');
         }
     }
@@ -99,7 +92,7 @@ class GeneralSalesController extends Controller
             GeneralSale::findOrFail(request()->saleId)->delete();
 
             return redirect()->route('general-sales')->with('success', 'Transaction deleted successfully');
-        } catch (Exception $e) {
+        } catch (Exception) {
             return back()->with('error', 'Failed. Please try again');
         }
     }

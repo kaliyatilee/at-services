@@ -13,9 +13,6 @@
                 </div>
                 <div class="card card-body mx-3 mx-md-4 mt-n6">
                     <div class="card card-plain h-100">
-                        <div style="display: flex; justify-content: end">
-                            <a href="{{ route('delete-general-sale', ['saleId' => $transaction->id]) }}" class="form-label" style="color: red"> Delete Transaction </a>
-                        </div>
                         <div class="card-body p-3">
                             <form wire:submit.prevent="editGeneralSale" method="POST">
                                 @csrf

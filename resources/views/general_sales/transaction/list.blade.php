@@ -9,6 +9,24 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card my-4">
+                        @if (Session::has('success'))
+                            <div class="alert alert-success alert-dismissible text-white" role="alert">
+                                <span class="text-sm">{{ Session::get('success') }}</span>
+                                <button type="button" class="btn-close text-lg py-3 opacity-10"
+                                        data-bs-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        @endif
+                        @if (Session::has('error'))
+                            <div class="alert alert-danger alert-dismissible text-white" role="alert">
+                                <span class="text-sm">{{ Session::get('error') }}</span>
+                                <button type="button" class="btn-close text-lg py-3 opacity-10"
+                                        data-bs-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        @endif
                         <div class="me-3 my-3" style="display: flex; justify-content: space-between">
                             <div style="margin-left: 20px">
                                 @foreach($transactionTypes as $transactionType)
@@ -111,10 +129,31 @@
                                                     <p class="mb-0 text-sm">{{ (new DateTime($transaction->transaction_date))->format('d M Y') }}</p>
                                                 </div>
                                             </td>
-                                            <td class="align-middle text-center">
-                                                <div class="d-flex flex-column justify-content-center">
-                                                    <a href="{{ route('edit-general-sale', ['saleId' => $transaction->id]) }}" class="mb-0 text-sm">Edit</a>
-                                                </div>
+{{--                                            <td class="align-middle text-center">--}}
+{{--                                                <div class="d-flex flex-column justify-content-center">--}}
+{{--                                                    <a href="{{ route('edit-general-sale', ['saleId' => $transaction->id]) }}" class="mb-0 text-sm">Edit</a>--}}
+{{--                                                </div>--}}
+{{--                                            </td>--}}
+                                            <td class="align-middle">
+                                                <a rel="tooltip" class="btn btn-success btn-link"
+                                                   href="{{ route('edit-general-sale', ['saleId' => $transaction->id]) }}" data-original-title=""
+                                                   title="">
+                                                    <i class="material-icons">edit</i>
+                                                    <div class="ripple-container"></div>
+                                                </a>
+
+                                                <a rel="tooltip" class="btn btn-primary btn-link"
+                                                   href="{{ route('view-general-sale', ['transaction' => $transaction->id]) }}" data-original-title=""
+                                                   title="">
+                                                    <i class="material-icons">view_module</i>
+                                                    <div class="ripple-container"></div>
+                                                </a>
+
+                                                <a href="{{ route('view-general-sale', ['transaction' => $transaction->id, 'del' => 1]) }}" type="button" class="btn btn-danger btn-link"
+                                                        data-original-title="" title="">
+                                                    <i class="material-icons">close</i>
+                                                    <div class="ripple-container"></div>
+                                                </a>
                                             </td>
                                         </tr>
                                     @endforeach

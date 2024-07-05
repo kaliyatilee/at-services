@@ -387,6 +387,7 @@ Route::get('user-profile', function () {
 
 Route::group([], function (){
     Route::get('general-sales', [GeneralSalesController::class, 'viewTransactions'])->name('general-sales');
+    Route::get('view-general-sale/{transaction}/{del?}', [GeneralSalesController::class, 'viewTransaction'])->name('view-general-sale');
     Route::get('create-general-sale', [GeneralSalesController::class, 'createTransaction'])->name('create-general-sale');
     Route::get('edit-general-sale/{saleId}', EditGeneralSale::class)->name('edit-general-sale');
     Route::post('store-general-sale', [GeneralSalesController::class, 'storeTransaction'])->name('store-general-sale');
