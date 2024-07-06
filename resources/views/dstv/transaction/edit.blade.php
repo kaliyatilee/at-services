@@ -27,9 +27,19 @@
                                 </div>
 
                                 <div class="mb-3 col-md-6">
-                                    <label class="form-label">Phone</label>
-                                    <input type="text" name="phone" class="form-control border border-2 p-2"
-                                           value='{{ $dstv_transaction->phone }}'>
+                                    <label class="form-label">Phone Number</label>
+                                    <input
+                                        class="form-control border border-2 p-2"
+                                        type="tel"
+                                        pattern="2637[0-9]{8}"
+                                        title="Must start with 2637 and follow format: 2637*********"
+                                        placeholder="Format: 2637*********"
+                                        name="phone"
+                                        value="{{ $dstv_transaction->phone }}"
+                                        oninput="this.setCustomValidity('')"
+                                        oninvalid="this.setCustomValidity('Invalid phone number. Must start with 2637 and follow format: 2637*********')"
+                                    />
+                                    <div id="phone_success_error_message" class="text-danger text-xs"></div>
                                 </div>
 
                                 <div class="mb-3 col-md-6">
@@ -70,7 +80,7 @@
                                     <input type="text" name="amount_paid" class="form-control border border-2 p-2"
                                            value='{{ $dstv_transaction->amount_paid }}'>
                                 </div>
-                                
+
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Notes (Optional)</label>
                                     <input type="text" name="notes" class="form-control border border-2 p-2"

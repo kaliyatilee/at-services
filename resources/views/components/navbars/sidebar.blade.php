@@ -36,6 +36,20 @@
                     <span class="nav-link-text ms-1">Insurance</span>
                 </a>
             </li>
+            {{-- REPORTS END --}}
+            {{-- BROCAST MESSAGE --}}
+            <li class="nav-item mt-3">
+                <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">BROADCAST MESSAGE</h6>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white {{ $activePage == 'broadcast' ? 'active bg-gradient-primary' : '' }} "
+                   href="{{ route('broadcast') }}">
+                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i style="font-size: 1.2rem;" class="fas fa-user-circle ps-2 pe-2 text-center"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Message</span>
+                </a>
+            </li>
             <!-- <li class="nav-item">
                 <a class="nav-link text-white {{ $activePage == 'report_loan' ? 'active bg-gradient-primary' : '' }} "
                    href="{{ route('user') }}">

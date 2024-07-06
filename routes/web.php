@@ -32,6 +32,10 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\Vehicle\VehicleClassController;
 use App\Http\Controllers\Zinara\ZinaraTransactionController;
 use App\Http\Controllers\Zinara\ZinaraTransactionTypeController;
+use Modules\Messaging\Http\Controllers\NewsLetterMessagingController;
+use Modules\Messaging\Http\Controllers\DstvMessagingController;
+use Modules\Messaging\Http\Controllers\InsuranceMessagingController;
+use Modules\Messaging\Http\Controllers\LoanMessagingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -48,10 +52,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/dstv', [DSTVTransactionController::class, "view"])->name("view_dstv");
 
-
 Route::get('/', function () {
     return redirect('sign-in');
 })->middleware('guest');
+
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
 Route::get('sign-up', [RegisterController::class, 'create'])->middleware('guest')->name('register');
 Route::post('sign-up', [RegisterController::class, 'store'])->middleware('guest');
@@ -75,6 +79,14 @@ Route::post('user-profile', [ProfileController::class, 'update'])->middleware('a
  * WEB
  */
 
+Route::post('/dstv-schedule-test', [DstvMessagingController::class, 'sendDstvExpiryReminders'])->name('dstvreminder');
+Route::post('/insurance-schedule-test', [InsuranceMessagingController::class, 'sendInsuranceExpiryReminders'])->name('insurancereminder');
+Route::post('/loan-schedule-test', [LoanMessagingController::class, 'sendLoanExpiryReminders'])->name('loanreminder');
+
+// BROADCAST MSG
+Route::get('/broadcast', [NewsLetterMessagingController::class, 'index'])->name('broadcast');
+Route::post('/broadcast/send', [NewsLetterMessagingController::class, 'sendBulkSms'])->name('send_broadcast');
+
 //REPORTS
 Route::get("report/dstv", [DSTVReportController::class, "view"])->name("report_dstv");
 Route::get("report/insurance", [\App\Http\Controllers\Reports\InsuranceReportController::class, "view"])->name("report_insurance");
@@ -88,7 +100,7 @@ Route::get("user/add", [UsersController::class, "add"])->name("user_add");
 Route::get("client", [ClientController::class, "view"])->name("client");
 Route::get("client/add", [ClientController::class, "add"])->name("client_add");
 
-Route::get("dstv", [DSTVTransactionController::class, "view"])->name("dstv"); 
+Route::get("dstv", [DSTVTransactionController::class, "view"])->name("dstv");
 Route::get("dstv/add", [DSTVTransactionController::class, "add"])->name("dstv_subscription_add");
 Route::get("dstv/package", [DSTVPackageController::class, "view"])->name("dstv_package");
 Route::get("dstv/package/add", [DSTVPackageController::class, "add"])->name("dstv_package_add");
@@ -159,9 +171,7 @@ Route::delete('api/eggs/{id}', [EggsController::class, "delete_eggs"])->name("ap
 Route::get('eggs/edit/{id}', [EggsController::class, "edit_eggs"])->name("eggs_edit");
 Route::get('eggs/view/{id}', [EggsController::class, "view_eggs"])->name("api_eggs_view");
 
-
 Route::get('eggs/edit/{id}', [EggsController::class, "edit_eggs"])->name("eggs_edit");
-
 
 Route::post('api/company/registration/new', [CompanyRegistrationController::class, "create_company_registration"])->name("api_create_company_registration");
 //confirm with mobile on
@@ -182,11 +192,7 @@ Route::delete('api/company/registration/supplier/{id}', [CompanyRegistrationSupp
 Route::get('api/edit/company/registration/supplier/get/{id}', [CompanyRegistrationSupplierController::class, "edit_company_registration_supplier"])->name("api_edit_company_registration_supplier");
 Route::get('api/edit/company/registration/supplier/view/{id}', [CompanyRegistrationSupplierController::class, "view_company_registration_supplier"])->name("api_view_company_registration_supplier");
 
-
-
 Route::get('api/edit/company/registration/supplier/get/{id}', [CompanyRegistrationSupplierController::class, "edit_company_registration_supplier"])->name("api_edit_company_registration_supplier");
-
-
 
 Route::post('api/ecocash/transaction_type/add', [EcocashTransactionTypeController::class, "create_ecocash_transaction_type"])->name("api_create_ecocash_transaction_type");
 Route::post('api/ecocash/transaction_type/add/{id}', [EcocashTransactionTypeController::class, "update_ecocash_transaction_type"])->name("api_update_ecocash_transaction_type");
@@ -229,19 +235,12 @@ Route::delete('api/ecocash/{id}', [EcocashController::class, "delete_ecocash"])-
 Route::get('ecocash/edit/{id}', [EcocashController::class, 'ecocash_edit'])->name('ecocash_edit');
 Route::get('ecocash/view/{id}', [EcocashController::class, 'ecocash_view'])->name('api_ecocash_view');
 
-
-
-
 Route::post('api/ecocash/agent_line/add', [EcocashAgentLineController::class, "create_ecocash_agent_line"])->name("api_create_ecocash_agent_line");
 Route::post('api/ecocash/agent_line/add/{id}', [EcocashAgentLineController::class, "update_ecocash_agent_line"])->name("api_update_ecocash_agent_line");
 Route::get('api/ecocash/agent_line', [EcocashAgentLineController::class, "list_ecocash_agent_line"])->name("api_get_ecocash_agent_line");
 Route::delete('api/ecocash/agent_line/{id}', [EcocashAgentLineController::class, "delete_ecocash_agent_line"])->name("api_delete_ecocash_agent_line");
 Route::get('ecocssh/agent/line/edit/{id}', [EcocashAgentLineController::class, 'ecocash_line_edit'])->name('api_ecocash_line_edit');
 Route::get('ecocssh/agent/line/view/{id}', [EcocashAgentLineController::class, 'ecocash_line_view'])->name('api_ecocash_line_view');
-
-
-
-
 
 Route::post('api/vehicle/class/new', [VehicleClassController::class, "create_vehicle_class"])->name("api_create_vehicle_class");
 Route::get('api/vehicle/class', [VehicleClassController::class, "list_vehicle_class"])->name("api_get_vehicle_class");
@@ -289,7 +288,7 @@ Route::get('dstv/transaction/view/{id}', [DSTVTransactionController::class, 'dst
 
 
 Route::post('api/dstv/payment/add', [DSTVPaymentController::class, "create_dstv_payment"])->name("api_create_dstv_payment");
-Route::get('api/dstv/payment/{transaction_id}', [DSTVPaymentController::class, "list_dstv_payments"])->name("api_list_dstv_payments_by_transaction_id"); 
+Route::get('api/dstv/payment/{transaction_id}', [DSTVPaymentController::class, "list_dstv_payments"])->name("api_list_dstv_payments_by_transaction_id");
 Route::delete('api/dstv/payment/{id}', [DSTVPaymentController::class, "delete_dstv_payment"])->name("api_delete_dstv_payment");
 
 Route::post('api/insurance/payment/add', [InsurancePaymentController::class, "create_insurance_payment"])->name("api_create_insurance_payment");
@@ -337,8 +336,6 @@ Route::get('api/notes/get/{date}', [NotesController::class, "list_notes"])->name
 Route::get('api/notes/edit/{id}', [NotesController::class, 'notes_edit'])->name('api_notes_edit');
 Route::post('api/notes/add/{id}', [NotesController::class, "update_notes"])->name("api_update_notes");
 Route::delete('api/notes/{id}', [NotesController::class, "delete_user"])->name("api_delete_notes");
-
-
 
 Route::post('api/user/add', [UsersController::class, "create_user"])->name("api_create_user");
 Route::post('add', [UsersController::class, "create_user"])->name("api_create_user");
