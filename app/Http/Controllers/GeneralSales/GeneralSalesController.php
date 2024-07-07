@@ -4,16 +4,99 @@ namespace App\Http\Controllers\GeneralSales;
 
 use App\Http\Controllers\Controller;
 use App\Models\Currency;
+use App\Models\DSTVPayment;
 use App\Models\Ecocash\Ecocash;
 use App\Models\Ecocash\EcocashAgentLine;
 use App\Models\Ecocash\EcocashTransactionType;
 use App\Models\GeneralSales\GeneralSale;
 use App\Models\GeneralSales\GeneralSaleTransactionType;
+use App\Models\SalesTransactionType;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use NumberFormatter;
 
 class GeneralSalesController extends Controller
 {
+
+    public function viewTransaction(GeneralSale $transaction, $del = 0)
+    {
+        return view('general_sales.transaction.view', compact('transaction', 'del'));
+    }
+
+    public function viewTransactions()
+    {
+        $transactions = GeneralSale::all();
+        $transactionTypes = SalesTransactionType::all();
+        $totals = [];
+        $groups = $transactions->groupBy('transaction_type');
+        foreach ($groups as $key => $groupTransactions) {
+            foreach ($groupTransactions as $groupTransaction) {
+                if (!$groupTransaction->amount) {
+                    $groupTransaction->amount = 0;
+                    $groupTransaction->save();
+                }
+                if (array_key_exists($key, $totals)) {
+                    $totals[$key] += $groupTransaction->amount;
+                } else {
+                    $totals[$key] = $groupTransaction->amount ?? 0;
+                }
+            }
+        }
+
+        return view('general_sales.transaction.list', compact('transactions', 'transactionTypes', 'totals'));
+    }
+
+    public function createTransaction()
+    {
+        $transactionTypes = SalesTransactionType::all();
+        $currencies = Currency::all();
+        return view('general_sales.transaction.create', compact('transactionTypes', 'currencies'));
+    }
+
+    public function storeTransaction(Request $request)
+    {
+
+        try {
+            $validated = $request->validate([
+                'name' => ['required', 'string'],
+                'phone' => ['required', 'string'],
+                'currency' => ['required', 'numeric', Rule::exists('currency', 'id')],
+                'transaction_type' => ['required', 'string', Rule::exists('sales_transaction_types', 'sale_transaction_type_id')],
+                'amount' => ['required', 'string'],
+                'notes' => ['nullable', 'string'],
+                'transaction_date' => 'required'
+            ]);
+
+            $validated['created_by'] = auth()->user()->id;
+
+            GeneralSale::create($validated);
+
+            return redirect()->route('general-sales')->with('success', 'Transaction created successfully');
+        } catch (Exception $e) {
+            return back()->with('error', 'Failed. Please try again');
+        }
+    }
+
+    public function editTransaction()
+    {
+        $transactionTypes = SalesTransactionType::all();
+        $currencies = Currency::all();
+        $transaction = GeneralSale::findOrFail(request()->saleId);
+        return view('general_sales.transaction.edit', compact('transactionTypes', 'currencies', 'transaction'));
+    }
+
+    public function deleteTransaction()
+    {
+        try {
+            GeneralSale::findOrFail(request()->saleId)->delete();
+
+            return redirect()->route('general-sales')->with('success', 'Transaction deleted successfully');
+        } catch (Exception) {
+            return back()->with('error', 'Failed. Please try again');
+        }
+    }
+
     public function view(Request $request){
 
         $general_sales = Ecocash::all();

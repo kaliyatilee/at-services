@@ -28,7 +28,7 @@ class PermanentDisc extends Model
       'phone',
 	  'transaction_date'
     ];
-    
+
 
     public function currency()
     {
@@ -41,11 +41,11 @@ class PermanentDisc extends Model
                 return $currency;
             }
         }
-    
+
         // If currency_id is zero or null, or if Currency object is not found, return a new instance of Currency
         return new Currency();
     }
-    
+
 
 
     public function createdBy(){
@@ -55,5 +55,10 @@ class PermanentDisc extends Model
         }
 
         return $user;
+    }
+
+    public function curr()
+    {
+        return $this->belongsTo(Currency::class, 'currency');
     }
 }

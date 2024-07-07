@@ -9,18 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class RTGs extends Model
 {
     use HasFactory;
-    protected $fillable = [
-      'transaction_type',
-      'description',
-      'amount',
-      'expected_amount',
-      'rate',
-      'name',
-      'phone',
-      'notes',
-      'created_by',
-	  'transaction_date'
-    ];
+    protected $guarded = [];
 
     protected $casts = [
         'created_at' => 'date:Y-m-d H:i:s',

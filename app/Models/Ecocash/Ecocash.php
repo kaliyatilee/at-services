@@ -2,7 +2,7 @@
 
 namespace App\Models\Ecocash;
 
-use App\Models\Currency; 
+use App\Models\Currency;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -46,6 +46,10 @@ class Ecocash extends Model
         }
 
         return $currency;
+    }
+
+    public function curr(){
+        return $this->belongsTo(Currency::class, 'currency');
     }
 
     public function transactionType(){

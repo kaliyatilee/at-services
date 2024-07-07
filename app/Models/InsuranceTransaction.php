@@ -16,23 +16,7 @@ class InsuranceTransaction extends Model
         'expiry_date' => 'date:Y-m-d H:i:s',
     ];
 
-    protected $fillable =
-        [
-            'created_by',
-            'class',
-            'reg_no',
-            'expiry_date',
-            'notes',
-            'amount_paid',
-            'name',
-            'vehicle_type',
-            'phone',
-            'rate',
-            'currency_id',
-            'expected_amount',
-            'insurance_broker',
-			'transaction_date'
-        ];
+    protected $guarded = [];
 
     public function createdBy(){
         $user = User::find($this->created_by);

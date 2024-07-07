@@ -1,0 +1,28 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+class SalesTransactionType extends Model
+{
+    use HasFactory, SoftDeletes;
+
+    /**
+        Using fillable is good when you have 2–10 fields, but what if you have 20–50 fields in your model? I have experienced creating a table
+        with 18 fields to be exact, and none of those fields are needed to be protected. Trust me, it’s quite of a work. “I’m not
+        saying that it’s not good” using fillable in this situation, you may, but if you want an easier way to secure it from
+        mass-assignment, then guarded will be more preferable.
+    */
+    protected $guarded = [
+	];
+
+    protected $hidden = [
+	];
+
+    protected $casts = [
+	];
+
+}

@@ -37,4 +37,9 @@ class Egg extends Model
 
         return $user;
     }
+
+    public function curr()
+    {
+        return $this->belongsTo(Currency::class, 'currency');
+    }
 }

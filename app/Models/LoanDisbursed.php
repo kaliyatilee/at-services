@@ -16,18 +16,7 @@ class LoanDisbursed extends Model
         'repayment_date' => 'date:Y-m-d H:i:s',
     ];
 
-    protected $fillable = [
-        'name',
-        'phone',
-        'amount',
-        'rate_per_week',
-        'repayment_date',
-        'collateral',
-        'created_by',
-        'notes',
-        'currency_id',
-		'transaction_date'
-    ];
+    protected $guarded = [];
 
     public function getUser(){
         $user = Client::query()->where("id_number",$this->user_id)->first();
