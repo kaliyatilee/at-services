@@ -12,6 +12,15 @@
             </div>
             <div class="card card-body mx-3 mx-md-4 mt-n6">
                 <div class="card card-plain h-100">
+                    @if (Session::has('error'))
+                        <div class="alert alert-danger alert-dismissible text-white" role="alert">
+                            <span class="text-sm">{{ Session::get('error') }}</span>
+                            <button type="button" class="btn-close text-lg py-3 opacity-10"
+                                    data-bs-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    @endif
                     <div class="card-body p-3">
                         <form method='POST' action='{{ route('store-general-sale') }}'>
                             @csrf
