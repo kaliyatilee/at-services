@@ -32,6 +32,7 @@ class DSTVPaymentController extends Controller
 
         $data['created_by'] = auth()->user()->id;
 
+
         $dstvTransaction = DSTVTransaction::findOrFail($data['dstv_transaction_id']);
 
         $data['amount_before'] = $dstvTransaction->balance;

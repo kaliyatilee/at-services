@@ -20,6 +20,11 @@ class LoanPayment extends Model
         'amount',
         'amount_before',
         'amount_after',
-        'created_by'
+        'created_by',
+        'installment_payment_date',
+        'installment_amount_paid',
+        'currency_rate',
+        'expense',
+        'expense_amount'
     ];
 }

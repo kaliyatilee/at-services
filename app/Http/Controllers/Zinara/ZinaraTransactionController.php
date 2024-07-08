@@ -8,6 +8,7 @@ use App\Models\InsuranceTransaction;
 use App\Models\VehicleClass;
 use App\Models\Zinara\ZinaraTransaction;
 use Illuminate\Http\Request;
+use Modules\Messaging\Http\Controllers\DigitalReceiptsMessagingController;
 
 class ZinaraTransactionController extends Controller
 {
@@ -61,9 +62,17 @@ class ZinaraTransactionController extends Controller
         $insurancePayment = new ZinaraTransaction();
         $insurancePayment->create($data);
 
+
+        $message = 'Zinara transaction for vehicle reg number ' . $data['reg_no'];
+        // digital receipt msg
+        $digitalReceiptController = new DigitalReceiptsMessagingController();
+        $sms = $digitalReceiptController->sendDigitalReceipt($data['phone'], $data['amount'], $message);
+
+
         return response()->json([
             'message' => "Saved successfully",
-            'success' => true
+            'success' => true,
+            'sms'     => $sms
         ]);
     }
 
@@ -93,9 +102,16 @@ class ZinaraTransactionController extends Controller
         $insurancePayment = ZinaraTransaction::findOrFail($id);
         $insurancePayment->update($data);
 
+        $message = 'Zinara transaction for vehicle reg number ' . $data['reg_no'];
+        // digital receipt msg
+        $digitalReceiptController = new DigitalReceiptsMessagingController();
+        $sms = $digitalReceiptController->sendDigitalReceipt($data['phone'], $data['amount'], $message);
+
+
         return response()->json([
             'message' => "Updated successfully",
-            'success' => true
+            'success' => true,
+            'sms'     => $sms
         ]);
     }
 

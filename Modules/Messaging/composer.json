@@ -1,0 +1,23 @@
+{
+    "name": "vendor/messaging",
+    "description": "",
+    "authors": [
+        {
+            "name": "",
+            "email": ""
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\Messaging\\Providers\\MessagingServiceProvider"
+            ],
+            "aliases": {}
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Messaging\\": ""
+        }
+    }
+}

@@ -23,6 +23,7 @@ class LoanDisbursed extends Model
         'rate_per_week',
         'repayment_date',
         'collateral',
+        'expense_amount',
         'created_by',
         'notes',
         'currency_id',

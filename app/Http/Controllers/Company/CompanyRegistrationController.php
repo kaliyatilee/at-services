@@ -11,6 +11,7 @@ use App\Models\Currency;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Modules\Messaging\Http\Controllers\DigitalReceiptsMessagingController;
 
 class CompanyRegistrationController extends Controller
 {
@@ -57,18 +58,18 @@ class CompanyRegistrationController extends Controller
     public function create_company_registration(Request $request)
     {
         $validator = validator()->make($request->all(), [
-            "name" => "nullable|string|min:1",
-            "phone" => "nullable|string|min:1",
-            "charge" => "required|numeric|min:1",
-            "currency_id" => "required|numeric|min:1",
-            "amount_paid" => "required|numeric|min:1",
-            "notes" => "nullable|string",
-            "created_by" => "nullable|numeric",
-			"expenses" => "required|numeric",
-			"supplier" => "nullable|numeric",
-			"commission" => "required|numeric",
+            "name"         => "nullable|string|min:1",
+            "phone"        => "nullable|string|min:1",
+            "charge"       => "required|numeric|min:1",
+            "currency_id"  => "required|numeric|min:1",
+            "amount_paid"  => "required|numeric|min:1",
+            "notes"        => "nullable|string",
+            "created_by"   => "nullable|numeric",
+			"expenses"     => "required|numeric",
+			"supplier"     => "nullable|numeric",
+			"commission"   => "required|numeric",
 			"transaction_date" => "nullable|date",
-			"charge" => "nullable|numeric",
+			"charge"           => "nullable|numeric",
         ]);
 
         if ($validator->fails()) {
@@ -80,14 +81,20 @@ class CompanyRegistrationController extends Controller
 
         $data = $validator->validated();
         $data['created_by'] = auth()->user()->id;
-      
 
         $companyRegistration = new CompanyRegistration();
         $companyRegistration->create($data);
 
+        $message = 'company registration';
+        // digital receipt msg
+        $digitalReceiptController = new DigitalReceiptsMessagingController();
+        $sms = $digitalReceiptController->sendDigitalReceipt($data['phone'], $data['amount_paid'], $message);
+
+
         return response()->json([
             'message' => "Saved successfully",
-            'success' => true
+            'success' => true,
+            'sms'       => $sms
         ]);
     }
 
@@ -111,9 +118,16 @@ class CompanyRegistrationController extends Controller
         $companyRegistration = CompanyRegistration::findOrFail($id);
         $companyRegistration->update($data);
 
+        $message = 'company registration';
+        // digital receipt msg
+        $digitalReceiptController = new DigitalReceiptsMessagingController();
+        $sms = $digitalReceiptController->sendDigitalReceipt($data['phone'], $data['amount_paid'], $message);
+
+
         return response()->json([
             'message' => "Updated successfully",
-            'success' => true
+            'success' => true,
+            'sms'     => $sms
         ]);
     }
 

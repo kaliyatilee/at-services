@@ -7,8 +7,10 @@ use App\Models\Client;
 use App\Models\Currency;
 use App\Models\InsuranceBroker;
 use App\Models\LoanDisbursed;
+use App\Models\LoanPayment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Modules\Messaging\Http\Controllers\DigitalReceiptsMessagingController;
 
 class LoanDisbursedController extends Controller
 {
@@ -34,11 +36,19 @@ class LoanDisbursedController extends Controller
 
         return view('loan.add', $data);
     }
-	public function loan_disbursed_edit($id){
-        $loans = LoanDisbursed::findOrFail($id);
-        $data['loan'] = $loans;
-        $data['currencies'] = Currency::all();
-        return view('loan.edit', $data);
+
+
+    public function loan_disbursed_edit($id){
+        $loan = LoanDisbursed::findOrFail($id);
+        $payments = LoanPayment::where('loan_id',$id)->get();
+        $currencies = Currency::all();
+        $installments = LoanPayment::where('loan_id', $id)->sum('installment_amount_paid');
+        $total_expenses = LoanPayment::where('loan_id', $id)->sum('expense_amount');
+
+        $commission = $installments - $loan->amount - $total_expenses;
+        $commission_usd = $commission;
+
+        return view('loan.edit', compact('loan', 'installments', 'total_expenses', 'currencies', 'payments', 'commission', 'commission_usd'));
 
 	}
 
@@ -60,6 +70,7 @@ class LoanDisbursedController extends Controller
             "currency_id" => "nullable|numeric|min:1",
             "rate_per_week" => "required|numeric|min:1",
             "repayment_date" => "required|date",
+            "expense_amount"   => "required|numeric",
             "collateral" => "nullable|string",
             "notes" => "nullable|string",
             "created_by" => "numeric",
@@ -67,7 +78,7 @@ class LoanDisbursedController extends Controller
 			"transaction_date" => "nullable|date"
         ]);
 
-// Check if validation fails
+        // Check if validation fails
         if ($validator->fails()) {
             // Return validation errors as JSON response
             return response()->json([
@@ -81,7 +92,9 @@ class LoanDisbursedController extends Controller
 		$data['currency_id']=intval(isset($data['currency_id']));
 		$data['amount']= doubleval(isset($data['amount'])) ? $data['amount'] : 0;
 		$data['rate_per_week']= doubleval(isset($data['rate_per_week'])) ? $data['rate_per_week'] : 0;
-	
+
+        $currency = Currency::findOrFail($request->currency_id);
+
         // if ($request->hasFile("collateral")) {
         //     $collateralFile = $request->file('collateral');
         //     $path = $collateralFile->store('/collateral/');
@@ -91,9 +104,24 @@ class LoanDisbursedController extends Controller
         $loanDisbursed = new LoanDisbursed();
         $loanDisbursed->create($data);
 
+        $message = sprintf(
+            'Loan of %s%s has been disbursed to %s with Account Number %s. Loan payable %s at Rate-Per-Week of %s.',
+            $currency->name,
+            $request->amount,
+            $request->name,
+            $request->phone,
+            $request->repayment_date,
+            $request->rate_per_week,
+        );
+        // digital receipt msg
+        $digitalReceiptController = new DigitalReceiptsMessagingController();
+        $sms = $digitalReceiptController->sendDigitalReceipt($data['phone'], $data['amount'], $message);
+
+
         return response()->json([
             'message' => "Saved successfully",
-            'success' => true
+            'success' => true,
+            'sms'      => $sms
         ]);
     }
 
@@ -114,12 +142,27 @@ class LoanDisbursedController extends Controller
         ]);
 
         $loanDisbursed = LoanDisbursed::findOrFail($id);
+        $currency = Currency::findOrFail($request->currency_id);
 		$data['currency_id']=intval(isset($data['currency_id']));
         $loanDisbursed->update($data);
 
+        $message = sprintf(
+            'Loan update of %s%s has been processed for %s with Account Number %s. Loan payable %s at Rate-Per-Week of %s.',
+            $currency->name,
+            $request->amount,
+            $request->name,
+            $request->phone,
+            $request->repayment_date,
+            $request->rate_per_week,
+        );
+        // digital receipt msg
+        $digitalReceiptController = new DigitalReceiptsMessagingController();
+        $sms = $digitalReceiptController->sendDigitalReceipt($data['phone'], $data['amount'], $message);
+
         return response()->json([
             'message' => "Updated successfully",
-            'success' => true
+            'success' => true,
+            'sms'     => $sms
         ]);
     }
 

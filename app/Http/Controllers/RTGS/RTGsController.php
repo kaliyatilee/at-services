@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use function auth;
 use function response;
 use function view;
+use Modules\Messaging\Http\Controllers\DigitalReceiptsMessagingController;
 
 class RTGsController extends Controller
 {
@@ -42,7 +43,7 @@ class RTGsController extends Controller
 	public function edit_rtgs($id){
             $rtgs = RTGs::findOrFail($id);
             $data['rtgs'] = $rtgs;
-       
+
         $transaction_types = [
             "1" => "Amount In",
             "2" => "Amount Out",
@@ -58,7 +59,7 @@ class RTGsController extends Controller
 	{
 		$rtgs = RTGs::findOrFail($id);
 		$data['rtgs'] = $rtgs;
-   
+
 	$transaction_types = [
 		"1" => "Amount In",
 		"2" => "Amount Out",
@@ -94,7 +95,7 @@ class RTGsController extends Controller
             ], 422);
         }
 
-        $data = $validator->validated(); 
+        $data = $validator->validated();
 		$data['created_by'] = auth()->user()->id;
 		$data['expected_amount']= doubleval(isset($data['expected_amount'])) ? $data['expected_amount'] : 0;
         $rtgs = new RTGs();

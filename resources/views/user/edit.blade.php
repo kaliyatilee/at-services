@@ -24,14 +24,34 @@
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Phone 1</label>
-                                    <input type="number" name="phone1" class="form-control border border-2 p-2"
-                                           value='{{ $user->phone1 }}'>
+                                    <input
+                                        class="form-control border border-2 p-2"
+                                        type="tel"
+                                        pattern="2637[0-9]{8}"
+                                        title="Must start with 2637 and follow format: 2637*********"
+                                        placeholder="Format: 2637*********"
+                                        name="phone1"
+                                        value="{{ $user->phone1 }}"
+                                        oninput="this.setCustomValidity('')"
+                                        oninvalid="this.setCustomValidity('Invalid phone number. Must start with 2637 and follow format: 2637*********')"
+                                    />
+                                    <div id="phone_success_error_message" class="text-danger text-xs"></div>
                                 </div>
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Phone 2 (Optional)</label>
-                                    <input type="number" name="phone2" class="form-control border border-2 p-2"
-                                           value='{{ $user->phone2 }}'>
+                                    <input
+                                        class="form-control border border-2 p-2"
+                                        type="tel"
+                                        pattern="2637[0-9]{8}"
+                                        title="Must start with 2637 and follow format: 2637*********"
+                                        placeholder="Format: 2637*********"
+                                        name="phone2"
+                                        value="{{ $user->phone2 }}"
+                                        oninput="this.setCustomValidity('')"
+                                        oninvalid="this.setCustomValidity('Invalid phone number. Must start with 2637 and follow format: 2637*********')"
+                                    />
+                                    <div id="phone_success_error_message" class="text-danger text-xs"></div>
                                 </div>
 
                                 <div class="mb-3 col-md-6">
