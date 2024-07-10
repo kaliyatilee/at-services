@@ -9,24 +9,6 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card my-4">
-                        @if (Session::has('success'))
-                            <div class="alert alert-success alert-dismissible text-white" role="alert">
-                                <span class="text-sm">{{ Session::get('success') }}</span>
-                                <button type="button" class="btn-close text-lg py-3 opacity-10"
-                                        data-bs-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                        @endif
-                        @if (Session::has('error'))
-                            <div class="alert alert-danger alert-dismissible text-white" role="alert">
-                                <span class="text-sm">{{ Session::get('error') }}</span>
-                                <button type="button" class="btn-close text-lg py-3 opacity-10"
-                                        data-bs-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                        @endif
                         <div class="me-3 my-3" style="display: flex; justify-content: space-between">
                             <div style="margin-left: 20px">
                                 @foreach($transactionTypes as $transactionType)
