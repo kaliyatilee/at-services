@@ -104,11 +104,11 @@ class InsuranceTransactionController extends Controller
     $data['amount_remitted_zig'] = $data['amount_remitted_zig'] ?? 0;
     $data['amount_received_usd'] = $data['amount_received_usd'] ?? 0;
 
-		$data = $validator->validated();
-		$data['created_by'] = auth()->user()->id;
+    $data = $validator->validated();
+    $data['created_by'] = auth()->user()->id;
 
-        $brokerName = InsuranceBroker::find($request->insurance_broker)->name;
-        $currencyName = Currency::find($request->currency_id)->name;
+    $brokerName = InsuranceBroker::find($request->insurance_broker)->name;
+    $currencyName = Currency::find($request->currency_id)->name;
 
 
     $amount_paid = $data['amount_received_usd'] ?? 0;
@@ -116,23 +116,23 @@ class InsuranceTransactionController extends Controller
     $insurancePayment = new InsuranceTransaction();
     $insurancePayment->create($data);
 
-        $message = sprintf(
-            'Insurance transaction of %s%s with %s for Vehicle Reg No. %s, expiring %s has been successful.',
-            $currencyName,
-            $request->amount_paid,
-            $brokerName,
-            $request->reg_no,
-            $request->expiry_date,
-        );
-        // digital receipt msg
-        $digitalReceiptController = new DigitalReceiptsMessagingController();
-        $sms = $digitalReceiptController->sendDigitalReceipt($data['phone'], $data['amount_paid'], $message);
+    $message = sprintf(
+        'Insurance transaction of %s%s with %s for Vehicle Reg No. %s, expiring %s has been successful.',
+        $currencyName,
+        $request->amount_paid,
+        $brokerName,
+        $request->reg_no,
+        $request->expiry_date,
+    );
+    // digital receipt msg
+    $digitalReceiptController = new DigitalReceiptsMessagingController();
+    $sms = $digitalReceiptController->sendDigitalReceipt($data['phone'], $data['amount_received_usd'], $message);
 
-        return response()->json([
-            'message' => "Saved successfully",
-            'success' => true,
-            'sms'     => $sms
-        ]);
+    return response()->json([
+        'message' => "Saved successfully",
+        'success' => true,
+        'sms'     => $sms
+    ]);
     }
 
     

@@ -99,7 +99,7 @@
                                 </div>
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Expected Amount (USD)</label>
-                                    <input type="text" name="expected_amount" id="expected_amount_usd" class="form-control border border-2 p-2"
+                                    <input type="text" name="expected_amount_usd" id="expected_amount_usd" class="form-control border border-2 p-2"
                                            value='{{ $insurance_transaction->expected_amount }}'>
                                 </div>
                                 <div class="mb-3 col-md-6">
