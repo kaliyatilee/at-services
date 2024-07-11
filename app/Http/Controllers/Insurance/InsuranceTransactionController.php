@@ -111,14 +111,11 @@ class InsuranceTransactionController extends Controller
         $currencyName = Currency::find($request->currency_id)->name;
 
 
+    $amount_paid = $data['amount_received_usd'] ?? 0;
+
     $insurancePayment = new InsuranceTransaction();
     $insurancePayment->create($data);
 
-    return response()->json([
-        'message' => "Saved successfully",
-        'success' => true
-    ]);
-}
         $message = sprintf(
             'Insurance transaction of %s%s with %s for Vehicle Reg No. %s, expiring %s has been successful.',
             $currencyName,
