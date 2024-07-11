@@ -7,4 +7,5 @@ mariadb -udeveloper -pdeveloppass 'muzanya_atservices' -e "ALTER TABLE rtgs ADD 
 mariadb -udeveloper -pdeveloppass 'muzanya_atservices' -e "ALTER TABLE permanent_disc ADD COLUMN IF NOT EXISTS transaction_date DATETIME DEFAULT CURRENT_TIMESTAMP;"
 mariadb -udeveloper -pdeveloppass 'muzanya_atservices' -e "ALTER TABLE eggs ADD COLUMN IF NOT EXISTS transaction_date DATETIME DEFAULT CURRENT_TIMESTAMP;"
 mariadb -udeveloper -pdeveloppass 'muzanya_atservices' -e "ALTER TABLE ecocash ADD COLUMN IF NOT EXISTS transaction_date DATETIME DEFAULT CURRENT_TIMESTAMP;"
+mariadb -udeveloper -pdeveloppass 'muzanya_atservices' -e "ALTER TABLE insurance_transaction ADD COLUMN IF NOT EXISTS received_date DATETIME DEFAULT CURRENT_TIMESTAMP;"
 

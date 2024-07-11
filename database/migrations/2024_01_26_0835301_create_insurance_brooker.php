@@ -19,6 +19,12 @@ return new class extends Migration
             $table->integer("created_by");
             $table->float("commission");
             $table->text("notes");
+            $table->json('remittance')->nullable();
+            $table->json('date_of_remittance')->nullable();
+            $table->json('method_of_remittance')->nullable();
+            $table->json('amount_remitted')->nullable();
+            $table->json('account_balance')->nullable();
+            $table->float("total_remittance");
             $table->timestamps();
         });
     }

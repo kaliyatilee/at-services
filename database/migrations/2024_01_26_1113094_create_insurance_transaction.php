@@ -15,16 +15,26 @@ return new class extends Migration
     {
         Schema::create('insurance_transaction', function (Blueprint $table) {
             $table->id();
+            $table->text("name")->nullable();
+            $table->text("phone")->nullable();
+            $table->text("vehicle_type")->nullable();
             $table->integer("created_by");
+            $table->integer("currency_id");
             $table->integer("class");
             $table->integer("insurance_broker");
             $table->string("reg_no");
-            $table->string("user_id",20);
             $table->date("expiry_date");
             $table->date("payment_date")->nullable();
-            $table->float("amount");
-            $table->float("balance");
+            $table->date("received_date")->nullable();
+            $table->float("expected_amount_zig");
+            $table->float("commission_amount");
+            $table->float("amount_remitted_usd");
+            $table->float("amount_remitted_zig");
+            $table->float("commission_percentage");
+            $table->float("amount_received_usd");
+            $table->float("amount_received_zig");
             $table->text("notes")->nullable();
+            $table->text("rate")->nullable();
             $table->timestamps();
         });
     }
