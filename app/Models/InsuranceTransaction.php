@@ -23,7 +23,6 @@ class InsuranceTransaction extends Model
             'reg_no',
             'expiry_date',
             'notes',
-            'amount_paid',
             'name',
             'vehicle_type',
             'phone',
@@ -31,7 +30,15 @@ class InsuranceTransaction extends Model
             'currency_id',
             'expected_amount',
             'insurance_broker',
-			'transaction_date'
+			'transaction_date',
+            'expected_amount_zig',
+            'received_date',
+            'commission_amount',
+            'amount_received_zig',
+            'amount_received_usd',
+            'amount_remitted_usd',
+            'amount_remitted_zig',
+            'commission_percentage'
         ];
 
     public function createdBy(){
@@ -68,6 +75,17 @@ class InsuranceTransaction extends Model
         }
 
         return $insurance_broker;
+    }
+
+    public function getCommissionPercentage()
+    {
+        $insuranceBroker = $this->getInsuranceBroker()->first();
+
+        if ($insuranceBroker) {
+            return $insuranceBroker->commission;
+        }
+
+        return 0; 
     }
 
     public function getAmountPaid(){

@@ -75,9 +75,19 @@
                                            value='{{ old('expiry_date') }}'>
                                 </div>
                                 <div class="mb-3 col-md-6">
+                                    <label class="form-label">Received Date</label>
+                                    <input type="date" required="true" name="received_date" class="form-control border border-2 p-2"
+                                           value='{{ isset($insurance_transaction->received_date) ? \Carbon\Carbon::parse($insurance_transaction->received_date)->format("Y-m-d") : "" }}'>
+                                </div>
+                                <div class="mb-3 col-md-6">
                                     <label class="form-label">Exchange Rate</label>
-                                    <input type="text" name="rate" class="form-control border border-2 p-2"
+                                    <input type="text" id="rate" name="rate" class="form-control border border-2 p-2"
                                            value='{{ old('rate') }}'>
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Expected Amount (ZIG)</label>
+                                    <input type="text" name="expected_amount_zig" id="expected_amount_zig" class="form-control border border-2 p-2"
+                                           value='{{ $insurance_transaction->expected_amount_zig }}'>
                                 </div>
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Currency</label>
@@ -88,15 +98,34 @@
                                     </select>
                                 </div>
                                 <div class="mb-3 col-md-6">
-                                    <label class="form-label">Expected Amount</label>
-                                    <input type="text" name="expected_amount" class="form-control border border-2 p-2"
-                                           value='{{ old('expected_amount') }}'>
+                                    <label class="form-label">Expected Amount (USD)</label>
+                                    <input type="text" name="expected_amount" id="expected_amount_usd" class="form-control border border-2 p-2"
+                                           value='{{ $insurance_transaction->expected_amount }}'>
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Amount Received (ZIG)</label>
+                                    <input type="text" name="amount_received_zig" id="amount_received_zig" class="form-control border border-2 p-2"
+                                           value='{{ $insurance_transaction->amount_received_zig }}'>
                                 </div>
 
+                              
                                 <div class="mb-3 col-md-6">
-                                    <label class="form-label">Amount in USD</label>
-                                    <input type="text" name="amount_paid" class="form-control border border-2 p-2"
-                                           value='{{ old('amount_paid') }}'>
+                                    <label class="form-label">Amount Received (USD)</label>
+                                    <input type="text" name="amount_received_usd" id="amount_received_usd" class="form-control border border-2 p-2"
+                                           value='{{ $insurance_transaction->amount_received_usd }}'>
+                                </div>
+                               
+                                
+                               
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Amount to be Remitted (ZIG)</label>
+                                    <input type="text" name="amount_remitted_zig" id="amount_remitted_zig" class="form-control border border-2 p-2"
+                                           value='{{ $insurance_transaction->amount_remitted_zig }}'>
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Commission (%)</label>
+                                    <input type="text" name="commission_percentage" id="commission_percentage" class="form-control border border-2 p-2"
+                                           value='{{ $insurance_broker->commission }}'>
                                 </div>
 								<div class="mb-3 col-md-6">
 									<label class="form-label">Transaction Date</label>
@@ -108,6 +137,16 @@
                                     <label class="form-label">Notes</label>
                                     <input type="text" name="notes" class="form-control border border-2 p-2"
                                            value='{{ old('notes') }}'>
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Commission Amount</label>
+                                    <input type="text" name="commission_amount" id="commission_amount" class="form-control border border-2 p-2"
+                                           value='{{ $insurance_transaction->commission_amount }}'>
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Amount to be Remitted (USD)</label>
+                                    <input type="text" name="amount_remitted_usd" id="amount_remitted_usd" class="form-control border border-2 p-2"
+                                           value='{{ $insurance_transaction->amount_remitted_usd }}'>
                                 </div>
                             </div>
                             <button type="submit" class="btn bg-gradient-dark">Submit</button>
@@ -121,6 +160,129 @@
     <x-plugins></x-plugins>
 
 </x-layout>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        function calculateCommissionAmount() {
+                var expectedAmountZig = parseFloat(document.getElementById('expected_amount_zig').value) || 0;
+                var expectedAmountUSD = parseFloat(document.getElementById('expected_amount_usd').value) || 0;
+                var amountReceivedZig = parseFloat(document.getElementById('amount_received_zig').value) || 0;
+                var amountReceivedUSD = parseFloat(document.getElementById('amount_received_usd').value) || 0;
+                var commissionPercentage = parseFloat(document.getElementById('commission_percentage').value) || 0;
+                var rate = parseFloat(document.getElementById('rate').value) || 1;
+
+                // console.log("expectedAmountZig:", expectedAmountZig);
+                // console.log("amountReceivedZig:", amountReceivedZig);
+                // console.log("commissionPercentage:", commissionPercentage);
+                // console.log("rate:", rate);
+
+            if (expectedAmountZig > 0 && amountReceivedZig > 0) {
+                    document.getElementById('amount_remitted_usd').value = 0;
+                    var commissionAmount = (amountReceivedZig - (expectedAmountZig * (commissionPercentage / 100))) / rate;
+                    var remittedAmountUSD = (expectedAmountUSD * (commissionPercentage / 100));
+                    var remittedAmountZig = (expectedAmountZig * (commissionPercentage / 100));
+                    document.getElementById('amount_remitted_zig').value = remittedAmountZig.toFixed(2);
+                    document.getElementById('amount_remitted_usd').value = remittedAmountUSD.toFixed(2);
+                    document.getElementById('commission_amount').value = commissionAmount.toFixed(2);
+
+            } 
+            else if (expectedAmountZig > 0 && amountReceivedUSD > 0) {
+             
+                    amountReceivedZig = amountReceivedUSD * rate
+    
+                    var commissionAmount = (amountReceivedZig - (expectedAmountZig * (commissionPercentage / 100))) / rate;
+                    var remittedAmountUSD = (expectedAmountUSD * (commissionPercentage / 100));
+                    var remittedAmountZig = (expectedAmountZig * (commissionPercentage / 100));
+                    document.getElementById('amount_remitted_zig').value = remittedAmountZig.toFixed(2);
+                    document.getElementById('amount_remitted_usd').value = remittedAmountUSD.toFixed(2);
+                    document.getElementById('commission_amount').value = commissionAmount.toFixed(2);
+            }
+
+            else if (expectedAmountUSD > 0 && amountReceivedUSD > 0) {
+               
+                    var commissionAmount = (amountReceivedUSD - (expectedAmountUSD * (commissionPercentage / 100)));
+                    var remittedAmountUSD = (expectedAmountUSD * (commissionPercentage / 100));
+                    var remittedAmountZig = (expectedAmountZig * (commissionPercentage / 100));
+                    document.getElementById('amount_remitted_zig').value = remittedAmountZig.toFixed(2);
+                    document.getElementById('amount_remitted_usd').value = remittedAmountUSD.toFixed(2);
+                    document.getElementById('commission_amount').value = commissionAmount.toFixed(2);
+            }
+
+            else if (expectedAmountUSD > 0 && amountReceivedZig > 0) {
+               
+                    amountReceivedUSD = amountReceivedZig * rate
+                    var commissionAmount = (amountReceivedUSD - (expectedAmountUSD * (commissionPercentage / 100)));
+                    var remittedAmountUSD = (expectedAmountUSD * (commissionPercentage / 100));
+                    var remittedAmountZig = (expectedAmountZig * (commissionPercentage / 100));
+                    document.getElementById('amount_remitted_zig').value = remittedAmountZig.toFixed(2);
+                    document.getElementById('amount_remitted_usd').value = remittedAmountUSD.toFixed(2);
+                    document.getElementById('commission_amount').value = commissionAmount.toFixed(2);
+            }
+            else {
+                document.getElementById('commission_amount').value = 0;
+            }
+        }
+
+        //disable or enable Zig fields when usig USD
+        function enableExpectedAmountUSD() {
+            document.getElementById('expected_amount_usd').disabled = false;
+        }
+        function disableExpectedAmountUSD() {
+            document.getElementById('expected_amount_usd').disabled = true;
+        }
+
+        function enableAmountReceivedUSD() {
+            document.getElementById('amount_received_usd').disabled = false;
+        }
+        function disableAmountReceivedUSD() {
+            document.getElementById('amount_received_usd').disabled = true;
+        }
+
+                //disable or enable USD fields when usig Zig
+                function enableExpectedAmountZig() {
+            document.getElementById('expected_amount_zig').disabled = false;
+        }
+        function disableExpectedAmountZig() {
+            document.getElementById('expected_amount_zig').disabled = true;
+        }
+
+        function enableAmountReceivedZig() {
+            document.getElementById('amount_received_zig').disabled = false;
+        }
+        function disableAmountReceivedZig() {
+            document.getElementById('amount_received_zig').disabled = true;
+        }
+        
+        //Zig
+         $('#expected_amount_usd').on('mouseenter', enableExpectedAmountUSD);
+         $('#expected_amount_zig').on('input', disableExpectedAmountUSD);
+         $('#amount_received_usd').on('mouseenter', enableAmountReceivedUSD);
+         $('#amount_received_zig').on('input', disableAmountReceivedUSD);
+
+         //USD
+         $('#expected_amount_zig').on('mouseenter', enableExpectedAmountZig);
+         $('#expected_amount_usd').on('input', disableExpectedAmountZig);
+         $('#amount_received_zig').on('mouseenter', enableAmountReceivedZig);
+         $('#amount_received_usd').on('input', disableAmountReceivedZig);
+        $('#expected_amount_zig, #expected_amount_usd, #amount_received_zig, #amount_received_usd, #commission_percentage, #rate').on('input', calculateCommissionAmount);
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+  
+    document.getElementById('expected_amount_usd').value = 0;
+    document.getElementById('expected_amount_zig').value = 0;
+    document.getElementById('amount_received_usd').value = 0;
+    document.getElementById('amount_received_zig').value = 0;
+    document.getElementById('rate').value = 0;    
+    document.getElementById('commission_amount').value = 0;
+    document.getElementById('amount_remitted_zig').value = 0;
+    document.getElementById('amount_remitted_usd').value = 0;
+    });
+</script>
 
 <script type="text/javascript">
     $(document).ready(function () {

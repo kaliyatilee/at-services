@@ -11,7 +11,7 @@
                     <div class="card my-4">
                         <div class=" me-3 my-3 text-end">
                             <a class="btn bg-gradient-dark mb-0" href="{{ route("insurance_payment_add") }}"><i
-                                    class="material-icons text-sm">add</i>&nbsp;&nbsp;Add New Insurance Transaction</a> 
+                                    class="material-icons text-sm">add</i>&nbsp;&nbsp;Add New Insurance Transaction</a>
                         </div>
                         <div class="card-body px-0 pb-2">
                             <div class="table-responsive p-0">
@@ -42,7 +42,7 @@
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Expiry Date
                                         </th>
-                                       
+
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Created By
@@ -51,7 +51,37 @@
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Transaction Date
                                         </th>
-                    
+                                        <th style="display: none;"
+                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Received Date
+                                        </th>
+                                        <th style="display: none;"
+                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Expected Amount(USD)
+                                        </th>
+                                        <th style="display: none;"
+                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Expected Amount(ZIG)
+                                        </th>
+                                        <th style="display: none;"
+                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Commission Amount
+                                        </th>
+                                  
+
+                                        <th style="display: none;"
+                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Amount Remitted(USD)
+                                        </th>
+                                        <th style="display: none;"
+                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Amount Remitted(ZIG)
+                                        </th>
+                                        <th style="display: none;"
+                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Commission(%)
+                                        </th>
+
                                         <th class="text-secondary opacity-7"></th>
                                     </tr>
                                     </thead>
@@ -71,7 +101,7 @@
                                                         <p class="mb-0 text-sm">{{ $insurance_transaction->name }} / {{ $insurance_transaction->phone }}</p>
                                                     </div>
                                                 </div>
-                                             
+
                                             </td>
                                             <td>
                                                 <div class="d-flex flex-column justify-content-center">
@@ -103,6 +133,44 @@
                                                     <p class="mb-0 text-sm">{{ $insurance_transaction->transaction_date }}</p>
                                                 </div>
                                             </td>
+                                            <td class="align-middle text-center" style="display: none;">
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <p class="mb-0 text-sm">{{ $insurance_transaction->received_date }}</p>
+                                                </div>
+                                            </td>
+                                            <td class="align-middle text-center" style="display: none;">
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <p class="mb-0 text-sm">{{ $insurance_transaction->expected_amount }}</p>
+                                                </div>
+                                            </td>
+                                            <td class="align-middle text-center" style="display: none;">
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <p class="mb-0 text-sm">{{ $insurance_transaction->expected_amount_zig }}</p>
+                                                </div>
+                                            </td>
+                                            <td class="align-middle text-center" style="display: none;">
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <p class="mb-0 text-sm">{{ $insurance_transaction->commission_amount }}</p>
+                                                </div>
+                                            </td>
+                                            
+                                        
+                                            <td class="align-middle text-center" style="display: none;">
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <p class="mb-0 text-sm">{{ $insurance_transaction->amount_remitted_usd }}</p>
+                                                </div>
+                                            </td>
+                                            <td class="align-middle text-center" style="display: none;">
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <p class="mb-0 text-sm">{{ $insurance_transaction->amount_remitted_zig }}</p>
+                                                </div>
+                                            </td>
+                                            <td class="align-middle text-center" style="display: none;">
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <p class="mb-0 text-sm">{{ $insurance_transaction->commission_percentage }}</p>
+                                                </div>
+                                            </td>
+
                                             <td class="align-middle">
                                                 <a rel="tooltip" class="btn btn-success btn-link"
 												href="{{ route("insurance_transaction_edit", $insurance_transaction->id) }}" data-original-title=""

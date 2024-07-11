@@ -63,31 +63,46 @@ class InsuranceTransactionController extends Controller
 
 
     public function create_insurance_transaction(Request $request)
+{
+    $validator = validator()->make($request->all(), [
+        "name" => ['nullable', 'string'],
+        "phone" => ['nullable', 'string'],
+        "class" => "required|numeric",
+        "insurance_broker" => "required|numeric",
+        "reg_no" => "nullable|string|min:7|max:7",
+        "vehicle_type" => "required|string",
+        "expiry_date" => "required|date",
+        "expected_amount" => "nullable|numeric",
+        "rate" => "required|numeric",
+        "currency_id" => "required|numeric",
+        "notes" => "nullable|string",
+        "created_by" => "numeric",
+        "expected_amount_zig" => "nullable|numeric",
+        "received_date" => "required|date",
+        "commission_amount" => "nullable|numeric",
+        "amount_received_usd" => "nullable|numeric",
+        "amount_received_zig" => "nullable|numeric",
+        "amount_remitted_usd" => "nullable|numeric",
+        "amount_remitted_zig" => "nullable|numeric",
+        "commission_percentage" => "nullable|numeric"
+    ]);
 
-    {
-        $validator = validator()->make($request->all(), [
-			"name" => ['nullable', 'string'],
-            "phone" => ['nullable', 'string'],
-            "class" => "required|numeric",
-            "insurance_broker" => "required|numeric",
-            "reg_no" => "nullable|string|min:7|max:7",
-            "vehicle_type" => "required|string",
-            "expiry_date" => "required|date",
-            "amount_paid" => "required|numeric",
-            "expected_amount" => "nullable|numeric",
-            "rate" => "required|numeric",
-            "currency_id" => "required|numeric",
-            "notes" => "nullable|string",
-            "created_by" => "numeric",
-        ]);
+    if ($validator->fails()) {
+        return response()->json([
+            'message' => 'The given data was invalid.',
+            'errors' => $validator->errors(),
+        ], 422);
+    }
 
-        if ($validator->fails()) {
-            return response()->json([
-                'message' => 'The given data was invalid.',
-                'errors' => $validator->errors(),
-            ], 422);
-        }
-        // Set a default value of zero for "expected_amount" if not provided
+    $data = $validator->validated();
+    $data['created_by'] = auth()->user()->id;
+
+    // Provide default values for nullable numeric fields
+    $data['expected_amount_zig'] = $data['expected_amount_zig'] ?? 0;
+    $data['amount_received_zig'] = $data['amount_received_zig'] ?? 0;
+    $data['amount_remitted_usd'] = $data['amount_remitted_usd'] ?? 0;
+    $data['amount_remitted_zig'] = $data['amount_remitted_zig'] ?? 0;
+    $data['amount_received_usd'] = $data['amount_received_usd'] ?? 0;
 
 		$data = $validator->validated();
 		$data['created_by'] = auth()->user()->id;
@@ -95,9 +110,15 @@ class InsuranceTransactionController extends Controller
         $brokerName = InsuranceBroker::find($request->insurance_broker)->name;
         $currencyName = Currency::find($request->currency_id)->name;
 
-        $insurancePayment = new InsuranceTransaction();
-        $insurancePayment->create($data);
 
+    $insurancePayment = new InsuranceTransaction();
+    $insurancePayment->create($data);
+
+    return response()->json([
+        'message' => "Saved successfully",
+        'success' => true
+    ]);
+}
         $message = sprintf(
             'Insurance transaction of %s%s with %s for Vehicle Reg No. %s, expiring %s has been successful.',
             $currencyName,
@@ -117,6 +138,7 @@ class InsuranceTransactionController extends Controller
         ]);
     }
 
+    
     public function update_insurance_transaction(Request $request, $id)
     {
         $validator = validator()->make($request->all(), [
@@ -127,11 +149,18 @@ class InsuranceTransactionController extends Controller
             "reg_no" => "nullable|string|min:7|max:7",
             "vehicle_type" => "required|string",
             "expiry_date" => "required|date",
-            "amount_paid" => "required|numeric",
             "expected_amount" => "nullable|numeric",
             "rate" => "required|numeric",
             "currency_id" => "required|numeric",
             "notes" => "nullable|string",
+            "expected_amount_zig" => "nullable|numeric",
+            "received_date" => "required|date",
+            "commission_amount" => "nullable|numeric",
+            "amount_received_usd" => "nullable|numeric",
+            "amount_received_zig" => "nullable|numeric",
+            "amount_remitted_usd" => "nullable|numeric",
+            "amount_remitted_zig" => "nullable|numeric",
+            "commission_percentage" => "nullable|numeric"
         ]);
 
         if ($validator->fails()) {
@@ -144,8 +173,14 @@ class InsuranceTransactionController extends Controller
         $data = $validator->validated();
         $currency = Currency::findOrFail($request->currency_id);
 
-        $insurancePayment = InsuranceTransaction::findOrFail($id);
-        $insurancePayment->update($data);
+        $insuranceTransaction = InsuranceTransaction::findOrFail($id);
+        $insuranceTransaction->update($data);
+
+        if (isset($data['amount_remitted_usd'])) {
+            $insuranceBroker = $insuranceTransaction->getInsuranceBroker();
+            $insuranceBroker->total_remittance += $data['amount_remitted_usd'];
+            $insuranceBroker->save();
+        }
 
 
         $message = sprintf(
@@ -166,6 +201,7 @@ class InsuranceTransactionController extends Controller
             'sms'     => $sms
         ]);
     }
+
 
     public function list_insurance_transaction(Request $request, $id = null)
     {

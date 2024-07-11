@@ -95,6 +95,106 @@
 										</div>
 									</div>
                                 </div>
+								<div class="mb-3 col-md-6">
+									<div class="card card-frame">
+										<div class="card-body">
+										<p>Received Date</p>
+										<hr>
+										{{ $insurance_transaction->received_date }}
+										</div>
+									</div>
+                                </div>
+								<div class="mb-3 col-md-6">
+									<div class="card card-frame">
+										<div class="card-body">
+										<p>Expected Amount(ZIG)</p>
+										<hr>
+										{{ $insurance_transaction->expected_amount_zig }}
+										</div>
+									</div>
+                                </div>
+								<div class="mb-3 col-md-6">
+									<div class="card card-frame">
+										<div class="card-body">
+										<p>Expected Amount(USD)</p>
+										<hr>
+										{{ $insurance_transaction->expected_amount }}
+										</div>
+									</div>
+                                </div>
+								<div class="mb-3 col-md-6">
+									<div class="card card-frame">
+										<div class="card-body">
+										<p>Amount Received(USD)</p>
+										<hr>
+										{{ $insurance_transaction->amount_received_usd }}
+										</div>
+									</div>
+                                </div>
+								<div class="mb-3 col-md-6">
+									<div class="card card-frame">
+										<div class="card-body">
+										<p>Commission(%)</p>
+										<hr>
+										{{ $insurance_transaction->commission_percentage }}%
+										</div>
+									</div>
+                                </div>
+								<div class="mb-3 col-md-6">
+									<div class="card card-frame">
+										<div class="card-body">
+										<p>Commission Amount</p>
+										<hr>
+										{{ $insurance_transaction->commission_amount }} 
+										</div>
+									</div>
+                                </div>
+								<div class="mb-3 col-md-6">
+									<div class="card card-frame">
+										<div class="card-body">
+										<p>Phone</p>
+										<hr>
+										{{ $insurance_transaction->phone }} 
+										</div>
+									</div>
+                                </div>
+								<div class="mb-3 col-md-6">
+									<div class="card card-frame">
+										<div class="card-body">
+										<p>Exchange Rate</p>
+										<hr>
+										{{ $insurance_transaction->rate }} 
+										</div>
+									</div>
+                                </div>
+								<div class="mb-3 col-md-6">
+									<div class="card card-frame">
+										<div class="card-body">
+										<p>Amount Received(ZIG)</p>
+										<hr>
+										{{ $insurance_transaction->amount_received_zig }} 
+										</div>
+									</div>
+                                </div>
+								<div class="mb-3 col-md-6">
+									<div class="card card-frame">
+										<div class="card-body">
+										<p>Amount to be Remitted (ZIG)</p>
+										<hr>
+										{{ $insurance_transaction->amount_remitted_zig }} 
+										</div>
+									</div>
+                                </div>
+								<div class="mb-3 col-md-6">
+									<div class="card card-frame">
+										<div class="card-body">
+										<p>Amount to be Remitted(USD)</p>
+										<hr>
+										{{ $insurance_transaction->amount_remitted_usd }} 
+										</div>
+									</div>
+                                </div>
+						
 
 
                             </div>

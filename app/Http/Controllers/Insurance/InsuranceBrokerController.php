@@ -32,13 +32,18 @@ class InsuranceBrokerController extends Controller
         return view('insurance.broker.add',$data);
     }
 
-	public function insurance_broker_edit($id){
+    public function insurance_broker_edit($id)
+    {
         $insurance_broker = InsuranceBroker::findOrFail($id);
-        $data['insurance_broker'] = $insurance_broker;
+        $transactions = $insurance_broker->transactions;
+    
+        return view('insurance.broker.edit', [
+            'insurance_broker' => $insurance_broker,
+            'transactions' => $transactions
+        ]);
+    }
+    
 
-        return view('insurance.broker.edit',$data);
-
-	}
 
 	public function insurance_broker_view($id)
 	{
@@ -49,40 +54,101 @@ class InsuranceBrokerController extends Controller
 	}
 
     public function create_insurance_broker(Request $request)
-    {
-        $data = $request->validate([
-            "name" => "required|string|min:1",
-            "commission" => "required|numeric",
-            "notes" => "nullable|string",
-        ]);
+{
+    $data = $request->validate([
+        "name" => "required|string|min:1",
+        "commission" => "required|numeric",
+        "notes" => "nullable|string",
+        "date_of_remittance" => "required|date",
+        "method_of_remittance" => "required|string",
+        "amount_remitted" => "nullable|numeric",
+        "account_balance" => "nullable|numeric",
+        "total_remittance" => "nullable|numeric",
+        "remittance" => "nullable|numeric"
+    ]);
 
-        $data['created_by'] = auth()->user()->id;
+    $data['created_by'] = auth()->user()->id;
 
-        $insuranceBroker = new InsuranceBroker();
-        $insuranceBroker->create($data);
+    // Convert fields to arrays
+    $data['date_of_remittance'] = [$data['date_of_remittance']];
+    $data['method_of_remittance'] = [$data['method_of_remittance']];
+    $data['amount_remitted'] = isset($data['amount_remitted']) ? [$data['amount_remitted']] : [];
+    $data['account_balance'] = isset($data['account_balance']) ? [$data['account_balance']] : [];
+    $data['remittance'] = isset($data['remittance']) ? [$data['remittance']] : [];
 
-        return response()->json([
-            'message' => "Saved successfully",
-            'success' => true
-        ]);
+    $insuranceBroker = InsuranceBroker::create($data);
+
+    return response()->json([
+        'message' => "Saved successfully",
+        'success' => true,
+        'data' => $insuranceBroker
+    ]);
+}
+
+
+public function update_insurance_broker(Request $request, $id)
+{
+    $data = $request->validate([
+        "name" => "required|string|min:1",
+        "commission" => "required|numeric",
+        "notes" => "nullable|string",
+        "date_of_remittance" => "required|date",
+        "method_of_remittance" => "required|string",
+        "amount_remitted" => "required|numeric",
+        "account_balance" => "required|numeric",
+        "total_remittance" => "nullable|numeric",
+        "remittance" => "nullable|numeric"
+    ]);
+
+    $insuranceBroker = InsuranceBroker::findOrFail($id);
+
+    // Update name, commission, notes, and total_remittance directly
+    $insuranceBroker->name = $data['name'];
+    $insuranceBroker->commission = $data['commission'];
+    $insuranceBroker->notes = $data['notes'];
+    $insuranceBroker->total_remittance = $data['total_remittance'];
+
+    // Merge new values into JSON fields
+    $remittance = $insuranceBroker->remittance ?? [];
+    if (isset($data['remittance'])) {
+        $remittance[] = $data['remittance'];
     }
 
-    public function update_insurance_broker(Request $request, $id)
-    {
-        $data = $request->validate([
-            "name" => "required|string|min:1",
-            "commission" => "required|numeric",
-            "notes" => "nullable|string",
-        ]);
-
-        $insuranceBroker = InsuranceBroker::findOrFail($id);
-        $insuranceBroker->update($data);
-
-        return response()->json([
-            'message' => "Updated successfully",
-            'success' => true
-        ]);
+    $dateOfRemittance = $insuranceBroker->date_of_remittance ?? [];
+    if (isset($data['date_of_remittance'])) {
+        $dateOfRemittance[] = $data['date_of_remittance'];
     }
+
+    $methodOfRemittance = $insuranceBroker->method_of_remittance ?? [];
+    if (isset($data['method_of_remittance'])) {
+        $methodOfRemittance[] = $data['method_of_remittance'];
+    }
+
+    $amountRemitted = $insuranceBroker->amount_remitted ?? [];
+    if (isset($data['amount_remitted'])) {
+        $amountRemitted[] = $data['amount_remitted'];
+    }
+
+    $accountBalance = $insuranceBroker->account_balance ?? [];
+    if (isset($data['account_balance'])) {
+        $accountBalance[] = $data['account_balance'];
+    }
+
+    // Update JSON fields
+    $insuranceBroker->remittance = $remittance;
+    $insuranceBroker->date_of_remittance = $dateOfRemittance;
+    $insuranceBroker->method_of_remittance = $methodOfRemittance;
+    $insuranceBroker->amount_remitted = $amountRemitted;
+    $insuranceBroker->account_balance = $accountBalance;    
+
+    $insuranceBroker->save();
+
+    return response()->json([
+        'message' => "Updated successfully",
+        'success' => true
+    ]);
+}
+
 
     public function list_insurance_broker(Request $request)
     {
