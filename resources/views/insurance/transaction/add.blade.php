@@ -77,7 +77,7 @@
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Received Date</label>
                                     <input type="date" required="true" name="received_date" class="form-control border border-2 p-2"
-                                           value='{{ isset($insurance_transaction->F) ? \Carbon\Carbon::parse($insurance_transaction->received_date)->format("Y-m-d") : "" }}'>
+                                           value='{{ isset($insurance_transaction->received_date) ? \Carbon\Carbon::parse($insurance_transaction->received_date)->format("Y-m-d") : "" }}'>
                                 </div>
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Exchange Rate</label>
