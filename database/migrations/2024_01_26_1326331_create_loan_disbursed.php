@@ -19,9 +19,14 @@ return new class extends Migration
             $table->float("amount");
             $table->float("balance");
             $table->float("rate_per_week");
+            $table->float("expense_amount")->nullable();
             $table->date("repayment_date");
+            $table->date("transaction_date");
             $table->string("collateral");
+            $table->string("name");
             $table->integer("created_by");
+            $table->integer("phone");
+            $table->integer("currency_id");
             $table->text("notes")->nullable();
             $table->timestamps();
         });

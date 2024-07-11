@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6f562a788544e66aa4860aed443958fe",
+    "content-hash": "1e69a73e7457138e0a60f1dd6f76a78d",
     "packages": [
         {
             "name": "brick/math",
@@ -3288,6 +3288,76 @@
             "time": "2024-04-27T21:32:50+00:00"
         },
         {
+            "name": "rawilk/laravel-modules",
+            "version": "0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rawilk/laravel-modules.git",
+                "reference": "b1dfbbf3b3a4dc13f0ac1ec8aa819ca91bc4bfc6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rawilk/laravel-modules/zipball/b1dfbbf3b3a4dc13f0ac1ec8aa819ca91bc4bfc6",
+                "reference": "b1dfbbf3b3a4dc13f0ac1ec8aa819ca91bc4bfc6",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": ">=7.3"
+            },
+            "require-dev": {
+                "laravel/framework": "6.0.*",
+                "mockery/mockery": "~1.0",
+                "orchestra/testbench": "^4.0",
+                "phpunit/phpunit": "~8.0",
+                "spatie/phpunit-snapshot-assertions": "^2.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Rawilk\\LaravelModules\\LaravelModulesServiceProvider"
+                    ],
+                    "aliases": {
+                        "Module": "Rawilk\\LaravelModules\\Facades\\Module"
+                    }
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/helpers.php"
+                ],
+                "psr-4": {
+                    "Rawilk\\LaravelModules\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Randall Wilk",
+                    "email": "randall@randallwilk.com",
+                    "homepage": "https://randallwilk.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Laravel module management",
+            "homepage": "https://github.com/rawilk/laravel-modules",
+            "keywords": [
+                "laravel",
+                "laravel Modules",
+                "modules"
+            ],
+            "support": {
+                "issues": "https://github.com/rawilk/laravel-modules/issues",
+                "source": "https://github.com/rawilk/laravel-modules/tree/master"
+            },
+            "abandoned": true,
+            "time": "2019-09-12T15:18:54+00:00"
+        },
+        {
             "name": "symfony/console",
             "version": "v6.4.7",
             "source": {
@@ -5574,6 +5644,77 @@
             "time": "2023-12-08T13:03:43+00:00"
         },
         {
+            "name": "victorybiz/laravel-tel-input",
+            "version": "v1.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/victorybiz/laravel-tel-input.git",
+                "reference": "783182bb9651487345096f4f9696a171348b66d0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/victorybiz/laravel-tel-input/zipball/783182bb9651487345096f4f9696a171348b66d0",
+                "reference": "783182bb9651487345096f4f9696a171348b66d0",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^8.0|^9.0|^10.0|^11.0",
+                "php": "^7.4|^8.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^6.0|^7.0|^9.0",
+                "phpunit/phpunit": "^9.0|^10.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Victorybiz\\LaravelTelInput\\LaravelTelInputServiceProvider"
+                    ],
+                    "aliases": {
+                        "LaravelTelInput": "Victorybiz\\LaravelTelInput\\LaravelTelInputFacade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Victorybiz\\LaravelTelInput\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Victory Osayi Airuoyuwa",
+                    "email": "lavictorybiz@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Laravel Telephone Input component for Blade and Livewire based on the intl-tel-input JavaScript plugin. ",
+            "homepage": "https://github.com/victorybiz/laravel-tel-input",
+            "keywords": [
+                "blade",
+                "international-telephone-input",
+                "intl-tel-input",
+                "laravel",
+                "laravel-blade",
+                "laravel-livewire",
+                "laravel-tel-input",
+                "livewire",
+                "livewire-tel-input",
+                "tel-input",
+                "telephone-input",
+                "victorybiz"
+            ],
+            "support": {
+                "issues": "https://github.com/victorybiz/laravel-tel-input/issues",
+                "source": "https://github.com/victorybiz/laravel-tel-input/tree/v1.6.0"
+            },
+            "time": "2024-04-01T18:17:58+00:00"
+        },
+        {
             "name": "vlucas/phpdotenv",
             "version": "v5.6.0",
             "source": {
@@ -5791,6 +5932,90 @@
         }
     ],
     "packages-dev": [
+        {
+            "name": "barryvdh/laravel-debugbar",
+            "version": "v3.13.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/barryvdh/laravel-debugbar.git",
+                "reference": "92d86be45ee54edff735e46856f64f14b6a8bb07"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/barryvdh/laravel-debugbar/zipball/92d86be45ee54edff735e46856f64f14b6a8bb07",
+                "reference": "92d86be45ee54edff735e46856f64f14b6a8bb07",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/routing": "^9|^10|^11",
+                "illuminate/session": "^9|^10|^11",
+                "illuminate/support": "^9|^10|^11",
+                "maximebf/debugbar": "~1.22.0",
+                "php": "^8.0",
+                "symfony/finder": "^6|^7"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.3.3",
+                "orchestra/testbench-dusk": "^5|^6|^7|^8|^9",
+                "phpunit/phpunit": "^9.6|^10.5",
+                "squizlabs/php_codesniffer": "^3.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.13-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Barryvdh\\Debugbar\\ServiceProvider"
+                    ],
+                    "aliases": {
+                        "Debugbar": "Barryvdh\\Debugbar\\Facades\\Debugbar"
+                    }
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/helpers.php"
+                ],
+                "psr-4": {
+                    "Barryvdh\\Debugbar\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Barry vd. Heuvel",
+                    "email": "barryvdh@gmail.com"
+                }
+            ],
+            "description": "PHP Debugbar integration for Laravel",
+            "keywords": [
+                "debug",
+                "debugbar",
+                "laravel",
+                "profiler",
+                "webprofiler"
+            ],
+            "support": {
+                "issues": "https://github.com/barryvdh/laravel-debugbar/issues",
+                "source": "https://github.com/barryvdh/laravel-debugbar/tree/v3.13.5"
+            },
+            "funding": [
+                {
+                    "url": "https://fruitcake.nl",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/barryvdh",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-04-12T11:20:37+00:00"
+        },
         {
             "name": "doctrine/instantiator",
             "version": "2.0.0",
@@ -6174,6 +6399,74 @@
                 "source": "https://github.com/laravel/sail"
             },
             "time": "2024-03-20T20:09:31+00:00"
+        },
+        {
+            "name": "maximebf/debugbar",
+            "version": "v1.22.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/maximebf/php-debugbar.git",
+                "reference": "7aa9a27a0b1158ed5ad4e7175e8d3aee9a818b96"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/maximebf/php-debugbar/zipball/7aa9a27a0b1158ed5ad4e7175e8d3aee9a818b96",
+                "reference": "7aa9a27a0b1158ed5ad4e7175e8d3aee9a818b96",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2|^8",
+                "psr/log": "^1|^2|^3",
+                "symfony/var-dumper": "^4|^5|^6|^7"
+            },
+            "require-dev": {
+                "dbrekelmans/bdi": "^1",
+                "phpunit/phpunit": "^8|^9",
+                "symfony/panther": "^1|^2.1",
+                "twig/twig": "^1.38|^2.7|^3.0"
+            },
+            "suggest": {
+                "kriswallsmith/assetic": "The best way to manage assets",
+                "monolog/monolog": "Log using Monolog",
+                "predis/predis": "Redis storage"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.22-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "DebugBar\\": "src/DebugBar/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Maxime Bouroumeau-Fuseau",
+                    "email": "maxime.bouroumeau@gmail.com",
+                    "homepage": "http://maximebf.com"
+                },
+                {
+                    "name": "Barry vd. Heuvel",
+                    "email": "barryvdh@gmail.com"
+                }
+            ],
+            "description": "Debug bar in the browser for php application",
+            "homepage": "https://github.com/maximebf/php-debugbar",
+            "keywords": [
+                "debug",
+                "debugbar"
+            ],
+            "support": {
+                "issues": "https://github.com/maximebf/php-debugbar/issues",
+                "source": "https://github.com/maximebf/php-debugbar/tree/v1.22.3"
+            },
+            "time": "2024-04-03T19:39:26+00:00"
         },
         {
             "name": "mockery/mockery",
@@ -8345,5 +8638,5 @@
         "php": "^8.0.2"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }

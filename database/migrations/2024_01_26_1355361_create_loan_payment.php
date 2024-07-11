@@ -19,6 +19,11 @@ return new class extends Migration
             $table->float("amount");
             $table->float("amount_before");
             $table->float("amount_after");
+            $table->date("installment_payment_date");
+            $table->float("installment_amount_paid");
+            $table->float("currency_rate");
+            $table->string("expense");
+            $table->float("expense_amount");
             $table->integer("created_by");
             $table->timestamps();
         });

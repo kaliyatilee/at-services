@@ -9,6 +9,7 @@ use App\Models\VehicleClass;
 use App\Models\Currency;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Modules\Messaging\Http\Controllers\DigitalReceiptsMessagingController;
 
 class InsuranceTransactionController extends Controller
 {
@@ -103,6 +104,13 @@ class InsuranceTransactionController extends Controller
     $data['amount_remitted_zig'] = $data['amount_remitted_zig'] ?? 0;
     $data['amount_received_usd'] = $data['amount_received_usd'] ?? 0;
 
+		$data = $validator->validated();
+		$data['created_by'] = auth()->user()->id;
+
+        $brokerName = InsuranceBroker::find($request->insurance_broker)->name;
+        $currencyName = Currency::find($request->currency_id)->name;
+
+
     $insurancePayment = new InsuranceTransaction();
     $insurancePayment->create($data);
 
@@ -111,6 +119,24 @@ class InsuranceTransactionController extends Controller
         'success' => true
     ]);
 }
+        $message = sprintf(
+            'Insurance transaction of %s%s with %s for Vehicle Reg No. %s, expiring %s has been successful.',
+            $currencyName,
+            $request->amount_paid,
+            $brokerName,
+            $request->reg_no,
+            $request->expiry_date,
+        );
+        // digital receipt msg
+        $digitalReceiptController = new DigitalReceiptsMessagingController();
+        $sms = $digitalReceiptController->sendDigitalReceipt($data['phone'], $data['amount_paid'], $message);
+
+        return response()->json([
+            'message' => "Saved successfully",
+            'success' => true,
+            'sms'     => $sms
+        ]);
+    }
 
     
     public function update_insurance_transaction(Request $request, $id)
@@ -145,6 +171,7 @@ class InsuranceTransactionController extends Controller
         }
 
         $data = $validator->validated();
+        $currency = Currency::findOrFail($request->currency_id);
 
         $insuranceTransaction = InsuranceTransaction::findOrFail($id);
         $insuranceTransaction->update($data);
@@ -155,9 +182,23 @@ class InsuranceTransactionController extends Controller
             $insuranceBroker->save();
         }
 
+
+        $message = sprintf(
+            'Insurance update of %s%s for Vehicle Reg No. %s, expiring %s has been successful.',
+            $currency->name,
+            $request->amount_paid,
+            $request->reg_no,
+            $request->expiry_date,
+        );
+        // digital receipt msg
+        $digitalReceiptController = new DigitalReceiptsMessagingController();
+        $sms = $digitalReceiptController->sendDigitalReceipt($data['phone'], $data['amount_paid'], $message);
+
+
         return response()->json([
             'message' => "Updated successfully",
-            'success' => true
+            'success' => true,
+            'sms'     => $sms
         ]);
     }
 

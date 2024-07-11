@@ -13,11 +13,15 @@ class Kernel extends ConsoleKernel
      * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
      * @return void
      */
+
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->call(function () {
+            app(\Modules\Messaging\Http\Controllers\InsuranceMessagingController::class)->sendInsuranceExpiryReminders();
+            app(\Modules\Messaging\Http\Controllers\DstvMessagingController::class)->sendDstvExpiryReminders();
+            app(\Modules\Messaging\Http\Controllers\LoanMessagingController::class)->sendLoanExpiryReminders();
+        })->dailyAt('08:00');
     }
-
     /**
      * Register the commands for the application.
      *

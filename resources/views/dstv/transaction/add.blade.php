@@ -27,9 +27,19 @@
                                 </div>
 
                                 <div class="mb-3 col-md-6">
-                                    <label class="form-label">Phone</label>
-                                    <input type="text" name="phone" class="form-control border border-2 p-2"
-                                           value='{{ old('phone') }}'>
+                                    <label class="form-label">Phone Number</label>
+                                    <input
+                                        class="form-control border border-2 p-2"
+                                        type="tel"
+                                        pattern="2637[0-9]{8}"
+                                        title="Must start with 2637 and follow format: 2637*********"
+                                        placeholder="Format: 2637*********"
+                                        name="phone"
+                                        value="{{ old('phone') }}"
+                                        oninput="this.setCustomValidity('')"
+                                        oninvalid="this.setCustomValidity('Invalid phone number. Must start with 2637 and follow format: 2637*********')"
+                                    />
+                                    <div id="phone_success_error_message" class="text-danger text-xs"></div>
                                 </div>
 
                                 <div class="mb-3 col-md-6">
@@ -73,7 +83,7 @@
                                     <input type="date" name="transaction_date" class="form-control border border-2 p-2"
                                            value='{{ old('transaction_date') }}'>
                                 </div>
-                                
+
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Notes (Optional)</label>
                                     <input type="text" name="notes" class="form-control border border-2 p-2"
@@ -91,6 +101,7 @@
     <x-plugins></x-plugins>
 
 </x-layout>
+
 
 <script type="text/javascript">
     $(document).ready(function () {
@@ -166,7 +177,6 @@
 
             e.preventDefault();
             var formData = new FormData(this)
-            console.log(formData)
             $.ajax({
                 url: $(this).attr('action'),
                 type: 'POST',

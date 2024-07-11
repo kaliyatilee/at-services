@@ -3,19 +3,26 @@
 namespace App\Http\Controllers\Loan;
 
 use App\Http\Controllers\Controller;
+use App\Models\Currency;
 use App\Models\DSTVTransaction;
 use App\Models\LoanDisbursed;
 use App\Models\LoanPayment;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Modules\Messaging\Http\Controllers\DigitalReceiptsMessagingController;
 
 class LoanPaymentController extends Controller
 {
     public function create_loan_payment(Request $request)
     {
+
         $validator = validator()->make($request->all(), [
-            "loan_id" => "nullable|numeric|min:1",
-            "amount" => "nullable|numeric|min:1",
-            "created_by" => "nullable|numeric|min:1"
+            "installment_payment_date" => "required|date",
+            "installment_amount_paid" => "required|numeric",
+            "currency_rate" => "required",
+            "expense"       => "nullable",
+            "expense_amount" => "nullable|numeric",
+            "notes"     => "nullable"
         ]);
 
         if ($validator->fails()) {
@@ -27,17 +34,52 @@ class LoanPaymentController extends Controller
         }
 
         $data = $validator->validated();
+        $created_by= 1;//Auth::user()->id;
+        $loanDisbursed = LoanDisbursed::findOrFail($request->loan_id);
+        $installments = LoanPayment::where('loan_id', $request->loan_id)->sum('installment_amount_paid');
+        $amount_disbursed = $loanDisbursed->amount;
+        $commission = $request->installment_amount_paid - $amount_disbursed - $request->expense_amount;
+        $phone = $loanDisbursed->phone;
+        $currency = Currency::findOrFail($loanDisbursed->currency_id)->name;
+        $amount_before = $installments ? $amount_disbursed - $installments : $amount_disbursed;
 
-        $loanDisbursed = LoanDisbursed::findOrFail($data['loan_id']);
+        /* if ($installments >= $amount_disbursed) {
+            return response()->json([
+                'message' => 'Loan has been paid in full.',
+                'status' => 'paid_in_full',
+                'success' => true
+            ], 200);
+        } */
 
-        $data['amount_before'] = $loanDisbursed->getBalance();
-        $data['amount_after'] = $data['amount_before'] - $data['amount'];
+       LoanPayment::create([
+            "loan_id"                   => $request->loan_id,
+            "amount"                    => $request->installment_amount_paid,
+            "amount_before"             => $amount_before,
+            "amount_after"              => $amount_before - $request->installment_amount_paid,
+            "installment_payment_date"  => $request->installment_payment_date,
+            "installment_amount_paid"   => $request->installment_amount_paid,
+            "currency_rate"             => $request->currency_rate,
+            "notes"                     => $request->notes,
+            "expense"                   => $request->expense,
+            "expense_amount"            => $request->expense_amount,
+            "created_by"                => $created_by
+        ]);
 
-        $loanPayment = new LoanPayment();
-        $loanPayment->create($data);
+        $message = sprintf(
+            'A payment of %s%.2f has been debited from your outstanding loan balance of %s%.2f. Your new outstanding loan balance is %s%.2f.',
+            $currency,
+            $request->installment_amount_paid,
+            $currency,
+            $amount_before,
+            $currency,
+            $amount_before - $request->installment_amount_paid
+        );
+        // digital receipt msg
+        $digitalReceiptController = new DigitalReceiptsMessagingController();
+        $sms = $digitalReceiptController->sendDigitalReceipt($phone, $amount_before, $message);
 
         return response()->json([
-            'message' => "Saved successfully " . json_encode($data),
+            'message' => "Saved successfully",
             'success' => true
         ]);
     }
@@ -52,7 +94,7 @@ class LoanPaymentController extends Controller
         $loanDisbursed = LoanDisbursed::findOrFail($id);
 
         return response()->json([
-            'message' => "Can't update",
+            'message' => "Can't updates",
             'success' => true
         ],500);
     }

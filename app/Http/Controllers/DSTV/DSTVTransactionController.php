@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use function response;
+use Modules\Messaging\Http\Controllers\DigitalReceiptsMessagingController;
 
 class DSTVTransactionController extends Controller
 {
@@ -84,16 +85,30 @@ class DSTVTransactionController extends Controller
 
         $data = $validator->validated();
         $data['created_by'] = Auth::user()->id;
+        //$data['created_by'] = 1;
 		$dstv_packages = DSTVPackage::findOrfail($data['package_id']);
 
         $data['commission_usd'] = $dstv_packages['commission_usd'];
+        $currency = Currency::findOrFail($request->currency_id);
 
         $dstvTransaction = new DSTVTransaction();
         $dstvTransaction->create($data);
 
+       $message = sprintf(
+            'Transaction for DSTV Account %s with Package %s %s%s was successful.',
+            $request->dstv_account_number,
+            $dstv_packages->name,
+            $currency->name,
+            $request->amount_paid,
+        );
+        // digital receipt msg
+        $digitalReceiptController = new DigitalReceiptsMessagingController();
+        $sms = $digitalReceiptController->sendDigitalReceipt($data['phone'], $data['amount_paid'], $message);
+
         return response()->json([
             'message' => "Saved successfully",
-            'success' => true
+            'success' => true,
+            'sms' => $sms
         ]);
     }
 
@@ -112,7 +127,7 @@ class DSTVTransactionController extends Controller
 			"transaction_date" => "required|date"
         ]);
 
-// Check if validation fails
+        // Check if validation fails
         if ($validator->fails()) {
             // Return validation errors as JSON response
             return response()->json([
@@ -122,13 +137,26 @@ class DSTVTransactionController extends Controller
         }
 
         $data = $validator->validated();
+        $dstv_packages = DSTVPackage::findOrfail($data['package_id']);
 
         $dstvTransaction = DSTVTransaction::findOrFail($id);
         $dstvTransaction->update($data);
 
+       // $message = '$'.$request->amount_paid.' on DSTV Account '.$request->dstv_account_number.' with Package '.$dstv_packages->name;
+        $message = sprintf(
+            'Payment update of $%s received on DSTV Account %s with Package %s.',
+            $request->amount_paid,
+            $request->dstv_account_number,
+            $dstv_packages->name
+        );
+        // digital receipt msg
+        $digitalReceiptController = new DigitalReceiptsMessagingController();
+        $sms = $digitalReceiptController->sendDigitalReceipt($data['phone'], $data['amount_paid'], $message);
+
         return response()->json([
             'message' => "Updated successfully",
-            'success' => true
+            'success' => true,
+            'sms'     => $sms
         ]);
     }
 
