@@ -51,7 +51,7 @@
                     <span class="nav-link-text ms-1">Transactions</span>
                 </a>
             </li>
-            {{-- REPORTS END --}}
+            {{-- PREPAID TRANSACTIONS END --}}
 
             {{-- BROCAST MESSAGE --}}
             <li class="nav-item mt-3">
@@ -120,7 +120,7 @@
                     <span class="nav-link-text ms-1">Permanent Disc</span>
                 </a>
             </li> -->
-            {{--            PREPAID TRANSACTIONS END--}}
+            {{--            REPORTS END--}}
             {{--            USERS START--}}
             <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Users</h6>

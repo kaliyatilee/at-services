@@ -21,6 +21,7 @@ use App\Http\Controllers\Loan\LoanDisbursedController;
 use App\Http\Controllers\Loan\LoanPaymentController;
 use App\Http\Controllers\Notes\NotesController;
 use App\Http\Controllers\PermanentDiscController;
+use App\Http\Controllers\PrepaidTransactionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\Reports\DSTVReportController;
@@ -379,3 +380,12 @@ Route::get('user-management', function () {
 Route::get('user-profile', function () {
     return view('pages.laravel-examples.user-profile');
 })->name('user-profile');
+
+Route::resource('prepaid/transaction', PrepaidTransactionController::class)->names([
+    'index' => 'prepaid.transaction.index',
+    'create' => 'prepaid.transaction.create',
+    'store' => 'prepaid.transaction.store',
+    'edit' => 'prepaid.transaction.edit',
+    'update' => 'prepaid.transaction.update',
+    'destroy' => 'prepaid.transaction.delete',
+]);
