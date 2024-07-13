@@ -12,11 +12,9 @@ use Illuminate\Routing\Controller;
 class PrepaidTransactionController extends Controller
 {
     public function index(){
-
-        $prepaidTransactions = User::all();
-
+        $prepaidTransactions = PrepaidTransaction::all();
         $data['prepaidTransactions'] = $prepaidTransactions;
-        return view('user.list',$data);
+        return view('prepayments.list',$data);
     }
 
     public function add(Request $request,$id = null){
