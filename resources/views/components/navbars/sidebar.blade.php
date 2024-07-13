@@ -37,6 +37,22 @@
                 </a>
             </li>
             {{-- REPORTS END --}}
+
+            {{--PREPAID TRANSACTIONS START--}}
+            <li class="nav-item mt-3">
+                <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">PREPAID TRANSACTIONS</h6>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white {{ $activePage == 'report_dstv' ? 'active bg-gradient-primary' : '' }} "
+                   href="{{ route('prepaid.transaction.index') }}">
+                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i style="font-size: 1.2rem;" class="fas fa-user-circle ps-2 pe-2 text-center"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Transactions</span>
+                </a>
+            </li>
+            {{-- REPORTS END --}}
+
             {{-- BROCAST MESSAGE --}}
             <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">BROADCAST MESSAGE</h6>
@@ -104,7 +120,7 @@
                     <span class="nav-link-text ms-1">Permanent Disc</span>
                 </a>
             </li> -->
-            {{--            REPORTS END--}}
+            {{--            PREPAID TRANSACTIONS END--}}
             {{--            USERS START--}}
             <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Users</h6>
