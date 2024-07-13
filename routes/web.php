@@ -21,7 +21,7 @@ use App\Http\Controllers\Loan\LoanDisbursedController;
 use App\Http\Controllers\Loan\LoanPaymentController;
 use App\Http\Controllers\Notes\NotesController;
 use App\Http\Controllers\PermanentDiscController;
-use App\Http\Controllers\PrepaidTransactionController;
+use App\Http\Controllers\Prepayments\PrepaidTransactionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\Reports\DSTVReportController;
