@@ -9,10 +9,9 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card my-4">
-                        <div class=" me-3 my-3 text-end">
-                            <a class="btn bg-gradient-dark mb-0" href="{{ route("user_add") }}"><i
-                                    class="material-icons text-sm">add</i>&nbsp;&nbsp;Add New
-                                User</a>
+                        <div class="card-header me-3 my-3 text-end">
+                            <a class="btn bg-gradient-dark mb-0" href="{{ route("prepaid.transaction.create") }}"><i
+                                    class="material-icons text-sm">add</i>&nbsp;&nbsp;Add New Transaction</a>
                         </div>
                         <div class="card-body px-0 pb-2">
                             <div class="table-responsive p-0">
@@ -21,7 +20,7 @@
                                     <tr>
                                         <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            User ID
+                                            Transaction ID
                                         </th>
                                         <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -29,70 +28,106 @@
                                         </th>
                                         <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Phone 1
+                                            Phone
                                         </th>
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Phone 2
+                                            Description
                                         </th>
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Is Admin
+                                            Notes
                                         </th>
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Created At
+                                            Payment Type
+                                        </th>
+                                        <th
+                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Currency
+                                        </th>
+                                        <th
+                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Rate
+                                        </th>
+                                        <th
+                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Amount
+                                        </th>
+                                        <th
+                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Transaction Date
                                         </th>
                                         <th class="text-secondary opacity-7"></th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($users as $user)
+                                    @foreach($prepaidTransactions as $transaction)
                                         <tr>
                                             <td>
                                                 <div class="d-flex px-2 py-1">
                                                     <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm">{{ $user->id }}</h6>
+                                                        <h6 class="mb-0 text-sm">{{ $transaction->id }}</h6>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="d-flex px-2 py-1">
                                                     <div class="d-flex flex-column justify-content-center">
-                                                        <p class="mb-0 text-sm">{{ $user->name }}</p>
+                                                        <p class="mb-0 text-sm">{{ $transaction->name }}</p>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="d-flex flex-column justify-content-center">
-                                                    <p class="mb-0 text-sm">{{ $user->phone1 }}</p>
+                                                    <p class="mb-0 text-sm">{{ $transaction->phone }}</p>
                                                 </div>
                                             </td>
                                             <td class="align-middle text-center text-sm">
                                                 <div class="d-flex flex-column justify-content-center">
-                                                    <p class="mb-0 text-sm">{{ $user->phone2 }}</p>
+                                                    <p class="mb-0 text-sm">{{ $transaction->description }}</p>
                                                 </div>
                                             </td>
                                             <td class="align-middle text-center text-sm">
                                                 <div class="d-flex flex-column justify-content-center">
-                                                    <p class="mb-0 text-sm">{{ $user->is_admin == 1 ? "Yes" : "No" }}</p>
+                                                    <p class="mb-0 text-sm">{{ $transaction->notes }}</p>
                                                 </div>
                                             </td>
                                             <td class="align-middle text-center">
                                                 <div class="d-flex flex-column justify-content-center">
-                                                    <p class="mb-0 text-sm">{{ $user->created_at }}</p>
+                                                    <p class="mb-0 text-sm">Prepayment</p>
+                                                </div>
+                                            </td>
+                                            <td class="align-middle text-center">
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <p class="mb-0 text-sm">{{ $transaction->currency->name }}</p>
+                                                </div>
+                                            </td>
+                                            <td class="align-middle text-center">
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <p class="mb-0 text-sm">{{ $transaction->rate }}</p>
+                                                </div>
+                                            </td>
+                                            <td class="align-middle text-center">
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <p class="mb-0 text-sm">{{ $transaction->amount }}</p>
+                                                </div>
+                                            </td>
+                                            <td class="align-middle text-center">
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <p class="mb-0 text-sm">{{ $transaction->transaction_date }}</p>
                                                 </div>
                                             </td>
                                             <td class="align-middle">
                                                 <a rel="tooltip" class="btn btn-success btn-link"
-												href="{{ route("user_edit", ['id' => $user->id]) }}" data-original-title=""
+												href="{{ route("user_edit", ['id' => $transaction->id]) }}" data-original-title=""
                                                    title="">
                                                     <i class="material-icons">edit</i>
                                                     <div class="ripple-container"></div>
                                                 </a>
 
 												<a rel="tooltip" class="btn btn-primary btn-link"
-												href="{{ route("api_user_view", ['id' => $user->id]) }}" data-original-title=""
+												href="{{ route("api_user_view", ['id' => $transaction->id]) }}" data-original-title=""
                                                    title="">
                                                     <i class="material-icons">view_module</i>
                                                     <div class="ripple-container"></div>

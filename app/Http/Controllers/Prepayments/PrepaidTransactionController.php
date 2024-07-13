@@ -13,8 +13,8 @@ class PrepaidTransactionController extends Controller
 {
     public function index(){
         $prepaidTransactions = PrepaidTransaction::all();
-        $data['prepaidTransactions'] = $prepaidTransactions;
-        return view('prepayments.list',$data);
+        $prepaidTransactions = $prepaidTransactions;
+        return view('prepayments.list')->with(compact('prepaidTransactions'));
     }
 
     public function add(Request $request,$id = null){

@@ -3,8 +3,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class PrepaidTransaction extends Model{
     use HasFactory;
     protected $guarded = ['id','created_at','updated_at'];
+
+    public function currency(): BelongsTo{
+        return $this->belongsTo(Currency::class);
+    }
 }
