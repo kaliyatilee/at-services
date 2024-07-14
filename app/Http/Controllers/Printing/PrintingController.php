@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Printing;
 
-use App\Http\Controllers\Controller;
+use App\Models\Currency;
 use Illuminate\Http\Request;
-use App\Models\PrintingServices\PrintingSales;
+use App\Exports\PrintingExport;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use App\Models\Currency;
+use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Models\PrintingServices\PrintingSales;
 
 class PrintingController extends Controller
 {
@@ -123,6 +125,12 @@ class PrintingController extends Controller
                 'success' => false
             ], 500);
         }
+    }
+
+    public function export($id)
+    {
+        $record = PrintingSales::find($id);
+        return Excel::download(new PrintingExport($record), 'printing_' . $id . '.xlsx');
     }
 
     public function edit($id)

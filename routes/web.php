@@ -386,6 +386,8 @@ Route::get('printing/view/{id}', [PrintingController::class, "view"])->name("api
 Route::post('printing/{id}', [PrintingController::class, "update"])->name("api_printing_update");
 Route::delete('printing/destroy/{id}', [PrintingController::class, "delete"])->name("api_printing_delete");
 
+Route::get('printing/export/{id}', [PrintingController::class, "export"])->name("api_printing_export");
+
 Route::get('billing', function () {
     return view('pages.billing');
 })->name('billing');

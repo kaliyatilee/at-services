@@ -138,6 +138,12 @@
                                                     <div class="ripple-container"></div>
                                                 </a>
 
+                                                <a rel="tooltip" class="btn  btn-primary btn-link"
+												href="{{ route('api_printing_export', $sales->id) }}" data-original-title=""
+                                                   title="">
+                                                    <i class="material-icons">download</i>
+                                                    <div class="ripple-container"></div>
+                                                </a>
                                                 <form action="{{ route('api_printing_delete', $sales->id) }}" method="post" style="display:inline">
                                                     @method('DELETE')
                                                     @csrf
