@@ -129,8 +129,8 @@ class PrintingController extends Controller
 
     public function export($id)
     {
-        $record = PrintingSales::find($id);
-        return Excel::download(new PrintingExport($record), 'printing_' . $id . '.xlsx');
+        $id = PrintingSales::find($id);
+        return Excel::download(new PrintingExport($id), 'printing_'.'.xlsx');
     }
 
     public function edit($id)

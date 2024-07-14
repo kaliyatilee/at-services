@@ -7,6 +7,12 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 
 class PrintingExport implements FromCollection, WithHeadings
 {
+    private $id;
+
+    public function __construct($id)
+    {
+        $this->id = $id;
+    }
     public function headings(): array
     {
         return [
@@ -27,6 +33,7 @@ class PrintingExport implements FromCollection, WithHeadings
 
     public function collection()
     {
-        return PrintingSales::all();
+        return PrintingSales::where('id', $this->id)->get();
+
     }
 }
