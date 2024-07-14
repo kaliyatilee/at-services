@@ -15,23 +15,8 @@
                     <div class="card my-4">
                         <div class="card-body px-4 pb-2">
                             
-                            @if(session('success') || session('error'))
-                            <div class="container">
-                                @if(session('success'))
-                                    <div class="alert text-center text-capitalize" role="alert" style="background:rgb(155, 191, 228); color:black">
-                                        {{ session('success') }}
-                                    </div>
-                                @endif
-                                @if(session('error'))
-                                    <div class="alert text-center text-capitalize" role="alert" style="background:rgb(241, 177, 177); color:black">
-                                        {{ session('error') }}
-                                    </div>
-                                @endif
-                            </div>
-                        @endif
-                            <form id="form" method="post" action="{{route('api_remittances_store',['id' => $id])}}" accept-charset="UTF-8" id="form"
-                                enctype="multipart/form-data" data-parsley-validate>
-                                @csrf
+                                <form class="" id="form" method='POST' action='{{route('api_remittances_store',['id' => $id])}}'>
+                                    @csrf
                                 <div class="row">
                                     <div class="mb-3 col-md-4">
                                         <label class="form-label">Remittence Date</label>
@@ -52,7 +37,7 @@
 
                                     <div class="mb-3 col-md-4">
                                         <label class="form-label">Remitted Amount</label>
-                                        <input type="integer" step="0.1" name="amount_remitted" class="form-control border border-2 p-2" data-parsley-trigger="focusout" required data-parsley-required-message="Remittence amount is required"
+                                        <input type="number" step="0.1" name="amount_remitted" class="form-control border border-2 p-2" data-parsley-trigger="focusout" required data-parsley-required-message="Remittence amount is required"
                                             value='{{ old('amount_remitted') }}'>
                                             @if ($errors->has('amount_remitted'))
                                             <small class="mt-2 text-sm text-danger">{{ $errors->first('amount_remitted') }}</small>
@@ -61,7 +46,7 @@
                                     
                                 </div>
                                 <button type="submit" class="btn bg-gradient-dark">Submit</button>
-                                
+                                <div class='' id="success_error_message"></div>
                             </form>
                         </div>
                     </div>
@@ -142,3 +127,39 @@
     <x-plugins></x-plugins>
 
 </x-layout>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#form').submit(function (e) {
+            $('#success_error_message').html('');
+
+            e.preventDefault();
+            var formData = new FormData(this)
+            console.log(formData)
+            $.ajax({
+                url: $(this).attr('action'),
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (result) {
+                    console.log(result);
+                    $('#success_error_message').append('<div class="text-success" style="font-size: larger">' + result.message + '</div');
+                },
+                error: function (xhr, status, err) {
+                    console.log(xhr);
+                    if (xhr.status === 422) {
+                        $.each(xhr.responseJSON.errors, function (key, value) {
+                            $('#success_error_message').append('<div class="text-danger" style="font-size: larger">' + value + '</div');
+                        });
+
+                    } else if (xhr.status === 500) {
+                        $('#success_error_message').append('<div class="text-danger" style="font-size: larger">' + xhr.responseJSON.message + '</div');
+                    } else {
+                        $('#success_error_message').append('<div class="text-danger" style="font-size: larger">' + xhr.statusText + '</div');
+                    }
+                }
+            });
+        });
+    });
+</script>

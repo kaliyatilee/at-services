@@ -18,7 +18,7 @@ class PrintingSales extends Model
         'rate',
         'amount_paid',
         'payment_type',
-        'commission_percentage',
+        'commission',
         'commission_usd',
     ];
     

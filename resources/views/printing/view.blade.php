@@ -3,25 +3,23 @@
     <x-navbars.sidebar activePage="printing"></x-navbars.sidebar>
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         <!-- Navbar -->
-        <x-navbars.navs.auth titlePage="Create Printing Transaction"></x-navbars.navs.auth>
+        <x-navbars.navs.auth titlePage="Edit Sale"></x-navbars.navs.auth>
         <!-- End Navbar -->
         <div class="container-fluid px-2 px-md-4">
             <div class="page-header min-height-300 border-radius-xl mt-4"
                  style="background-image: url('https://images.unsplash.com/photo-1531512073830-ba890ca4eba2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');">
                 <span class="mask  bg-gradient-primary  opacity-6"></span>
             </div>
-            
             <div class="card card-body mx-3 mx-md-4 mt-n6">
                 <div class="card card-plain h-100">
                     <div class="card-body p-3"> 
-                            <form class="" id="form" method='POST' action='{{ route('api_printing_store') }}'>
-                                @csrf
+                            
                             <div class="row">
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Full Name</label>
-                                    <input type="text" name="full_name" class="form-control border border-2 p-2" data-parsley-trigger="focusout" required data-parsley-required-message="Full Name is required" 
-                                           value='{{ old('full_name') }}'>
+                                    <input readonly type="text" name="full_name" class="form-control border border-2 p-2" data-parsley-trigger="focusout" required data-parsley-required-message="Full Name is required"
+                                           value='{{ $salesBook->full_name }}'>
                                            @if ($errors->has('full_name'))
                                         <small class="mt-2 text-sm text-danger">{{ $errors->first('full_name') }}</small>
                                     @endif
@@ -30,6 +28,7 @@
 								<div class="mb-3 col-md-6">
                                     <label class="form-label">Phone Number</label>
                                     <input
+                                    readonly
                                         class="form-control border border-2 p-2"
                                         type="tel"
                                         data-parsley-trigger="focusout" required data-parsley-required-message="Phoneis required"
@@ -37,7 +36,7 @@
                                         title="Must start with 2637 and follow format: 2637*********"
                                         placeholder="Format: 2637*********"
                                         name="phone"
-                                        value="{{ old('phone') }}" 
+                                        value="{{ $salesBook->phone }}" 
                                         oninput="this.setCustomValidity('')"
                                         oninvalid="this.setCustomValidity('Invalid phone number. Must start with 2637 and follow format: 2637*********')"
                                     />
@@ -49,8 +48,8 @@
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Description</label>
-                                    <input type="text" name="description" class="form-control border border-2 p-2" data-parsley-trigger="focusout" required data-parsley-required-message="Description is required"
-                                           value='{{ old('description') }}'>
+                                    <input readonly type="text" name="description" class="form-control border border-2 p-2" data-parsley-trigger="focusout" required data-parsley-required-message="Description is required"
+                                           value='{{ $salesBook->description }}'>
                                            @if ($errors->has('description'))
                                         <small class="mt-2 text-sm text-danger">{{ $errors->first('description') }}</small>
                                     @endif
@@ -58,17 +57,17 @@
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Amount Paid</label>
-                                    <input type="number" name="amount_paid" class="form-control border border-2 p-2" data-parsley-trigger="focusout" required data-parsley-required-message="Amount is required"
-                                           value='{{ old('amount_paid') }}'>
+                                    <input readonly type="number" name="amount_paid" class="form-control border border-2 p-2" data-parsley-trigger="focusout" required data-parsley-required-message="Amount is required"
+                                           value='{{ $salesBook->amount_paid }}'>
                                            @if ($errors->has('amount_paid'))
-                                           <small class="mt-2 text-sm text-danger">{{ $errors->first('amount_paid') }}</small>
-                                       @endif       
+                                        <small class="mt-2 text-sm text-danger">{{ $errors->first('amount_paid') }}</small>
+                                    @endif
                                 </div>
                                 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Rate</label>
-                                    <input type="number" step="0.1" name="rate" class="form-control border border-2 p-2" data-parsley-trigger="focusout" required data-parsley-required-message="Rate is required"
-                                           value='{{ old('rate') }}'>
+                                    <input readonly type="number" step="0.1" name="rate" class="form-control border border-2 p-2" data-parsley-trigger="focusout" required data-parsley-required-message="Rate is required"
+                                           value='{{ $salesBook->rate }}'>
                                            @if ($errors->has('rate'))
                                         <small class="mt-2 text-sm text-danger">{{ $errors->first('rate') }}</small>
                                     @endif
@@ -76,17 +75,17 @@
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Payment Type</label>
-                                    <input type="text" name="payment_type" class="form-control border border-2 p-2" data-parsley-trigger="focusout" required data-parsley-required-message="Payment type is required"
-                                           value='{{ old('payment_type') }}'>
+                                    <input readonly type="text" name="payment_type" class="form-control border border-2 p-2" data-parsley-trigger="focusout" required data-parsley-required-message="Payment type is required"
+                                           value='{{ $salesBook->payment_type }}'>
                                            @if ($errors->has('payment_type'))
                                         <small class="mt-2 text-sm text-danger">{{ $errors->first('payment_type') }}</small>
                                     @endif
                                 </div>
-
+                                
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Transaction Date</label>
-                                    <input type="date" name="transaction_date" class="form-control border border-2 p-2" data-parsley-trigger="focusout" required data-parsley-required-message="Transaction date is required"
-                                           value='{{ old('transaction_date') }}'>
+                                    <input readonly type="date" name="transaction_date" class="form-control border border-2 p-2" data-parsley-trigger="focusout" required data-parsley-required-message="Transaction date is required"
+                                           value='{{ $salesBook->transaction_date }}'>
                                            @if ($errors->has('transaction_date'))
                                         <small class="mt-2 text-sm text-danger">{{ $errors->first('transaction_date') }}</small>
                                     @endif
@@ -94,16 +93,13 @@
                                 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Notes</label>
-                                    <input type="text" name="notes" class="form-control border border-2 p-2"
-                                           value='{{ old('notes') }}'>
+                                    <input readonly type="text" name="notes" class="form-control border border-2 p-2"
+                                           value='{{ $salesBook->notes }}'>
                                            @if ($errors->has('notes'))
                                         <small class="mt-2 text-sm text-danger">{{ $errors->first('notes') }}</small>
                                     @endif
                                 </div>
                             </div>
-                            <button type="submit" class="btn bg-gradient-dark">Submit</button>
-                            <div class='' id="success_error_message"></div>
-                        </form>
                     </div>
                 </div>
             </div>
@@ -113,39 +109,4 @@
 
 </x-layout>
 
-<script type="text/javascript">
-    $(document).ready(function () {
 
-        $('#form').submit(function (e) {
-            $('#success_error_message').html('');
-
-            e.preventDefault();
-            var formData = new FormData(this)
-            console.log(formData)
-            $.ajax({
-                url: $(this).attr('action'),
-                type: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function (result) {
-                    console.log(result);
-                    $('#success_error_message').append('<div class="text-success" style="font-size: larger">' + result.message + '</div');
-                },
-                error: function (xhr, status, err) {
-                    console.log(xhr);
-                    if (xhr.status === 422) {
-                        $.each(xhr.responseJSON.errors, function (key, value) {
-                            $('#success_error_message').append('<div class="text-danger" style="font-size: larger">' + value + '</div');
-                        });
-
-                    } else if (xhr.status === 500) {
-                        $('#success_error_message').append('<div class="text-danger" style="font-size: larger">' + xhr.responseJSON.message + '</div');
-                    } else {
-                        $('#success_error_message').append('<div class="text-danger" style="font-size: larger">' + xhr.statusText + '</div');
-                    }
-                }
-            });
-        });
-    });
-</script>

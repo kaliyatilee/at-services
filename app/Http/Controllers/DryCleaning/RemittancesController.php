@@ -39,7 +39,7 @@ class RemittancesController extends Controller
             $remittanceHistory = RemittancesBook::where('provider_remitted_to', $id)->get();
 
             $totalAmountRemitted = RemittancesBook::where('provider_remitted_to', $id)->sum('amount_remitted');
-            $totalProviderSales = SalesBook::where('provider', $id)->sum('remittence_usd');
+            $totalProviderSales = SalesBook::where('provider', $id)->sum('remittance_usd');
 
             $remittanceBalance = number_format($totalProviderSales - $totalAmountRemitted, 2);
 
@@ -80,15 +80,19 @@ class RemittancesController extends Controller
             DB::beginTransaction();
 
             try {
-                $totalAmountRemitted = RemittancesBook::where('provider_remitted_to', $request->remitted_to)->sum('amount_remitted');
-                $totalProviderSales = SalesBook::where('provider', $request->remitted_to)->sum('remittence_usd');
+                $totalAmountRemitted = RemittancesBook::where('provider_remitted_to', $id)->sum('amount_remitted');
+                $totalProviderSales = SalesBook::where('provider', $id)->sum('remittance_usd');
 
                 $remittanceBalance = number_format($totalProviderSales - $totalAmountRemitted, 2);
 
                 $newRemittanceBalance = number_format($remittanceBalance - $request->amount_remitted, 2);
 
-                if($request->amount_remitted > $newRemittanceBalance){
-                    return back()->with('error', 'Amount can not exceed current balance');
+               
+                if($request->amount_remitted > $remittanceBalance){
+                    return response()->json([
+                        'message' => 'Amount can not exceed current balance',
+                        'success' => false
+                    ], 500);
                 }
 
                 $remittancesBook = RemittancesBook::create([
@@ -100,14 +104,22 @@ class RemittancesController extends Controller
                 ]);
 
                 DB::commit();
-                return back()->with('success', 'Remittence record created successfully!');
-                return redirect()->back();
+                return response()->json([
+                    'message' => "Saved successfully",
+                    'success' => true
+                ]);
             } catch (\Exception $e) {
                 DB::rollBack();
-                return back()->with('error', 'Something went wrong. Please try again later.');
+                return response()->json([
+                    'message' => $e->getMessage(),
+                    'success' => false
+                ], 500);
             }
         } catch (\Exception $e) {
-            return back()->with('error', 'Something went wrong. Please try again later.');
+            return response()->json([
+                'message' => $e->getMessage(),
+                'success' => false
+            ], 500);
         }
     }
 

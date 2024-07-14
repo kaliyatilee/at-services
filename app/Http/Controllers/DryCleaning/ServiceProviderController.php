@@ -64,15 +64,23 @@ class ServiceProviderController extends Controller
                 ]);
 
                 DB::commit();
-                return back()->with('success', 'New provider recored created.');
+                return response()->json([
+                    'message' => "Saved successfully",
+                    'success' => true
+                ]);
             } catch (\Exception $e) {
                 DB::rollBack();
                 Log::error($e->getMessage());
-                return back()->with('error', 'Something went wrong. Please try again later.');
+                return response()->json([
+                    'message' => 'Something went wrong. Please try again later.',
+                    'success' => false
+                ], 500);
             }
         } catch (\Exception $e) {
-            return redirect()->back();
-            return back()->with('error', 'Something went wrong. Please try again later.');
+            return response()->json([
+                'message' => 'Something went wrong. Please try again later.',
+                'success' => false
+            ], 500);
         }
     }
 
@@ -82,13 +90,19 @@ class ServiceProviderController extends Controller
             $provider = ServiceProviders::find($id);
 
             if (!$provider) {
-                return redirect()->back();
+                return response()->json([
+                    'message' => 'Provider not found..',
+                    'success' => false
+                ], 500);
             }
 
             return view('dry-cleaning.providers.edit', compact('provider'));
         } catch (\Exception $e) {
             Log::error($e->getMessage());
-            return redirect()->back()->with('error', 'An error occurred while loading the edit provider page.');
+            return response()->json([
+                'message' => 'Something went wrong. Please try again later.',
+                'success' => false
+            ], 500);
         }
     }
 
@@ -98,7 +112,10 @@ class ServiceProviderController extends Controller
             $provider = ServiceProviders::find($id);
 
             if (!$provider) {
-                return redirect()->back();
+                return response()->json([
+                    'message' => 'Provider not found..',
+                    'success' => false
+                ], 500);
             }
 
             $validator = validator()->make($request->all(), [
@@ -127,16 +144,24 @@ class ServiceProviderController extends Controller
                 ]);
 
                 DB::commit();
-
-                return back()->with('success', 'Provider record updated.');
+                return response()->json([
+                    'message' => "Updated successfully",
+                    'success' => true
+                ]);
             } catch (\Exception $e) {
                 DB::rollBack();
                 Log::error($e->getMessage());
-                return back()->with('error', 'Something went wrong. Please try again later.');
+                return response()->json([
+                    'message' => 'Something went wrong. Please try again later.',
+                    'success' => false
+                ], 500);
             }
         } catch (\Exception $e) {
             Log::error($e->getMessage());
-            return back()->with('error', 'Something went wrong. Please try again later.');
+            return response()->json([
+                'message' => 'Something went wrong. Please try again later.',
+                'success' => false
+            ], 500);
         }
     }    
 

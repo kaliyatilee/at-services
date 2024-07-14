@@ -28,7 +28,7 @@ return new class extends Migration
             $table->string('expense_name')->nullable()->comment('Name of the expense (if any)');
             $table->decimal('expense_amount', 8, 2)->nullable()->comment('Amount of the expense (if any)');
             $table->decimal('commission_percentage', 2, 1)->required()->comment('Commission percentage');
-            $table->decimal('remittence_usd', 8, 2)->nullable()->comment('Remittance in USD');
+            $table->decimal('remittance_usd', 8, 2)->nullable()->comment('Remittance in USD');
             $table->decimal('commission_usd', 8, 2)->nullable()->comment('Commission in USD');
             $table->timestamps();
         });

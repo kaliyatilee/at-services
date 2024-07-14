@@ -13,9 +13,8 @@
             <div class="card card-body mx-3 mx-md-4 mt-n6">
                 <div class="card card-plain h-100">
                     <div class="card-body p-3"> 
-                        <form id="form" method="post" action="{{route('api_sales_book_update',['id' => $salesBook->id])}}" accept-charset="UTF-8" id="form"
-                            enctype="multipart/form-data" data-parsley-validate>
-                            @csrf
+                            <form class="" id="form" method='POST' action='{{route('api_sales_book_update',['id' => $salesBook->id])}}'>
+                                @csrf
                             <div class="row">
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Search Provider</label>
@@ -168,7 +167,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
-        $('#update_sale_form').submit(function (e) {
+        $('#form').submit(function (e) {
             $('#success_error_message').html('');
 
             e.preventDefault();

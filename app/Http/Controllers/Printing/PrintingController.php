@@ -59,11 +59,9 @@ class PrintingController extends Controller
                 'notes'             => 'nullable',
                 'full_name'         => 'required',
                 'phone'             => 'required',
-                'currency'          => 'required',
                 'rate'              => 'required',
                 'amount_paid'       => 'required',
                 'payment_type'      => 'required|string',
-                'commission_percentage' => 'required',
             ], [
                 'transaction_date.required' => 'The transaction date is required.',
                 'transaction_date.date' => 'The transaction date must be a valid date.',
@@ -89,32 +87,41 @@ class PrintingController extends Controller
 
             try {
 
-                $commissionAmount = number_format($request->amount_paid * ($request->commission_percentage / 100), 2);
-
+                $commissionAmount = number_format($request->amount_paid , 2);
+                $cur = Currency::whereName('USD')->value('id');
+               
                 $sales= PrintingSales::create([
                     'transaction_date'  =>  $request->transaction_date,
                     'description'       =>  $request->description,
                     'notes'             =>  $request->notes,
                     'full_name'         =>  $request->full_name,
                     'phone'             =>  $request->phone,
-                    'currency'          =>  $request->currency,
+                    'currency'          =>  $cur,
                     'rate'              =>  number_format($request->rate, 2),
                     'amount_paid'       =>  number_format($request->amount_paid, 2),
                     'payment_type'      =>  $request->payment_type,
-                    'commission_percentage' => number_format($request->commission_percentage, 2),
+                    'commission' => number_format($request->amount_paid, 2),
                     'commission_usd'    =>  number_format($commissionAmount, 2)
                 ]);
 
                 DB::commit();
-
-                return back()->with('success', 'New sale record created successfully!');
+                return response()->json([
+                    'message' => "Saved successfully",
+                    'success' => true
+                ]);
             } catch (\Exception $e) {
                 DB::rollBack();
 
-                return back()->with('error', 'Something bad happened. Try again!');
+                return response()->json([
+                    'message' => $e->getMessage() - 'Something went wrong. Please try again later.',
+                    'success' => false
+                ], 500);
             }
         } catch (\Exception $e) {
-            return back()->with('error', 'Something bad happened. Try again!');
+            return response()->json([
+                'message' => 'Something went wrong. Please try again later.',
+                'success' => false
+            ], 500);
         }
     }
 
@@ -125,10 +132,33 @@ class PrintingController extends Controller
             $currencies = Currency::all();
 
             if (!$salesBook) {
-                return back()->with('error', 'Record not found!');
+                return response()->json([
+                    'message' => 'Record not found.',
+                    'success' => false
+                ], 500);
             }
 
             return view('printing.edit', compact('salesBook','currencies'));
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return redirect()->back()->with('error', 'An error occurred while loading the edit sales book page.');
+        }
+    }
+
+    public function view($id)
+    {
+        try {
+            $salesBook = PrintingSales::find($id);
+            $currencies = Currency::all();
+
+            if (!$salesBook) {
+                return response()->json([
+                    'message' => 'Record not found.',
+                    'success' => false
+                ], 500);
+            }
+
+            return view('printing.view', compact('salesBook','currencies'));
         } catch (\Exception $e) {
             Log::error($e->getMessage());
             return redirect()->back()->with('error', 'An error occurred while loading the edit sales book page.');
@@ -141,7 +171,10 @@ class PrintingController extends Controller
             $sales = PrintingSales::find($id);
 
             if (!$sales) {
-                return back()->with('error', 'Record not found. Try again!');
+                return response()->json([
+                    'message' => 'Record not found.',
+                    'success' => false
+                ], 500);
             }
 
             $validator = validator()->make($request->all(), [
@@ -150,11 +183,9 @@ class PrintingController extends Controller
                 'notes'             => 'nullable',
                 'full_name'         => 'required',
                 'phone'             => 'required',
-                'currency'          => 'required',
                 'rate'              => 'required',
                 'amount_paid'       => 'required',
                 'payment_type'      => 'required|string',
-                'commission_percentage' => 'required',
             ], [
                 'transaction_date.required' => 'The transaction date is required.',
                 'transaction_date.date' => 'The transaction date must be a valid date.',
@@ -179,7 +210,8 @@ class PrintingController extends Controller
             DB::beginTransaction();
 
             try {
-                $commissionAmount = number_format($request->amount_paid * ($request->commission_percentage / 100), 2);
+                $commissionAmount = number_format($request->amount_paid , 2);
+                $cur = Currency::whereName('USD')->value('id');
 
                 $sales->update([
                     'transaction_date'  =>  $request->transaction_date,
@@ -187,25 +219,34 @@ class PrintingController extends Controller
                     'notes'             =>  $request->notes,
                     'full_name'         =>  $request->full_name,
                     'phone'             =>  $request->phone,
-                    'currency'          =>  $request->currency,
+                    'currency'          =>  $cur,
                     'rate'              =>  number_format($request->rate, 2),
                     'amount_paid'       =>  number_format($request->amount_paid, 2),
                     'payment_type'      =>  $request->payment_type,
-                    'commission_percentage' => number_format($request->commission_percentage, 2),
-                    'commission_usd'    =>  number_format($commissionAmount,2) 
+                    'commission' => number_format($request->amount_paid, 2),
+                    'commission_usd'    =>  number_format($commissionAmount, 2)
                 ]);
 
                 DB::commit();
 
-                return back()->with('success', 'Record updated successfully!');
+                return response()->json([
+                    'message' => "Saved successfully",
+                    'success' => true
+                ]);
             } catch (\Exception $e) {
                 DB::rollBack();
                 Log::error($e->getMessage());
-                return back()->with('error', 'Something bad happened. Try again!');
+                return response()->json([
+                    'message' => 'Something went wrong. Please try again later.',
+                    'success' => false
+                ], 500);
             }
         } catch (\Exception $e) {
             Log::error($e->getMessage());
-            return back()->with('error', 'Something bad happened. Try again!');
+            return response()->json([
+                'message' => 'Something went wrong. Please try again later.',
+                'success' => false
+            ], 500);
         }
     }
 

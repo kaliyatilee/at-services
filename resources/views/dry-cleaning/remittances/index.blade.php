@@ -60,7 +60,7 @@
                                             </td>
                                             <td class="align-middle">
                                                 <a rel="tooltip" class="btn btn-success btn-link"
-												href="{{ route("api_remittances_create", $provider->id) }}" data-original-title=""
+												href="{{ route("api_remittances_create", $provider->id) }}" 
                                                    title="">
                                                     <i class="material-icons">add</i>
                                                     <div class="ripple-container"></div>

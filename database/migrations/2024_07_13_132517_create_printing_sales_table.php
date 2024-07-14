@@ -23,7 +23,7 @@ return new class extends Migration
             $table->unsignedInteger('currency')->required()->comment('Currency used for the transaction');
             $table->decimal('rate', 8, 2)->required()->comment('Exchange rate');
             $table->decimal('amount_paid', 8, 2)->comment('Amount paid by the customer');
-            $table->decimal('commission_percentage', 8, 2)->comment('Amount of percentage for commission');
+            $table->decimal('commission', 8, 2)->comment('Amount for commission');
             $table->string('payment_type')->required()->comment('Type of payment (e.g. cash, credit card)');
             $table->decimal('commission_usd', 8, 2)->nullable()->comment('Commission in USD');
             $table->timestamps();

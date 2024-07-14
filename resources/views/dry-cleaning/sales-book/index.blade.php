@@ -151,7 +151,7 @@
                                             </td>
                                             <td>
                                                 <div class="d-flex flex-column justify-content-center">
-                                                    <p class="mb-0 text-sm">{{ $sales->remittence_usd }}</p>
+                                                    <p class="mb-0 text-sm">{{ $sales->remittance_usd }}</p>
                                                 </div>
                                             </td>
                                             <td>

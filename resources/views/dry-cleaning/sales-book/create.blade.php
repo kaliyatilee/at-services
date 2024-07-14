@@ -14,23 +14,8 @@
             <div class="card card-body mx-3 mx-md-4 mt-n6">
                 <div class="card card-plain h-100">
                     <div class="card-body p-3"> 
-                        @if(session('success') || session('error'))
-                            <div class="container">
-                                @if(session('success'))
-                                    <div class="alert text-center text-capitalize" role="alert" style="background:rgb(155, 191, 228); color:black">
-                                        {{ session('success') }}
-                                    </div>
-                                @endif
-                                @if(session('error'))
-                                    <div class="alert text-center text-capitalize" role="alert" style="background:rgb(241, 177, 177); color:black">
-                                        {{ session('error') }}
-                                    </div>
-                                @endif
-                            </div>
-                        @endif
-                        <form id="form" method="post" action="{{route('api_sales_book_store')}}" accept-charset="UTF-8" id="form"
-                            enctype="multipart/form-data" data-parsley-validate>
-                            @csrf
+                        <form class="" id="form" method='POST' action='{{ route('api_sales_book_store') }}'>
+                                @csrf
                             <div class="row">
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Search Provider</label>
@@ -166,7 +151,7 @@
                                 </div>
                             </div>
                             <button type="submit" class="btn bg-gradient-dark">Submit</button>
-                            
+                            <div class='' id="success_error_message"></div>
                         </form>
                     </div>
                 </div>
@@ -180,7 +165,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
-        $('#create_sale_form').submit(function (e) {
+        $('#form').submit(function (e) {
             $('#success_error_message').html('');
 
             e.preventDefault();

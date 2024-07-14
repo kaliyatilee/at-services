@@ -382,6 +382,7 @@ Route::get('printing', [PrintingController::class, "index"])->name("api_printing
 Route::get('printing/create', [PrintingController::class, "create"])->name("api_printing_create");
 Route::post('printing', [PrintingController::class, "store"])->name("api_printing_store");
 Route::get('printing/{id}', [PrintingController::class, "edit"])->name("api_printing_edit");
+Route::get('printing/view/{id}', [PrintingController::class, "view"])->name("api_printing_view");
 Route::post('printing/{id}', [PrintingController::class, "update"])->name("api_printing_update");
 Route::delete('printing/destroy/{id}', [PrintingController::class, "delete"])->name("api_printing_delete");
 

@@ -27,9 +27,9 @@
                                 @endif
                             </div>
                         @endif
-                        <form id="form" method="post" action="{{route('api_printing_update',['id' => $salesBook->id])}}" accept-charset="UTF-8" id="form"
-                            enctype="multipart/form-data" data-parsley-validate>
-                            @csrf
+                       
+                            <form class="" id="form" method='POST' action='{{route('api_printing_update',['id' => $salesBook->id])}}'>
+                                @csrf
                             <div class="row">
 
                                 <div class="mb-3 col-md-6">
@@ -78,21 +78,7 @@
                                         <small class="mt-2 text-sm text-danger">{{ $errors->first('amount_paid') }}</small>
                                     @endif
                                 </div>
-
-                                <div class="mb-3 col-md-6">
-                                    <label class="form-label">Currency</label>
-                                    <select class="form-control border border-2 p-2" name="currency" data-parsley-trigger="focusout" required data-parsley-required-message="Currency is required">
-                                        @foreach($currencies as $currency)
-                                            <option value="{{ $currency->id }}" {{ $currency->id == old('currency', $currency->id) ? 'selected' : '' }}>
-                                                {{ $currency->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    @if ($errors->has('currency'))
-                                        <small class="mt-2 text-sm text-danger">{{ $errors->first('currency') }}</small>
-                                    @endif
-                                </div>
-
+                                
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Rate</label>
                                     <input type="number" step="0.1" name="rate" class="form-control border border-2 p-2" data-parsley-trigger="focusout" required data-parsley-required-message="Rate is required"
@@ -110,15 +96,7 @@
                                         <small class="mt-2 text-sm text-danger">{{ $errors->first('payment_type') }}</small>
                                     @endif
                                 </div>
-                                <div class="mb-3 col-md-6">
-                                    <label class="form-label">Commission %age</label>
-                                    <input type="number" step="0.1" name="commission_percentage" max="100" min="0" class="form-control border border-2 p-2" data-parsley-trigger="focusout" required data-parsley-required-message="Commission percentage is required"
-                                           value='{{ $salesBook->commission_percentage }}'>
-                                           @if ($errors->has('commission_percentage'))
-                                        <small class="mt-2 text-sm text-danger">{{ $errors->first('commission_percentage') }}</small>
-                                    @endif
-                                </div>
-
+                                
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Transaction Date</label>
                                     <input type="date" name="transaction_date" class="form-control border border-2 p-2" data-parsley-trigger="focusout" required data-parsley-required-message="Transaction date is required"
@@ -152,7 +130,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
-        $('#update_sale_form').submit(function (e) {
+        $('#form').submit(function (e) {
             $('#success_error_message').html('');
 
             e.preventDefault();

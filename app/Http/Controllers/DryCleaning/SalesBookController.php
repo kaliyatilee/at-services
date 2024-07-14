@@ -122,13 +122,22 @@ class SalesBookController extends Controller
                 ]);
 
                 DB::commit();
-                return back()->with('success', 'New sale record created successfully!');
+                return response()->json([
+                    'message' => "Saved successfully",
+                    'success' => true
+                ]);
             } catch (\Exception $e) {
                 DB::rollBack();
-                return back()->with('error', 'Something bad happened. Try again!');
+                return response()->json([
+                    'message' => 'Something went wrong. Please try again later.',
+                    'success' => false
+                ], 500);
             }
         } catch (\Exception $e) {
-            return back()->with('error', 'Something bad happened. Try again!');
+            return response()->json([
+                'message' => 'Something went wrong. Please try again later.',
+                'success' => false
+            ], 500);
         }
     }
 
@@ -156,7 +165,10 @@ class SalesBookController extends Controller
             $salesBook = SalesBook::find($id);
 
             if (!$salesBook) {
-                return back()->with('error', 'Record not found. Try again!');
+                return response()->json([
+                    'message' => 'Record not found.',
+                    'success' => false
+                ], 500);
             }
 
             $validator = validator()->make($request->all(), [
@@ -223,15 +235,24 @@ class SalesBookController extends Controller
                 ]);
 
                 DB::commit();
-                return back()->with('success', 'Record updated successfully!');
+                return response()->json([
+                    'message' => "Saved successfully",
+                    'success' => true
+                ]);
             } catch (\Exception $e) {
                 DB::rollBack();
                 Log::error($e->getMessage());
-                return back()->with('error', 'Something went wrong. Please try again later.');
+                return response()->json([
+                    'message' => 'Something went wrong. Please try again later.',
+                    'success' => false
+                ], 500);
             }
         } catch (\Exception $e) {
             Log::error($e->getMessage());
-            return back()->with('error', 'Something went wrong. Please try again later.');
+            return response()->json([
+                'message' => 'Something went wrong. Please try again later.',
+                'success' => false
+            ], 500);
         }
     }
 

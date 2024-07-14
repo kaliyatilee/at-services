@@ -56,7 +56,7 @@
                                         </th>
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Commission %
+                                            Commission
                                         </th>
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -115,7 +115,7 @@
                                             </td>
                                             <td>
                                                 <div class="d-flex flex-column justify-content-center">
-                                                    <p class="mb-0 text-sm">{{ $sales->commission_percentage }}</p>
+                                                    <p class="mb-0 text-sm">{{ $sales->amount_paid }}</p>
                                                 </div>
                                             </td>
                                             <td>
@@ -128,6 +128,13 @@
 												href="{{ route("api_printing_edit", $sales->id) }}" data-original-title=""
                                                    title="">
                                                     <i class="material-icons">edit</i>
+                                                    <div class="ripple-container"></div>
+                                                </a>
+
+                                                <a rel="tooltip" class="btn  btn-primary btn-link"
+												href="{{ route('api_printing_view', $sales->id) }}" data-original-title=""
+                                                   title="">
+                                                    <i class="material-icons">view_module</i>
                                                     <div class="ripple-container"></div>
                                                 </a>
 
