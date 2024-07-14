@@ -1,5 +1,5 @@
 @if(session('status'))
-<div class="success_error_message {{session('status')=='success' ? 'text-success':'text-danger' }}">
+<div class="card-panel {{ session('status') == 'success' ? 'green lighten-4 green-text' : 'red lighten-4 red-text' }}">
     {{ session('message') }}
 </div>
 @endif

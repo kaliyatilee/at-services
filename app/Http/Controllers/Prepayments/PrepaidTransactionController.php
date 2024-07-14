@@ -28,7 +28,7 @@ class PrepaidTransactionController extends Controller
     public function store(PrepaidTransactionRequest $request){
         $validated = $request->validated();
         $validated['created_by'] = Auth::user()->id;
-        PrepaidTransaction::create($request->validated());
+        PrepaidTransaction::create($validated);
         return redirect()->route('prepaid.transaction.index')->with(['status'=>'success','message'=>'Transaction Successfully Saved']);
     }
 
