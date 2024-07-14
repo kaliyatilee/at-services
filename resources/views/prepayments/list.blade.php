@@ -14,6 +14,9 @@
                                     class="material-icons text-sm">add</i>&nbsp;&nbsp;Add New Transaction</a>
                         </div>
                         <div class="card-body px-0 pb-2">
+
+                            @include('partials.message')
+
                             <div class="table-responsive p-0">
                                 <table class="table align-items-center mb-0" id="dt-nested-object">
                                     <thead>
