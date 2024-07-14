@@ -8,8 +8,11 @@
 <div class="row">
     <div class="mb-3 col-md-6">
         <label class="form-label">Name</label>
-        <input type="text" name="name" class="form-control border border-2 p-2 @error('name') is-invalid @enderror"
-               value='{{ old('name') }}'>
+        <input type="text"
+               name="name"
+               class="form-control border border-2 p-2 @error('name') is-invalid @enderror"
+               value="{{ old('name', $prepaidTransaction->name ?? '') }}"
+               required>
     </div>
 
     <div class="mb-3 col-md-6">
@@ -21,7 +24,7 @@
             title="Must start with 2637 and follow format: 2637*********"
             placeholder="Format: 2637*********"
             name="phone"
-            value="{{ old('phone') }}"
+            value="{{ old('phone', $prepaidTransaction->phone ?? '') }}"
             oninput="this.setCustomValidity('')"
             oninvalid="this.setCustomValidity('Invalid phone number. Must start with 2637 and follow format: 2637*********')"
         />
@@ -34,7 +37,7 @@
             class="form-control border border-2 p-2 @error('description') is-invalid @enderror"
             type="text"
             name="description"
-            value="{{ old('description') }}"
+            value="{{ old('description', $prepaidTransaction->description ?? '') }}"
             required />
         <div id="phone_success_error_message" class="text-danger text-xs"></div>
     </div>
@@ -45,16 +48,16 @@
             class="form-control border border-2 p-2 @error('notes') is-invalid @enderror"
             type="text"
             name="notes"
-            value="{{ old('notes') }}"
+            value="{{ old('notes', $prepaidTransaction->notes ?? '') }}"
             required />
     </div>
     <div class="mb-3 col-md-6">
         <label class="form-label">Currency</label>
         <input
             class="form-control border border-2 p-2 @error('currency') is-invalid @enderror"
-            type="text"
-            name="description"
-            value="{{ old('description') }}"
+            type="int"
+            name="currency_id"
+            value="{{ old('currency_id', $prepaidTransaction->currency_id ?? '') }}"
             required />
         <div id="phone_success_error_message" class="text-danger text-xs"></div>
     </div>
@@ -63,18 +66,19 @@
         <label class="form-label">Rate</label>
         <input
             class="form-control border border-2 p-2 @error('rate') is-invalid @enderror"
-            type="text"
-            name="notes"
-            value="{{ old('notes') }}"
+            type="number"
+            step=".5"
+            name="rate"
+            value="{{ old('rate', $prepaidTransaction->rate ?? '') }}"
             required />
     </div>
     <div class="mb-3 col-md-6">
         <label class="form-label">Amount</label>
         <input
             class="form-control border border-2 p-2 @error('amount') is-invalid @enderror"
-            type="text"
-            name="description"
-            value="{{ old('description') }}"
+            type="number"
+            name="amount"
+            value="{{ old('amount', $prepaidTransaction->amount ?? '') }}"
             required />
         <div id="phone_success_error_message" class="text-danger text-xs"></div>
     </div>
@@ -83,9 +87,9 @@
         <label class="form-label">Transaction Date</label>
         <input
             class="form-control border border-2 p-2 @error('transaction_date') is-invalid @enderror"
-            type="text"
-            name="notes"
-            value="{{ old('transaction_date') }}"
+            type="date"
+            name="transaction_date"
+            value="{{ old('transaction_date', $prepaidTransaction->transaction_date ?? '') }}"
             required />
     </div>
 </div>
