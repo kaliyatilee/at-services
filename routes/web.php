@@ -37,6 +37,10 @@ use Modules\Messaging\Http\Controllers\DstvMessagingController;
 use Modules\Messaging\Http\Controllers\InsuranceMessagingController;
 use Modules\Messaging\Http\Controllers\LoanMessagingController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DryCleaning\RemittancesController;
+use App\Http\Controllers\DryCleaning\SalesBookController;
+use App\Http\Controllers\DryCleaning\ServiceProviderController;
+use App\Http\Controllers\Printing\PrintingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -351,6 +355,35 @@ Route::get('api/user/view/{id}', [UsersController::class, "user_view"])->name("a
 Route::get('api/summary/ecocash/{user_id}/{start_date}/{end_date}', [EcocashController::class, "summary"])->name("api_summary_ecocash");
 
 Route::get('api/summary/{user_id}/{start_date}/{end_date}', [SummaryController::class, "summary"])->name("api_summary");
+
+//Dry Cleaning Remittances Routes 
+Route::get('dry-cleaning/remittances', [RemittancesController::class, "index"])->name("api_remittances");
+Route::get('dry-cleaning/remittances/{id}', [RemittancesController::class, "create"])->name("api_remittances_create");
+Route::post('dry-cleaning/remittances/{id}', [RemittancesController::class, "store"])->name("api_remittances_store");
+Route::delete('dry-cleaning/remittances/destroy/{id}', [RemittancesController::class, "delete"])->name("api_remittances_delete");
+
+//Dry Cleaning Sales Book Routes
+Route::get('dry-cleaning/sales-book', [SalesBookController::class, "index"])->name("api_sales_book");
+Route::get('dry-cleaning/sales-book/create', [SalesBookController::class, "create"])->name("api_sales_book_create");
+Route::post('dry-cleaning/sales-book', [SalesBookController::class, "store"])->name("api_sales_book_store");
+Route::get('dry-cleaning/sales-book/{id}', [SalesBookController::class, "edit"])->name("api_sales_book_edit");
+Route::post('dry-cleaning/sales-book/{id}', [SalesBookController::class, "update"])->name("api_sales_book_update");
+Route::delete('dry-cleaning/sales-book/destroy/{id}', [SalesBookController::class, "delete"])->name("api_sales_book_delete");
+
+//Dry Cleaning Service Providers Routes
+Route::get('dry-cleaning/providers', [ServiceProviderController::class, "index"])->name("api_service_provider");
+Route::post('dry-cleaning/providers', [ServiceProviderController::class, "store"])->name("api_service_provider_store");
+Route::get('dry-cleaning/providers/{id}', [ServiceProviderController::class, "edit"])->name("api_service_provider_edit");
+Route::post('dry-cleaning/providers/{id}', [ServiceProviderController::class, "update"])->name("api_service_provider_update");
+Route::delete('dry-cleaning/providers/destroy/{id}', [ServiceProviderController::class, "delete"])->name("api_service_provider_delete");
+
+//Printing Services Transaction Routes
+Route::get('printing', [PrintingController::class, "index"])->name("api_printing");
+Route::get('printing/create', [PrintingController::class, "create"])->name("api_printing_create");
+Route::post('printing', [PrintingController::class, "store"])->name("api_printing_store");
+Route::get('printing/{id}', [PrintingController::class, "edit"])->name("api_printing_edit");
+Route::post('printing/{id}', [PrintingController::class, "update"])->name("api_printing_update");
+Route::delete('printing/destroy/{id}', [PrintingController::class, "delete"])->name("api_printing_delete");
 
 Route::get('billing', function () {
     return view('pages.billing');
