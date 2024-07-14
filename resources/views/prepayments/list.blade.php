@@ -17,6 +17,10 @@
 
                             @include('partials.message')
 
+                            <div class="w-25 my-2 d-block">
+                                Total Amount: {{$prepaidTransactions->sum('amount')}}
+                            </div>
+
                             <div class="table-responsive p-0">
                                 <table class="table align-items-center mb-0" id="dt-nested-object">
                                     <thead>
