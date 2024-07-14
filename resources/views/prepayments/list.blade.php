@@ -126,18 +126,18 @@
                                                     <div class="ripple-container"></div>
                                                 </a>
 
-												<a rel="tooltip" class="btn btn-primary btn-link"
-												href="{{ route("api_user_view", ['id' => $transaction->id]) }}" data-original-title=""
-                                                   title="">
-                                                    <i class="material-icons">view_module</i>
-                                                    <div class="ripple-container"></div>
-                                                </a>
+                                                <form action="{{ route("prepaid.transaction.delete", [$transaction->id]) }}" method="post" style="display:inline">
+                                                    @csrf
+                                                    @method('DELETE')
 
-                                                <button type="button" class="btn btn-danger btn-link"
-                                                        data-original-title="" title="">
-                                                    <i class="material-icons">close</i>
-                                                    <div class="ripple-container"></div>
-                                                </button>
+                                                    <button type="submit" class="btn btn-danger">
+                                                        <i class="material-icons">delete</i>
+                                                        <div class="ripple-container"></div>
+                                                    </button>
+                                                </form>
+
+
+
                                             </td>
                                         </tr>
                                     @endforeach
