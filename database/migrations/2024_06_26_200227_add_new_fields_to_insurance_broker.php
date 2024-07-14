@@ -14,10 +14,18 @@ return new class extends Migration
     public function up()
     {
         Schema::table('insurance_brooker', function (Blueprint $table) {
-            $table->date("date_of_remittance")->nullable();
-            $table->string("method_of_remittance");
-            $table->float("amount_remitted");
-            $table->float("account_balance");
+            if (!Schema::hasColumn('insurance_brooker', 'date_of_remittance')) {
+                $table->date("date_of_remittance")->nullable();
+            }
+            if (!Schema::hasColumn('insurance_brooker', 'method_of_remittance')) {
+                $table->string("method_of_remittance");
+            }
+            if (!Schema::hasColumn('insurance_brooker', 'amount_remitted')) {
+                $table->float("amount_remitted");
+            }
+            if (!Schema::hasColumn('insurance_brooker', 'account_balance')) {
+                $table->float("account_balance");
+            }
         });
     }
 
@@ -29,7 +37,19 @@ return new class extends Migration
     public function down()
     {
         Schema::table('insurance_brooker', function (Blueprint $table) {
-            Schema::dropIfExists('insurance_brooker');
+            if (Schema::hasColumn('insurance_brooker', 'date_of_remittance')) {
+                $table->dropColumn('date_of_remittance');
+            }
+            if (Schema::hasColumn('insurance_brooker', 'method_of_remittance')) {
+                $table->dropColumn('method_of_remittance');
+            }
+            if (Schema::hasColumn('insurance_brooker', 'amount_remitted')) {
+                $table->dropColumn('amount_remitted');
+            }
+            if (Schema::hasColumn('insurance_brooker', 'account_balance')) {
+                $table->dropColumn('account_balance');
+            }
         });
     }
 };
+

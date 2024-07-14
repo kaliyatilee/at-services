@@ -358,6 +358,29 @@
                 </a>
             </li>
             {{--            Eggs END--}}
+            {{-- ZINARA START --}}
+            <li class="nav-item mt-3">
+                <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Reports</h6>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white {{ $activePage == 'report_vehicle_licence_transactions' ? 'active bg-gradient-primary' : '' }}"
+                href="{{ route('report_vehicle_licence_transactions') }}">
+                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i style="font-size: 1.2rem;" class="fas fa-car ps-2 pe-2 text-center"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Vehicle Licence Transactions</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white {{ $activePage == 'report_remittance_records' ? 'active bg-gradient-primary' : '' }}"
+                href="{{ route('report_remittance_records') }}">
+                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i style="font-size: 1.2rem;" class="fas fa-money-check-alt ps-2 pe-2 text-center"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Remittance Records</span>
+                </a>
+            </li>
+            {{-- ZINARA END --}}
 
         </ul>
     </div>

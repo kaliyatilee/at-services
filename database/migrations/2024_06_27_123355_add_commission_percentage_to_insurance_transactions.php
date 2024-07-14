@@ -14,8 +14,12 @@ return new class extends Migration
     public function up()
     {
         Schema::table('insurance_transaction', function (Blueprint $table) {
-            $table->float("amount_received_usd");
-            $table->float("amount_received_zig");
+            if (!Schema::hasColumn('insurance_transaction', 'amount_received_usd')) {
+                $table->float("amount_received_usd");
+            }
+            if (!Schema::hasColumn('insurance_transaction', 'amount_received_zig')) {
+                $table->float("amount_received_zig");
+            }
         });
     }
 
@@ -27,7 +31,12 @@ return new class extends Migration
     public function down()
     {
         Schema::table('insurance_transaction', function (Blueprint $table) {
-            Schema::dropIfExists('insurance_transaction');
+            if (Schema::hasColumn('insurance_transaction', 'amount_received_usd')) {
+                $table->dropColumn('amount_received_usd');
+            }
+            if (Schema::hasColumn('insurance_transaction', 'amount_received_zig')) {
+                $table->dropColumn('amount_received_zig');
+            }
         });
     }
 };

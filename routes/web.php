@@ -36,6 +36,8 @@ use Modules\Messaging\Http\Controllers\NewsLetterMessagingController;
 use Modules\Messaging\Http\Controllers\DstvMessagingController;
 use Modules\Messaging\Http\Controllers\InsuranceMessagingController;
 use Modules\Messaging\Http\Controllers\LoanMessagingController;
+use App\Http\Controllers\VehicleLicenceTransactionController;
+use App\Http\Controllers\RemittanceRecordController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -346,6 +348,15 @@ Route::get('api/user/{id}', [UsersController::class, "list_users"])->name("api_l
 Route::delete('api/user/{id}', [UsersController::class, "delete_user"])->name("api_delete_user");
 Route::get('api/user/edit/{id}', [UsersController::class, "user_edit"])->name("user_edit");
 Route::get('api/user/view/{id}', [UsersController::class, "user_view"])->name("api_user_view");
+
+Route::resource('vehicle_licence_transactions', VehicleLicenceTransactionController::class);
+Route::resource('remittance_records', RemittanceRecordController::class);
+Route::get('/remittance-records/export', [RemittanceRecordController::class, 'export'])->name('remittance_records.export');
+Route::get('/vehicle-licence-transactions/export', [VehicleLicenceTransactionController::class, 'export'])->name('vehicle_licence_transactions.export');
+
+// Route to export data
+Route::get('vehicle_licence_transactions/export', [VehicleLicenceTransactionController::class, 'exportVehicleLicenceTransactions'])->name('vehicle_licence_transactions.export');
+Route::get('remittance_records/export', [RemittanceRecordController::class, 'exportRemittanceRecords'])->name('remittance_records.export');
 
 
 Route::get('api/summary/ecocash/{user_id}/{start_date}/{end_date}', [EcocashController::class, "summary"])->name("api_summary_ecocash");

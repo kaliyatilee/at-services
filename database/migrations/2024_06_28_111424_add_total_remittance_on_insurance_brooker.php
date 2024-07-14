@@ -14,7 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::table('insurance_brooker', function (Blueprint $table) {
-            $table->float("total_remittance");
+            if (!Schema::hasColumn('insurance_brooker', 'total_remittance')) {
+                $table->float("total_remittance");
+            }
         });
     }
 
@@ -26,7 +28,9 @@ return new class extends Migration
     public function down()
     {
         Schema::table('insurance_brooker', function (Blueprint $table) {
-            Schema::dropIfExists('insurance_brooker');
+            if (Schema::hasColumn('insurance_brooker', 'total_remittance')) {
+                $table->dropColumn('total_remittance');
+            }
         });
     }
 };
