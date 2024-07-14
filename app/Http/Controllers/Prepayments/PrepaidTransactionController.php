@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Prepayments;
 
 
+use App\Http\Requests\PrepaidTransactionRequest;
 use App\Models\PrepaidTransaction;
 use App\Models\Currency;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Routing\Controller;
@@ -23,16 +25,11 @@ class PrepaidTransactionController extends Controller
         return view('prepayments.create')->with(compact('currencies'));
     }
 
-    public function store(Request $request,$id = null){
-
-        if($id != null) {
-            $user = User::findOrFail($id);
-            $data['user'] = $user;
-        }else{
-            $data['user'] = new User();
-        }
-
-        return view('user.add',$data);
+    public function store(PrepaidTransactionRequest $request){
+        $validated = $request->validated();
+        $validated['created_by'] = Auth::user()->id;
+        PrepaidTransaction::create($request->validated());
+        return redirect()->route('prepaid.transaction.index')->with(['status'=>'success','message'=>'Transaction Successfully Saved']);
     }
 
 	public function edit($id){
