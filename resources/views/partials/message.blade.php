@@ -1,5 +1,5 @@
 @if(session('status'))
-<div class="{{session('status')=='success' ? 'alert alert-default-success':'alert alert-default-danger' }}">
+<div class="success_error_message {{session('status')=='success' ? 'text-success':'text-danger' }}">
     {{ session('message') }}
 </div>
 @endif

@@ -45,6 +45,6 @@ class PrepaidTransactionController extends Controller
     public function destroy(Request $request,$id){
         $prepaidTransaction= PrepaidTransaction::findorfail($id);
         $prepaidTransaction->delete();
-        return redirect()->route('prepaid.transaction.index')->with(['status'=>'success','message'=>'Transaction Successfully Updated']);
+        return redirect()->route('prepaid.transaction.index')->with(['status'=>'success','message'=>'Transaction Successfully Deleted']);
     }
 }
