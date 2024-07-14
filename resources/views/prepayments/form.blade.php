@@ -111,6 +111,7 @@
         <input
             class="form-control border border-2 p-2 @error('transaction_date') is-invalid @enderror"
             type="date"
+            max="{{date('Y-m-d')}}"
             name="transaction_date"
             value="{{ old('transaction_date', $prepaidTransaction->transaction_date ?? '') }}"
             required />
