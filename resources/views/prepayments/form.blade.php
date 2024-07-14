@@ -80,7 +80,9 @@
         <input
             class="form-control border border-2 p-2 @error('rate') is-invalid @enderror"
             type="number"
-            step=".5"
+            step="0.01"
+            min="0.01"
+            max="99999"
             name="rate"
             value="{{ old('rate', $prepaidTransaction->rate ?? '') }}"
             required />
