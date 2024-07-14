@@ -64,12 +64,12 @@
     </div>
     <div class="mb-3 col-md-6">
         <label class="form-label">Currency</label>
-        <input
-            class="form-control border border-2 p-2 @error('currency') is-invalid @enderror"
-            type="int"
-            name="currency_id"
-            value="{{ old('currency_id', $prepaidTransaction->currency_id ?? '') }}"
-            required />
+        <select class="form-control border border-2 p-2 @error('currency_id') is-invalid @enderror" id="currency_id" name="currency_id" required>
+            <option value="">Select..</option>
+            @foreach($currencies as $currency)
+                <option value="{{$currency->id}}" {{ old('currency_id', $prepaidTransaction->currency_id ?? '') == $currency->id ? 'selected' : '' }}>{{$currency->name}}</option>
+            @endforeach
+        </select>
         @error('currency_id')
         <div class="invalid-feedback">{{ $message }}</div>
         @enderror
