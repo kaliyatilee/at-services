@@ -120,7 +120,7 @@
                                             </td>
                                             <td class="align-middle">
                                                 <a rel="tooltip" class="btn btn-success btn-link"
-												href="{{ route("user_edit", ['id' => $transaction->id]) }}" data-original-title=""
+												href="{{ route("prepaid.transaction.edit", [$transaction->id]) }}" data-original-title=""
                                                    title="">
                                                     <i class="material-icons">edit</i>
                                                     <div class="ripple-container"></div>

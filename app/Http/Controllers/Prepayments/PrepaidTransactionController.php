@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Prepayments;
 
 
 use App\Models\PrepaidTransaction;
+use App\Models\Currency;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
@@ -17,7 +18,12 @@ class PrepaidTransactionController extends Controller
         return view('prepayments.list')->with(compact('prepaidTransactions'));
     }
 
-    public function add(Request $request,$id = null){
+    public function create(){
+        $currencies=Currency::all();
+        return view('prepayments.create')->with(compact('currencies'));
+    }
+
+    public function store(Request $request,$id = null){
 
         if($id != null) {
             $user = User::findOrFail($id);
@@ -28,51 +34,13 @@ class PrepaidTransactionController extends Controller
 
         return view('user.add',$data);
     }
-	public function user_edit($id){
-        $user = User::findOrFail($id);
-        $data['user'] = $user;
-        return view('user.edit',$data);
+
+	public function edit($id){
+        $prepaidTransaction = PrepaidTransaction::findOrFail($id);
+        $currencies=Currency::all();
+        return view('prepayments.edit')->with(compact('prepaidTransaction','currencies'));
 	}
-
-	public function user_view($id){
-		$user = User::findOrFail($id);
-		$data['user'] = $user;
-	return view('user.view',$data);
-
-}
-    public function create_user(Request $request)
-    {
-
-        $validator = validator()->make($request->all(), [
-            "phone1" => ['required','numeric','min:5'],
-            "name" => "required|string|min:1",
-            "phone2" => "nullable|string|min:5",
-            "password" => "required|string|min:5",
-        ]);
-
-        // Check if validation fails
-        if ($validator->fails()) {
-            // Return validation errors as JSON response
-            return response()->json([
-                'message' => 'The given data was invalid.',
-                'errors' => $validator->errors(),
-            ], 422);
-        }
-
-        $data = $validator->validated();
-
-        $data['password'] = Hash::make($data['password']);
-
-        $user = new User();
-        $user->create($data);
-
-        return response()->json([
-            'message' => "Saved successfully",
-            'success' => true
-        ]);
-    }
-
-    public function update_user(Request $request,$id)
+    public function update(Request $request,$id)
     {
         $data = $request->validate([
             "phone1" => ['required','numeric','min:5'],
