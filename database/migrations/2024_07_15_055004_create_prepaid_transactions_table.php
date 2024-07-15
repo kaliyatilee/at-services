@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('phone', 255);
             $table->integer('currency_id');
             $table->double('rate', 15, 8);
-            $table->integer('transaction_type');
+            $table->integer('transaction_type')->default(13)->nullable()->change();
             $table->double('amount', 15, 8);
             $table->string('description', 255)->nullable();
             $table->longText('notes')->nullable();
