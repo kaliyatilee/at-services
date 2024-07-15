@@ -99,9 +99,20 @@ class SalesBookController extends Controller
             DB::beginTransaction();
 
             try {
-                $commissionAmount = number_format($request->amount_paid * ($request->commission_percentage / 100), 2);
-                $commissionUsd = number_format($commissionAmount - $request->expense_amount, 2);
-                $remittanceUsd = number_format($request->amount_paid - $commissionAmount, 2);
+                $cur_name = Currency::find($request->currency)->name;
+
+                if ($cur_name == 'USD') {
+                    $amountPaidUsd = $request->amount_paid;
+                    $expenseAmountUsd = $request->expense_amount;
+                } else {
+                    $conversionRate = Currency::find($request->currency)->exchange_rate;
+                    $amountPaidUsd = $request->amount_paid / $conversionRate;
+                    $expenseAmountUsd = $request->expense_amount / $conversionRate;
+                }
+
+                $commissionAmount = number_format($amountPaidUsd * ($request->commission_percentage / 100), 2);
+                $commissionUsd = number_format($commissionAmount - $expenseAmountUsd, 2);
+                $remittanceUsd = number_format($amountPaidUsd - $commissionAmount, 2);
 
                 $salesBook = SalesBook::create([
                     'transaction_date'  =>  $request->transaction_date,
@@ -110,7 +121,7 @@ class SalesBookController extends Controller
                     'full_name'         =>  $request->full_name,
                     'phone'             =>  $request->phone,
                     'provider'          =>  $request->provider,
-                    'currency'          =>  number_format($request->currency, 2),
+                    'currency'          =>  $request->currency,
                     'rate'              =>  $request->rate,
                     'amount_paid'       =>  number_format($request->amount_paid, 2),
                     'payment_type'      =>  $request->payment_type,
@@ -212,9 +223,20 @@ class SalesBookController extends Controller
             DB::beginTransaction();
 
             try {
-                $commissionAmount = number_format($request->amount_paid * ($request->commission_percentage / 100), 2);
-                $commissionUsd = number_format($commissionAmount - $request->expense_amount, 2);
-                $remittanceUsd = number_format($request->amount_paid - $commissionAmount, 2);
+                $cur_name = Currency::find($request->currency)->name;
+
+                if ($cur_name == 'USD') {
+                    $amountPaidUsd = $request->amount_paid;
+                    $expenseAmountUsd = $request->expense_amount;
+                } else {
+                    $conversionRate = Currency::find($request->currency)->exchange_rate;
+                    $amountPaidUsd = $request->amount_paid / $conversionRate;
+                    $expenseAmountUsd = $request->expense_amount / $conversionRate;
+                }
+
+                $commissionAmount = number_format($amountPaidUsd * ($request->commission_percentage / 100), 2);
+                $commissionUsd = number_format($commissionAmount - $expenseAmountUsd, 2);
+                $remittanceUsd = number_format($amountPaidUsd - $commissionAmount, 2);
 
                 $salesBook->update([
                     'transaction_date'  =>  $request->transaction_date,
@@ -223,7 +245,7 @@ class SalesBookController extends Controller
                     'full_name'         =>  $request->full_name,
                     'phone'             =>  $request->phone,
                     'provider'          =>  $request->provider,
-                    'currency'          =>  number_format($request->currency, 2),
+                    'currency'          =>  $request->currency,
                     'rate'              =>  $request->rate,
                     'amount_paid'       =>  number_format($request->amount_paid, 2),
                     'payment_type'      =>  $request->payment_type,

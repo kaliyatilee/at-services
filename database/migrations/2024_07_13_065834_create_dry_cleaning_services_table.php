@@ -22,11 +22,11 @@ return new class extends Migration
             $table->string('provider', 30)->required()->comment('Name of the service provider');
             $table->string('phone', 20)->required()->comment('Phone number of the customer');
             $table->unsignedInteger('currency')->required()->comment('Currency used for the transaction');
-            $table->decimal('rate', 8, 2)->required()->comment('Exchange rate');
+            $table->decimal('rate', 8, 2)->required()->default(0.00)->comment('Exchange rate');
             $table->decimal('amount_paid', 8, 2)->comment('Amount paid by the customer');
             $table->string('payment_type')->required()->comment('Type of payment (e.g. cash, credit card)');
             $table->string('expense_name')->nullable()->comment('Name of the expense (if any)');
-            $table->decimal('expense_amount', 8, 2)->nullable()->comment('Amount of the expense (if any)');
+            $table->decimal('expense_amount', 8, 2)->default(0.00)->comment('Amount of the expense (if any)');
             $table->decimal('commission_percentage', 2, 1)->required()->comment('Commission percentage');
             $table->decimal('remittance_usd', 8, 2)->nullable()->comment('Remittance in USD');
             $table->decimal('commission_usd', 8, 2)->nullable()->comment('Commission in USD');
