@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Agent\AgentController;
 use App\Http\Controllers\Client\ClientController;
 use App\Http\Controllers\Company\CompanyRegistrationController;
 use App\Http\Controllers\Company\CompanyRegistrationSupplierController;
@@ -112,45 +113,244 @@ Route::get("vehicle/class/add", [VehicleClassController::class, "add"])->name("v
 Route::get("ecocash/transaction_type", [EcocashTransactionTypeController::class, "view"])->name("ecocash_transaction_type");
 Route::get("ecocash/transaction_type/add", [EcocashTransactionTypeController::class, "add"])->name("ecocash_transaction_type_add");
 
-Route::get("ecocash", [EcocashController::class, "view"])->name("ecocash");
-Route::get("ecocash/add", [EcocashController::class, "add"])->name("ecocash_add");
+Route::get(
+	"ecocash",
+	[
+		EcocashController::class,
+		"view"
+	]
+)->name( "ecocash" );
+Route::get(
+	"ecocash/add",
+	[
+		EcocashController::class,
+		"add"
+	]
+)->name( "ecocash_add" );
 
-Route::get("ecocash/agent/line", [EcocashAgentLineController::class, "view"])->name("ecocash_agent_line");
-Route::get("ecocash/agent/line/add", [EcocashAgentLineController::class, "add"])->name("ecocash_agent_line_add");
+Route::get(
+	"ecocash/agent/line",
+	[
+		EcocashAgentLineController::class,
+		"view"
+	]
+)->name( "ecocash_agent_line" );
+Route::get(
+	"ecocash/agent/line/add",
+	[
+		EcocashAgentLineController::class,
+		"add"
+	]
+)->name( "ecocash_agent_line_add" );
 
-Route::get("company/registration", [CompanyRegistrationController::class, "view"])->name("company_registration");
-Route::get("company/registration/add", [CompanyRegistrationController::class, "add"])->name("company_registration_add");
+Route::get(
+	"company/registration",
+	[
+		CompanyRegistrationController::class,
+		"view"
+	]
+)->name( "company_registration" );
+Route::get(
+	"company/registration/add",
+	[
+		CompanyRegistrationController::class,
+		"add"
+	]
+)->name( "company_registration_add" );
 
-Route::get("company/registration/supplier", [CompanyRegistrationSupplierController::class, "view"])->name("company_registration_supplier");
-Route::get("company/registration/supplier/add", [CompanyRegistrationSupplierController::class, "add"])->name("company_registration_supplier_add");
+Route::get(
+	"company/registration/supplier",
+	[
+		CompanyRegistrationSupplierController::class,
+		"view"
+	]
+)->name( "company_registration_supplier" );
+Route::get(
+	"company/registration/supplier/add",
+	[
+		CompanyRegistrationSupplierController::class,
+		"add"
+	]
+)->name( "company_registration_supplier_add" );
 
-Route::get("permanent/disc", [PermanentDiscController::class, "view"])->name("permanent_disc");
-Route::get("permanent/disc/add", [PermanentDiscController::class, "add"])->name("permanent_disc_add");
+Route::get(
+	"permanent/disc",
+	[
+		PermanentDiscController::class,
+		"view"
+	]
+)->name( "permanent_disc" );
+Route::get(
+	"permanent/disc/add",
+	[
+		PermanentDiscController::class,
+		"add"
+	]
+)->name( "permanent_disc_add" );
 
-Route::get("eggs", [EggsController::class, "view"])->name("eggs");
-Route::get("eggs/add", [EggsController::class, "add"])->name("eggs_add");
+Route::get(
+	"eggs",
+	[
+		EggsController::class,
+		"view"
+	]
+)->name( "eggs" );
+Route::get(
+	"eggs/add",
+	[
+		EggsController::class,
+		"add"
+	]
+)->name( "eggs_add" );
 
-Route::get("rtgs", [RTGsController::class, "view"])->name("rtgs");
-Route::get("rtgs/add", [RTGsController::class, "add"])->name("rtgs_add");
+Route::get(
+	"rtgs",
+	[
+		RTGsController::class,
+		"view"
+	]
+)->name( "rtgs" );
+Route::get(
+	"rtgs/add",
+	[
+		RTGsController::class,
+		"add"
+	]
+)->name( "rtgs_add" );
+
+Route::get(
+	'agent',
+	[
+		AgentController::class,
+		'view'
+	]
+)->name( 'agent' );
+Route::get(
+	'agent/add',
+	[
+		AgentController::class,
+		'add'
+	]
+)->name( 'agent_add' );
+
+Route::get(
+	'agent/edit/{id}',
+	[
+		AgentController::class,
+		'agent_edit'
+	]
+)->name( 'agent_edit' );
+Route::get(
+	'agent/view/{id}',
+	[
+		AgentController::class,
+		'view_agent'
+	]
+)->name( 'agent_view' );
+Route::delete(
+	'agent/delete/{id}',
+	[
+		AgentController::class,
+		'delete'
+	]
+)->name( 'agent_delete' );
+
 /*
  * API
  */
 
-Route::post('api/rtgs/new', [RTGsController::class, "create_rtgs"])->name("api_create_rtgs");
-Route::post('api/rtgs/{id}', [RTGsController::class, "update_rtgs"])->name("api_update_rtgs");
-Route::get('api/rtgs', [RTGsController::class, "list_rtgs"])->name("api_get_rtgs");
-Route::get('api/rtgs/user/{user_id}', [RTGsController::class, "list_rtgs_by_user"])->name("api_get_rtgs_by_user");
-Route::delete('api/rtgs/{id}', [RTGsController::class, "delete_rtgs"])->name("api_delete_rtgs");
-Route::get('/api/rtgs/edit/{id}', [RTGsController::class, "edit_rtgs"])->name("api_edit_rtgs");
-Route::get('/api/rtgs/view/{id}', [RTGsController::class, "view_rtgs"])->name("api_view_rtgs");
+Route::post(
+	'api/rtgs/new',
+	[
+		RTGsController::class,
+		"create_rtgs"
+	]
+)->name( "api_create_rtgs" );
+Route::post(
+	'api/rtgs/{id}',
+	[
+		RTGsController::class,
+		"update_rtgs"
+	]
+)->name( "api_update_rtgs" );
+Route::get(
+	'api/rtgs',
+	[
+		RTGsController::class,
+		"list_rtgs"
+	]
+)->name( "api_get_rtgs" );
+Route::get(
+	'api/rtgs/user/{user_id}',
+	[
+		RTGsController::class,
+		"list_rtgs_by_user"
+	]
+)->name( "api_get_rtgs_by_user" );
+Route::delete(
+	'api/rtgs/{id}',
+	[
+		RTGsController::class,
+		"delete_rtgs"
+	]
+)->name( "api_delete_rtgs" );
+Route::get(
+	'/api/rtgs/edit/{id}',
+	[
+		RTGsController::class,
+		"edit_rtgs"
+	]
+)->name( "api_edit_rtgs" );
+Route::get(
+	'/api/rtgs/view/{id}',
+	[
+		RTGsController::class,
+		"view_rtgs"
+	]
+)->name( "api_view_rtgs" );
 
-
-Route::post('api/permanent/disc/new', [PermanentDiscController::class, "create_permanent_disc"])->name("api_create_permanent_disc");
-Route::post('api/permanent/disc', [PermanentDiscController::class, "update_permanent_disc"])->name("api_update_permanent_disc");
-Route::get('api/permanent/disc', [PermanentDiscController::class, "list_permanent_disc"])->name("api_get_permanent_disc");
-Route::delete('api/permanent/disc/{id}', [PermanentDiscController::class, "delete_permanent_disc"])->name("api_delete_permanent_disc");
-Route::get('/permanent/disc/edit/{id}', [PermanentDiscController::class, "edit_permanent_disc"])->name("permanent_disc_edit");
-Route::get('/permanent/disc/view/{id}', [PermanentDiscController::class, "view_permanent_disc"])->name("api_view_permanent_disc");
+Route::post(
+	'api/permanent/disc/new',
+	[
+		PermanentDiscController::class,
+		"create_permanent_disc"
+	]
+)->name( "api_create_permanent_disc" );
+Route::post(
+	'api/permanent/disc',
+	[
+		PermanentDiscController::class,
+		"update_permanent_disc"
+	]
+)->name( "api_update_permanent_disc" );
+Route::get(
+	'api/permanent/disc',
+	[
+		PermanentDiscController::class,
+		"list_permanent_disc"
+	]
+)->name( "api_get_permanent_disc" );
+Route::delete(
+	'api/permanent/disc/{id}',
+	[
+		PermanentDiscController::class,
+		"delete_permanent_disc"
+	]
+)->name( "api_delete_permanent_disc" );
+Route::get(
+	'/permanent/disc/edit/{id}',
+	[
+		PermanentDiscController::class,
+		"edit_permanent_disc"
+	]
+)->name( "permanent_disc_edit" );
+Route::get(
+	'/permanent/disc/view/{id}',
+	[
+		PermanentDiscController::class,
+		"view_permanent_disc"
+	]
+)->name( "api_view_permanent_disc" );
 
 Route::post('api/eggs/new', [EggsController::class, "create_eggs"])->name("api_create_eggs");
 Route::post('api/eggs', [EggsController::class, "update_eggs"])->name("api_update_eggs");
@@ -251,29 +451,148 @@ Route::get('vehicle/class/edit/{id}', [VehicleClassController::class, 'vehicle_c
 Route::post('api/vehicle/class/edit/{id}', [VehicleClassController::class, "update_vehicle_class"])->name("api_update_vehicle_class");
 Route::get('api/vehicle/class/view/{id}', [VehicleClassController::class, "vehicle_class_view"])->name("api_vehicle_class_view");
 
-Route::post('api/currency/add/new', [CurrencyController::class, "create_currency"])->name("api_create_currency");
-Route::get('api/currency', [CurrencyController::class, "getCurrency"])->name("api_get_currency");
-Route::get('api/currency/{currency}', [CurrencyController::class, "getCurrency"])->name("api_get_single_currency");
-Route::get('api/currency/get/exchange-rate', [CurrencyController::class, "getExchangeRate"])->name("api_currency_exchange_rate");
-Route::get('currency/edit/{id}', [CurrencyController::class, 'currency_edit'])->name('currency_edit');
-Route::post('api/currency/add/{id}', [CurrencyController::class, "update_currency"])->name("api_update_currency");
-Route::delete('api/currency/{id}', [CurrencyController::class, "delete_currency"])->name("api_delete_currency");
+Route::post(
+	'api/currency/add/new',
+	[
+		CurrencyController::class,
+		"create_currency"
+	]
+)->name( "api_create_currency" );
+Route::get(
+	'api/currency',
+	[
+		CurrencyController::class,
+		"getCurrency"
+	]
+)->name( "api_get_currency" );
+Route::get(
+	'api/currency/{currency}',
+	[
+		CurrencyController::class,
+		"getCurrency"
+	]
+)->name( "api_get_single_currency" );
+Route::get(
+	'api/currency/get/exchange-rate',
+	[
+		CurrencyController::class,
+		"getExchangeRate"
+	]
+)->name( "api_currency_exchange_rate" );
+Route::get(
+	'currency/edit/{id}',
+	[
+		CurrencyController::class,
+		'currency_edit'
+	]
+)->name( 'currency_edit' );
+Route::post(
+	'api/currency/add/{id}',
+	[
+		CurrencyController::class,
+		"update_currency"
+	]
+)->name( "api_update_currency" );
+Route::delete(
+	'api/currency/{id}',
+	[
+		CurrencyController::class,
+		"delete_currency"
+	]
+)->name( "api_delete_currency" );
 
-Route::post('api/client/add', [ClientController::class, "create_client"])->name("api_create_client");
-Route::post('api/client/add/{id}', [ClientController::class, "update_client"])->name("api_update_client");
-Route::get('api/client', [ClientController::class, "list_clients"])->name("api_list_clients");
-Route::get('api/client/{id}', [ClientController::class, "list_clients"])->name("api_list_clients");
-Route::get('api/client/search/{search}', [ClientController::class, "searchClient"])->name("api_search_clients");
-Route::delete('api/client/{id}', [ClientController::class, "delete_client"])->name("api_delete_client");
-Route::get('api/client/edit/{id}', [ClientController::class, "client_edit"])->name("client_edit");
-Route::get('api/client/view/{id}', [ClientController::class, "client_view"])->name("api_client_view");
+Route::post(
+	'api/client/add',
+	[
+		ClientController::class,
+		"create_client"
+	]
+)->name( "api_create_client" );
+Route::post(
+	'api/client/add/{id}',
+	[
+		ClientController::class,
+		"update_client"
+	]
+)->name( "api_update_client" );
+Route::get(
+	'api/client',
+	[
+		ClientController::class,
+		"list_clients"
+	]
+)->name( "api_list_clients" );
+Route::get(
+	'api/client/{id}',
+	[
+		ClientController::class,
+		"list_clients"
+	]
+)->name( "api_list_client" );
+Route::get(
+	'api/client/search/{search}',
+	[
+		ClientController::class,
+		"searchClient"
+	]
+)->name( "api_search_clients" );
+Route::delete(
+	'api/client/{id}',
+	[
+		ClientController::class,
+		"delete_client"
+	]
+)->name( "api_delete_client" );
+Route::get(
+	'api/client/edit/{id}',
+	[
+		ClientController::class,
+		"client_edit"
+	]
+)->name( "client_edit" );
+Route::get(
+	'api/client/view/{id}',
+	[
+		ClientController::class,
+		"client_view"
+	]
+)->name( "api_client_view" );
 
-
-Route::post('api/dstv/package/add', [DSTVPackageController::class, "create_dstv_package"])->name("api_create_dstv_package");
-Route::post('api/dstv/package/add/{id}', [DSTVPackageController::class, "update_dstv_package"])->name("api_update_dstv_package");
-Route::get('api/dstv/package', [DSTVPackageController::class, "list_dstv_package"])->name("api_list_dstv_package");
-Route::get('api/dstv/package/{id}', [DSTVPackageController::class, "list_dstv_package"])->name("api_list_dstv_package_by_id");
-Route::delete('api/dstv/package/{id}', [DSTVPackageController::class, "delete_dstv_package"])->name("api_delete_dstv_package");
+Route::post(
+	'api/dstv/package/add',
+	[
+		DSTVPackageController::class,
+		"create_dstv_package"
+	]
+)->name( "api_create_dstv_package" );
+Route::post(
+	'api/dstv/package/add/{id}',
+	[
+		DSTVPackageController::class,
+		"update_dstv_package"
+	]
+)->name( "api_update_dstv_package" );
+Route::get(
+	'api/dstv/package',
+	[
+		DSTVPackageController::class,
+		"list_dstv_package"
+	]
+)->name( "api_list_dstv_package" );
+Route::get(
+	'api/dstv/package/{id}',
+	[
+		DSTVPackageController::class,
+		"list_dstv_package"
+	]
+)->name( "api_list_dstv_package_by_id" );
+Route::delete(
+	'api/dstv/package/{id}',
+	[
+		DSTVPackageController::class,
+		"delete_dstv_package"
+	]
+)->name( "api_delete_dstv_package" );
 Route::get('api/dstv/package/edit/{id}', [DSTVPackageController::class, 'dstv_package_edit'])->name('dstv_package_edit');
 Route::get('api/dstv/package/view/{id}', [DSTVPackageController::class, 'dstv_package_view'])->name('api_dstv_package_view');
 
@@ -336,45 +655,177 @@ Route::post('api/loan/check', [LoanDisbursedController::class, "loan_check"])->n
 Route::post('api/notes/add', [NotesController::class, "create_notes"])->name("api_create_notes");
 Route::get('api/notes/get/{date}', [NotesController::class, "list_notes"])->name("api_get_notes");
 Route::get('api/notes/edit/{id}', [NotesController::class, 'notes_edit'])->name('api_notes_edit');
-Route::post('api/notes/add/{id}', [NotesController::class, "update_notes"])->name("api_update_notes");
-Route::delete('api/notes/{id}', [NotesController::class, "delete_user"])->name("api_delete_notes");
+Route::post(
+	'api/notes/add/{id}',
+	[
+		NotesController::class,
+		"update_notes"
+	]
+)->name( "api_update_notes" );
+Route::delete(
+	'api/notes/{id}',
+	[
+		NotesController::class,
+		"delete_user"
+	]
+)->name( "api_delete_notes" );
 
+Route::post(
+	'api/user/add',
+	[
+		UsersController::class,
+		"create_user"
+	]
+)->name( "api_create_user" );
+//Route::post('add', [UsersController::class, "create_user"])->name("api_create_user");
+Route::post(
+	'api/user/add/{id}',
+	[
+		UsersController::class,
+		"update_user"
+	]
+)->name( "api_update_user" );
+Route::post(
+	'api/user/password/{id}',
+	[
+		UsersController::class,
+		"update_user_password"
+	]
+)->name( "api_update_user_password" );
+Route::get(
+	'api/user',
+	[
+		UsersController::class,
+		"list_users"
+	]
+)->name( "api_list_users" );
+Route::get(
+	'api/user/{id}',
+	[
+		UsersController::class,
+		"list_users"
+	]
+)->name( "api_list_users_by_id" );
+Route::delete(
+	'api/user/{id}',
+	[
+		UsersController::class,
+		"delete_user"
+	]
+)->name( "api_delete_user" );
+Route::get(
+	'api/user/edit/{id}',
+	[
+		UsersController::class,
+		"user_edit"
+	]
+)->name( "user_edit" );
+Route::get(
+	'api/user/view/{id}',
+	[
+		UsersController::class,
+		"user_view"
+	]
+)->name( "api_user_view" );
 
+Route::get(
+	'api/summary/ecocash/{user_id}/{start_date}/{end_date}',
+	[
+		EcocashController::class,
+		"summary"
+	]
+)->name( "api_summary_ecocash" );
 
-Route::post('api/user/add', [UsersController::class, "create_user"])->name("api_create_user");
-Route::post('add', [UsersController::class, "create_user"])->name("api_create_user");
-Route::post('api/user/add/{id}', [UsersController::class, "update_user"])->name("api_update_user");
-Route::post('api/user/password/{id}', [UsersController::class, "update_user_password"])->name("api_update_user_password");
-Route::get('api/user', [UsersController::class, "list_users"])->name("api_list_users");
-Route::get('api/user/{id}', [UsersController::class, "list_users"])->name("api_list_users_by_id");
-Route::delete('api/user/{id}', [UsersController::class, "delete_user"])->name("api_delete_user");
-Route::get('api/user/edit/{id}', [UsersController::class, "user_edit"])->name("user_edit");
-Route::get('api/user/view/{id}', [UsersController::class, "user_view"])->name("api_user_view");
+Route::get(
+	'api/summary/{user_id}/{start_date}/{end_date}',
+	[
+		SummaryController::class,
+		"summary"
+	]
+)->name( "api_summary" );
 
+Route::post(
+	'api/agent/new',
+	[
+		AgentController::class,
+		'create_agent'
+	]
+)->name( 'api_create_agent' );
+Route::post(
+	'api/agent/edit/{id}',
+	[
+		AgentController::class,
+		'update_agent'
+	]
+)->name( 'api_update_agent' );
+Route::get(
+	'api/agent',
+	[
+		AgentController::class,
+		'list_agents'
+	]
+)->name( 'api_list_agents' );
+Route::get(
+	'api/agent/{id}',
+	[
+		AgentController::class,
+		'get_agent_by_id'
+	]
+)->name( 'api_get_agent_by_id' );
+Route::delete(
+	'api/agent/delete/{id}',
+	[
+		AgentController::class,
+		'delete_agent'
+	]
+)->name( 'api_delete_agent' );
+Route::get(
+	'api/agent/view/{id}',
+	[
+		AgentController::class,
+		"agent_view"
+	]
+)->name( "api_agent_view" );
 
-Route::get('api/summary/ecocash/{user_id}/{start_date}/{end_date}', [EcocashController::class, "summary"])->name("api_summary_ecocash");
-
-Route::get('api/summary/{user_id}/{start_date}/{end_date}', [SummaryController::class, "summary"])->name("api_summary");
-
-Route::get('billing', function () {
-    return view('pages.billing');
-})->name('billing');
-Route::get('tables', function () {
-    return view('pages.tables');
-})->name('tables');
-Route::get('rtl', function () {
-    return view('pages.rtl');
-})->name('rtl');
-Route::get('virtual-reality', function () {
-    return view('pages.virtual-reality');
-})->name('virtual-reality');
-Route::get('notifications', function () {
-    return view('pages.notifications');
-})->name('notifications');
-Route::get('static-sign-in', function () {
-    return view('pages.static-sign-in');
-})->name('static-sign-in');
-Route::get('static-sign-up', function () {
+Route::get(
+	'billing',
+	function () {
+		return view( 'pages.billing' );
+	}
+)->name( 'billing' );
+Route::get(
+	'tables',
+	function () {
+		return view( 'pages.tables' );
+	}
+)->name( 'tables' );
+Route::get(
+	'rtl',
+	function () {
+		return view( 'pages.rtl' );
+	}
+)->name( 'rtl' );
+Route::get(
+	'virtual-reality',
+	function () {
+		return view( 'pages.virtual-reality' );
+	}
+)->name( 'virtual-reality' );
+Route::get(
+	'notifications',
+	function () {
+		return view( 'pages.notifications' );
+	}
+)->name( 'notifications' );
+Route::get(
+	'static-sign-in',
+	function () {
+		return view( 'pages.static-sign-in' );
+	}
+)->name( 'static-sign-in' );
+Route::get(
+	'static-sign-up',
+	function () {
     return view('pages.static-sign-up');
 })->name('static-sign-up');
 Route::get('user-management', function () {
@@ -385,12 +836,54 @@ Route::get('user-profile', function () {
 })->name('user-profile');
 
 
-Route::group([], function (){
-    Route::get('general-sales', [GeneralSalesController::class, 'viewTransactions'])->name('general-sales');
-    Route::get('view-general-sale/{transaction}/{del?}', [GeneralSalesController::class, 'viewTransaction'])->name('view-general-sale');
-    Route::get('create-general-sale', [GeneralSalesController::class, 'createTransaction'])->name('create-general-sale');
-    Route::get('edit-general-sale/{saleId}', EditGeneralSale::class)->name('edit-general-sale');
-    Route::post('store-general-sale', [GeneralSalesController::class, 'storeTransaction'])->name('store-general-sale');
-    Route::post('update-general-sale', [GeneralSalesController::class, 'updateTransaction'])->name('update-general-sale');
-    Route::get('delete-general-sale/{saleId}', [GeneralSalesController::class, 'deleteTransaction'])->name('delete-general-sale');
+Route::group([], function () {
+	Route::get(
+		'general-sales',
+		[
+			GeneralSalesController::class,
+			'viewTransactions'
+		]
+	)->name( 'general-sales' );
+	Route::get(
+		'view-general-sale/{transaction}/{del?}',
+		[
+			GeneralSalesController::class,
+			'viewTransaction'
+		]
+	)->name( 'view-general-sale' );
+	Route::get(
+		'create-general-sale',
+		[
+			GeneralSalesController::class,
+			'createTransaction'
+		]
+	)->name( 'create-general-sale' );
+	Route::get(
+		'edit-general-sale/{saleId}',
+		[
+			EditGeneralSale::class,
+			'editGeneralSale'
+		]
+	)->name( 'edit-general-sale' );
+	Route::post(
+		'store-general-sale',
+		[
+			GeneralSalesController::class,
+			'storeTransaction'
+		]
+	)->name( 'store-general-sale' );
+	Route::post(
+		'update-general-sale',
+		[
+			GeneralSalesController::class,
+			'updateTransaction'
+		]
+	)->name( 'update-general-sale' );
+	Route::get(
+		'delete-general-sale/{saleId}',
+		[
+			GeneralSalesController::class,
+			'deleteTransaction'
+		]
+	)->name( 'delete-general-sale' );
 });
