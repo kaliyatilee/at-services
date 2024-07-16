@@ -89,7 +89,7 @@ class PrintingController extends Controller
 
             try {
 
-                $commissionAmount = number_format($request->amount_paid , 2);
+                $commissionAmount = $request->amount_paid;
                 $cur = Currency::where('name', 'USD')->first()->id;
                 
                 $sales= PrintingSales::create([
@@ -99,11 +99,11 @@ class PrintingController extends Controller
                     'full_name'         =>  $request->full_name,
                     'phone'             =>  $request->phone,
                     'currency'          =>  $cur,
-                    'rate'              =>  number_format($request->rate, 2),
-                    'amount_paid'       =>  number_format($request->amount_paid, 2),
+                    'rate'              =>  number_format($request->rate, 2, '.', ''),
+                    'amount_paid'       =>  number_format($request->amount_paid, 2, '.', ''),
                     'payment_type'      =>  $request->payment_type,
-                    'commission' => number_format($request->amount_paid, 2),
-                    'commission_usd'    =>  number_format($commissionAmount, 2)
+                    'commission' => number_format($request->amount_paid, 2, '.', ''),
+                    'commission_usd'    =>  number_format($commissionAmount, 2, '.', ''),
                 ]);
 
                 DB::commit();
@@ -218,7 +218,7 @@ class PrintingController extends Controller
             DB::beginTransaction();
 
             try {
-                $commissionAmount = number_format($request->amount_paid , 2);
+                $commissionAmount = $request->amount_paid;
                 $cur = Currency::where('name', 'USD')->first()->id;
 
                 $sales->update([
@@ -228,11 +228,11 @@ class PrintingController extends Controller
                     'full_name'         =>  $request->full_name,
                     'phone'             =>  $request->phone,
                     'currency'          =>  $cur,
-                    'rate'              =>  number_format($request->rate, 2),
-                    'amount_paid'       =>  number_format($request->amount_paid, 2),
+                    'rate'              =>  number_format($request->rate, 2, '.', ''),
+                    'amount_paid'       =>  number_format($request->amount_paid, 2, '.', ''),
                     'payment_type'      =>  $request->payment_type,
-                    'commission' => number_format($request->amount_paid, 2),
-                    'commission_usd'    =>  number_format($commissionAmount, 2)
+                    'commission' => number_format($request->amount_paid, 2, '.', ''),
+                    'commission_usd'    =>  number_format($commissionAmount, 2, '.', ''),
                 ]);
 
                 DB::commit();

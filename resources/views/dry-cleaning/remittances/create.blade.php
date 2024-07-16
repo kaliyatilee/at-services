@@ -37,7 +37,7 @@
 
                                     <div class="mb-3 col-md-4">
                                         <label class="form-label">Remitted Amount</label>
-                                        <input type="number" step="0.1" name="amount_remitted" class="form-control border border-2 p-2" data-parsley-trigger="focusout" required data-parsley-required-message="Remittence amount is required"
+                                        <input type="number" step=".01" name="amount_remitted" class="form-control border border-2 p-2" data-parsley-trigger="focusout" required data-parsley-required-message="Remittence amount is required"
                                             value='{{ old('amount_remitted') }}'>
                                             @if ($errors->has('amount_remitted'))
                                             <small class="mt-2 text-sm text-danger">{{ $errors->first('amount_remitted') }}</small>

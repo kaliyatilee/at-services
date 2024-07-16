@@ -43,39 +43,5 @@ class SalesBook extends Model
         'commission_usd',
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [];
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'transaction_date' => 'date',
-        'rate' => 'decimal:2',
-        'amount_paid' => 'decimal:2',
-        'expense_amount' => 'decimal:2',
-        'commission_percentage' => 'decimal:1',
-        'remittance_usd' => 'decimal:2',
-        'commission_usd' => 'decimal:2',
-    ];
-
-    /**
-     * The accessors to append to the model's array form.
-     *
-     * @var array
-     */
-    protected $appends = [];
-
-    /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = ['transaction_date'];
+   
 }

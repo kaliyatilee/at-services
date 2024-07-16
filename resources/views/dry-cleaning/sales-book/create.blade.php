@@ -70,7 +70,7 @@
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Amount Paid</label>
-                                    <input type="number" name="amount_paid" class="form-control border border-2 p-2" data-parsley-trigger="focusout" required data-parsley-required-message="Amount is required"
+                                    <input type="number" step=".01" name="amount_paid" class="form-control border border-2 p-2" data-parsley-trigger="focusout" required data-parsley-required-message="Amount is required"
                                            value='{{ old('amount_paid') }}' placeholder="0.00">
                                            @if ($errors->has('amount_paid'))
                                            <small class="mt-2 text-sm text-danger">{{ $errors->first('amount_paid') }}</small>
@@ -92,7 +92,7 @@
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Rate</label>
-                                    <input type="number" step="0.1" name="rate" class="form-control border border-2 p-2" data-parsley-trigger="focusout" required data-parsley-required-message="Rate is required"
+                                    <input type="number" step=".01" name="rate" class="form-control border border-2 p-2" data-parsley-trigger="focusout" required data-parsley-required-message="Rate is required"
                                            value='{{ old('rate') }}' placeholder="0.00">
                                            @if ($errors->has('rate'))
                                         <small class="mt-2 text-sm text-danger">{{ $errors->first('rate') }}</small>
@@ -120,7 +120,7 @@
                                 </div>
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Expense Amount</label>
-                                    <input type="number" step="0.1" name="expense_amount" class="form-control border border-2 p-2" data-parsley-trigger="focusout" required data-parsley-required-message="Expense amount is required"
+                                    <input type="number" step=".01" name="expense_amount" class="form-control border border-2 p-2" data-parsley-trigger="focusout" required data-parsley-required-message="Expense amount is required"
                                            value='{{ old('expense_amount') }}' placeholder="0.00">
                                            @if ($errors->has('expense_amount'))
                                         <small class="mt-2 text-sm text-danger">{{ $errors->first('expense_amount') }}</small>
@@ -128,7 +128,7 @@
                                 </div>
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Commission %age</label>
-                                    <input type="number" step="0.1" name="commission_percentage" max="100" min="0" class="form-control border border-2 p-2" data-parsley-trigger="focusout" required data-parsley-required-message="Commission percentage is required"
+                                    <input type="number" step=".01" name="commission_percentage" max="100" min="0" class="form-control border border-2 p-2" data-parsley-trigger="focusout" required data-parsley-required-message="Commission percentage is required"
                                            value='{{ old('commission_percentage') }}' placeholder="0.00">
                                            @if ($errors->has('commission_percentage'))
                                         <small class="mt-2 text-sm text-danger">{{ $errors->first('commission_percentage') }}</small>

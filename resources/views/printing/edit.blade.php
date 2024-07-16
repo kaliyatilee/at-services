@@ -72,8 +72,8 @@
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Amount Paid</label>
-                                    <input type="number" name="amount_paid" class="form-control border border-2 p-2" data-parsley-trigger="focusout" required data-parsley-required-message="Amount is required"
-                                           value='{{ $salesBook->amount_paid }}'>
+                                    <input type="number" step=".01" name="amount_paid" class="form-control border border-2 p-2" data-parsley-trigger="focusout" required data-parsley-required-message="Amount is required"
+                                           value='{{ $salesBook->amount_paid }}' placeholder="0.00">
                                            @if ($errors->has('amount_paid'))
                                         <small class="mt-2 text-sm text-danger">{{ $errors->first('amount_paid') }}</small>
                                     @endif
@@ -82,7 +82,7 @@
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Rate</label>
                                     <input type="number" step="0.1" name="rate" class="form-control border border-2 p-2" data-parsley-trigger="focusout" required data-parsley-required-message="Rate is required"
-                                           value='{{ $salesBook->rate }}'>
+                                           value='{{ $salesBook->rate }}' placeholder="0.00">
                                            @if ($errors->has('rate'))
                                         <small class="mt-2 text-sm text-danger">{{ $errors->first('rate') }}</small>
                                     @endif
@@ -91,7 +91,7 @@
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Payment Type</label>
                                     <input type="text" name="payment_type" class="form-control border border-2 p-2" data-parsley-trigger="focusout" required data-parsley-required-message="Payment type is required"
-                                           value='{{ $salesBook->payment_type }}'>
+                                           value='{{ $salesBook->payment_type }}' placeholder="Cash">
                                            @if ($errors->has('payment_type'))
                                         <small class="mt-2 text-sm text-danger">{{ $errors->first('payment_type') }}</small>
                                     @endif

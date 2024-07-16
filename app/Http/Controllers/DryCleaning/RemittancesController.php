@@ -83,9 +83,9 @@ class RemittancesController extends Controller
                 $totalAmountRemitted = RemittancesBook::where('provider_remitted_to', $id)->sum('amount_remitted');
                 $totalProviderSales = SalesBook::where('provider', $id)->sum('remittance_usd');
 
-                $remittanceBalance = number_format($totalProviderSales - $totalAmountRemitted, 2);
+                $remittanceBalance = $totalProviderSales - $totalAmountRemitted;
 
-                $newRemittanceBalance = number_format($remittanceBalance - $request->amount_remitted, 2);
+                $newRemittanceBalance = $remittanceBalance - $request->amount_remitted;
 
                
                 if($request->amount_remitted > $remittanceBalance){
@@ -99,8 +99,8 @@ class RemittancesController extends Controller
                     'remittance_date'   =>  $request->remittance_date,
                     'provider_remitted_to'       =>  $id,
                     'remittance_method' =>  $request->remittance_method,
-                    'amount_remitted'   =>  number_format($request->amount_remitted, 2),
-                    'account_balance'   =>  number_format($newRemittanceBalance, 2),
+                    'amount_remitted'   =>  number_format($request->amount_remitted, 2, '.', ''),
+                    'account_balance'   =>  number_format($newRemittanceBalance, 2, '.', ''),
                 ]);
 
                 DB::commit();
@@ -111,13 +111,13 @@ class RemittancesController extends Controller
             } catch (\Exception $e) {
                 DB::rollBack();
                 return response()->json([
-                    'message' => $e->getMessage(),
+                    'message' => $e. 'Something went wrong. Please try again later.',
                     'success' => false
                 ], 500);
             }
         } catch (\Exception $e) {
             return response()->json([
-                'message' => $e->getMessage(),
+                'message' => 'Something went wrong. Please try again later.',
                 'success' => false
             ], 500);
         }

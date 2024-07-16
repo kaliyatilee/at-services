@@ -110,9 +110,12 @@ class SalesBookController extends Controller
                     $expenseAmountUsd = $request->expense_amount / $conversionRate;
                 }
 
-                $commissionAmount = number_format($amountPaidUsd * ($request->commission_percentage / 100), 2);
-                $commissionUsd = number_format($commissionAmount - $expenseAmountUsd, 2);
-                $remittanceUsd = number_format($amountPaidUsd - $commissionAmount, 2);
+                $commissionAmount = $amountPaidUsd * ($request->commission_percentage / 100);
+                
+                $commissionUsd =$commissionAmount - $expenseAmountUsd;
+                $remittanceUsd = $amountPaidUsd - $commissionAmount;
+
+                
 
                 $salesBook = SalesBook::create([
                     'transaction_date'  =>  $request->transaction_date,
@@ -123,13 +126,13 @@ class SalesBookController extends Controller
                     'provider'          =>  $request->provider,
                     'currency'          =>  $request->currency,
                     'rate'              =>  $request->rate,
-                    'amount_paid'       =>  number_format($request->amount_paid, 2),
+                    'amount_paid'       =>  number_format($request->amount_paid, 2, '.', ''),
                     'payment_type'      =>  $request->payment_type,
                     'expense_name'      =>  $request->expense_name,
-                    'expense_amount'    =>  number_format($request->expense_amount, 2),
-                    'commission_percentage'  => number_format($request->commission_percentage, 2),
-                    'remittance_usd'    => $remittanceUsd,
-                    'commission_usd'    => $commissionUsd,
+                    'expense_amount'    =>  number_format($request->expense_amount, 2, '.', ''),
+                    'commission_percentage'  => number_format($request->commission_percentage, 2, '.', ''),
+                    'remittance_usd'    => number_format($remittanceUsd, 2, '.', ''),
+                    'commission_usd'    => number_format($commissionUsd, 2, '.', ''),
                 ]);
 
                 DB::commit();
@@ -234,9 +237,10 @@ class SalesBookController extends Controller
                     $expenseAmountUsd = $request->expense_amount / $conversionRate;
                 }
 
-                $commissionAmount = number_format($amountPaidUsd * ($request->commission_percentage / 100), 2);
-                $commissionUsd = number_format($commissionAmount - $expenseAmountUsd, 2);
-                $remittanceUsd = number_format($amountPaidUsd - $commissionAmount, 2);
+                $commissionAmount = $amountPaidUsd * ($request->commission_percentage / 100);
+                
+                $commissionUsd =$commissionAmount - $expenseAmountUsd;
+                $remittanceUsd = $amountPaidUsd - $commissionAmount;
 
                 $salesBook->update([
                     'transaction_date'  =>  $request->transaction_date,
@@ -247,13 +251,13 @@ class SalesBookController extends Controller
                     'provider'          =>  $request->provider,
                     'currency'          =>  $request->currency,
                     'rate'              =>  $request->rate,
-                    'amount_paid'       =>  number_format($request->amount_paid, 2),
+                    'amount_paid'       =>  number_format($request->amount_paid, 2, '.', ''),
                     'payment_type'      =>  $request->payment_type,
                     'expense_name'      =>  $request->expense_name,
-                    'expense_amount'    =>  number_format($request->expense_amount, 2),
-                    'commission_percentage'  => number_format($request->commission_percentage, 2),
-                    'remittance_usd'    => $remittanceUsd,
-                    'commission_usd'    => $commissionUsd,
+                    'expense_amount'    =>  number_format($request->expense_amount, 2, '.', ''),
+                    'commission_percentage'  => number_format($request->commission_percentage, 2, '.', ''),
+                    'remittance_usd'    => number_format($remittanceUsd, 2, '.', ''),
+                    'commission_usd'    => number_format($commissionUsd, 2, '.', ''),
                 ]);
 
                 DB::commit();
