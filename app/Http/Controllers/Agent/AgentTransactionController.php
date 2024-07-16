@@ -11,11 +11,7 @@ class AgentTransactionController extends Controller {
 		$agent_transaction = AgentTransaction::all();
 
 		$data['agent_transactions'] = $agent_transaction;
-
-		return view(
-			'agent.transaction.list',
-			$data
-		);
+		return view('agent.transaction.list',$data);
 	}
 
 	public function add( Request $request, $id = null ) {
@@ -25,10 +21,7 @@ class AgentTransactionController extends Controller {
 		} else {
 			$data['agent_transaction'] = new AgentTransaction();
 
-			return view(
-				'agent.transaction.add',
-				$data
-			);
+			return view('agent.transaction.add',$data);
 		}
 	}
 
@@ -36,10 +29,7 @@ class AgentTransactionController extends Controller {
 		$agent_transaction = AgentTransaction::findOrFail( $id );
 		$data['transaction'] = $agent_transaction;
 
-		return view(
-			'agent.transaction.edit',
-			$data
-		);
+		return view('agent.transaction.edit',$data);
 	}
 
 	public function create_agent_transaction( Request $request ) {
@@ -63,30 +53,17 @@ class AgentTransactionController extends Controller {
 	public function show( $id ) {
 		$transaction = AgentTransaction::findOrFail( $id );
 
-		$agent = Agent::where(
-			'name',
-			'=',
-			$transaction->name
-		)->get();
+		$agent = Agent::where('name','=',$transaction->name	)->get();
 		$amounts_paid = $agent->pluck( 'amount_paid' );
 		$total_amount_paid = $amounts_paid->sum();
 
-		$transactions = AgentTransaction::where(
-			'name',
-			'=',
-			$transaction->name
-		)->get();
+		$transactions = AgentTransaction::where('name',	'=',$transaction->name)->get();
 		$amounts_remmited = $agent->pluck( 'amount_remmited' );
 		$total_amount_remmited = $amounts_remmited->sum();
 
 		$accountBalance = $total_amount_paid - $total_amount_remmited;
 
-		return view(
-			'agent.transaction.view',
-			compact(
-				'agent',
-				'transactions',
-				'accountBalance'
+		return view('agent.transaction.view',compact('agent','transactions','accountBalance'
 			)
 		);
 	}
@@ -94,10 +71,7 @@ class AgentTransactionController extends Controller {
 	public function edit( $id ) {
 		$transaction = AgentTransaction::findOrFail( $id );
 
-		return view(
-			'agent.transaction.edit',
-			compact( 'transaction' )
-		);
+		return view('agent.transaction.edit',compact( 'transaction' ));
 	}
 
 	public function update_agent_transaction( Request $request, $id ) {
@@ -122,10 +96,7 @@ class AgentTransactionController extends Controller {
 		if ( $id == null ) {
 			$data = AgentTransaction::all();
 		} else {
-			$data = AgentTransaction::query()->where(
-				"id",
-				$id
-			)->first();
+			$data = AgentTransaction::query()->where("id",$id	)->first();
 		}
 
 		return response()->json( [

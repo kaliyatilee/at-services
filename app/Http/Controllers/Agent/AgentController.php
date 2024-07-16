@@ -12,10 +12,7 @@ class AgentController extends Controller {
 
 		$data['agents'] = $agents;
 
-		return view(
-			'agent.list',
-			$data
-		);
+		return view('agent.list',$data);
 	}
 
 	public function add( Request $request, $id = null ) {
@@ -26,19 +23,14 @@ class AgentController extends Controller {
 			$data['agent'] = new Agent();
 		}
 
-		return view(
-			'agent.add',
-			$data
-		);
+		return view('agent.add',$data );
 	}
 
 	public function agent_edit( $id ) {
 		$agent = Agent::findOrFail( $id );
 		$data['agent'] = $agent;
 
-		return view(
-			'agent.edit',
-			$data
+		return view('agent.edit',$data
 		);
 	}
 
@@ -46,10 +38,7 @@ class AgentController extends Controller {
 		$agent = Agent::findOrFail( $id );
 		$data['agent'] = $agent;
 
-		return view(
-			'agent.view',
-			$data
-		);
+		return view('agent.view',$data);
 	}
 
 	public function create_agent( Request $request ) {
@@ -105,10 +94,7 @@ class AgentController extends Controller {
 		if ( $id == null ) {
 			$data = Agent::all();
 		} else {
-			$data = Agent::query()->where(
-				"id",
-				$id
-			)->first();
+			$data = Agent::query()->where("id",$id)->first();
 		}
 
 		return response()->json( [
