@@ -138,13 +138,37 @@
             </li>
             {{--            CLIENTS END--}}
 
-{{--            DSTV START--}}
+            {{--            AGENTS START--}}
+            <li class="nav-item mt-3">
+                <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Agents</h6>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white {{ $activePage == 'agent' ? 'active bg-gradient-primary' : '' }} "
+                   href="{{ route('agent') }}">
+                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i style="font-size: 1.2rem;" class="fas fa-user-circle ps-2 pe-2 text-center"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Agents</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white {{ $activePage == 'agent/add' ? 'active bg-gradient-primary' : '' }} "
+                   href="{{ route('agent_add') }}">
+                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i style="font-size: 1.2rem;" class="fas fa-user-circle ps-2 pe-2 text-center"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Add Agent</span>
+                </a>
+            </li>
+            {{--            AGENTS END--}}
+
+            {{--            DSTV START--}}
             <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">DSTV</h6>
             </li>
             <li class="nav-item">
                 <a class="nav-link text-white {{ $activePage == 'dstv' ? 'active bg-gradient-primary' : '' }} "
-                    href="{{ route('dstv') }}">
+                   href="{{ route('dstv') }}">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i style="font-size: 1.2rem;" class="fas fa-user-circle ps-2 pe-2 text-center"></i>
                     </div>
