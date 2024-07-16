@@ -21,7 +21,7 @@ class PrintingController extends Controller
     public function index()
     {
         try {
-            
+
            $printSales = PrintingSales::all();
             return view('printing.index', compact('printSales'));
         } catch (\Exception $e) {
@@ -90,8 +90,8 @@ class PrintingController extends Controller
             try {
 
                 $commissionAmount = number_format($request->amount_paid , 2);
-                $cur = Currency::whereName('USD')->value('id');
-               
+                $cur = Currency::where('name', 'USD')->first()->id;
+                
                 $sales= PrintingSales::create([
                     'transaction_date'  =>  $request->transaction_date,
                     'description'       =>  $request->description,
@@ -115,7 +115,7 @@ class PrintingController extends Controller
                 DB::rollBack();
 
                 return response()->json([
-                    'message' => $e->getMessage() - 'Something went wrong. Please try again later.',
+                    'message' => 'Something went wrong. Please try again later.',
                     'success' => false
                 ], 500);
             }
@@ -219,7 +219,7 @@ class PrintingController extends Controller
 
             try {
                 $commissionAmount = number_format($request->amount_paid , 2);
-                $cur = Currency::whereName('USD')->value('id');
+                $cur = Currency::where('name', 'USD')->first()->id;
 
                 $sales->update([
                     'transaction_date'  =>  $request->transaction_date,
