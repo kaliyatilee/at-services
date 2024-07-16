@@ -90,8 +90,11 @@
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Payment Type</label>
-                                    <input type="text" name="payment_type" class="form-control border border-2 p-2" data-parsley-trigger="focusout" required data-parsley-required-message="Payment type is required"
-                                           value='{{ $salesBook->payment_type }}' placeholder="Cash">
+                                    <select class="form-control border border-2 p-2" name="payment_type" data-parsley-trigger="focusout" required data-parsley-required-message="Payment type is required">
+                                        <option value="">Select Payment Type</option>
+                                        <option value="Given" {{ $salesBook->payment_type == old('payment_type', $salesBook->payment_type) ? 'selected' : '' }}>Given</option>
+                                        <option value="Received" {{ $salesBook->payment_type == old('payment_type', $salesBook->payment_type) ? 'selected' : '' }}>Received</option>
+                                    </select>
                                            @if ($errors->has('payment_type'))
                                         <small class="mt-2 text-sm text-danger">{{ $errors->first('payment_type') }}</small>
                                     @endif
