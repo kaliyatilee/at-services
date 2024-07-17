@@ -1,11 +1,11 @@
 @props(['activePage'])
 
 <aside
-    class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark"
-    id="sidenav-main">
+        class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark"
+        id="sidenav-main">
     <div class="sidenav-header">
         <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
-            aria-hidden="true" id="iconSidenav"></i>
+           aria-hidden="true" id="iconSidenav"></i>
         <a class="navbar-brand m-0 d-flex text-wrap align-items-center" href=" {{ route('dashboard') }} ">
             <img src="{{ asset('assets') }}/img/logo-ct.png" class="navbar-brand-img h-100" alt="main_logo">
             <span class="ms-2 font-weight-bold text-white">{{ env("APP_NAME") }}</span>
@@ -160,6 +160,15 @@
                     <span class="nav-link-text ms-1">Add Agent</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link text-white {{ $activePage == 'agent_transaction' ? 'active bg-gradient-primary' : '' }} "
+                   href="{{ route('agent_transaction') }}">
+                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i style="font-size: 1.2rem;" class="fas fa-user-circle ps-2 pe-2 text-center"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Agent Transactions</span>
+                </a>
+            </li>
             {{--            AGENTS END--}}
 
             {{--            DSTV START--}}
@@ -184,7 +193,7 @@
                     <span class="nav-link-text ms-1">Packages</span>
                 </a>
             </li>
-{{--            DSTV END--}}
+            {{--            DSTV END--}}
             {{--            LOAN START--}}
             <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">LOAN</h6>
