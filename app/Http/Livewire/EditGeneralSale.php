@@ -16,7 +16,6 @@ use App\Models\PermanentDisc;
 use App\Models\RTGS\RTGs;
 use App\Models\SalesTransactionType;
 use DateTime;
-use Illuminate\Console\View\Components\Component;
 use Illuminate\Validation\Rule;
 
 class EditGeneralSale extends Component
