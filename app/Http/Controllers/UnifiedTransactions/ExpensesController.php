@@ -26,8 +26,9 @@ class ExpensesController extends Controller
     public function index()
     {
         try {
-            $transaction = UnifiedTransactions::where('model', $this->modelReference)->get(); 
-            return view('unified_transactions.expenses.index', compact('transaction'));
+            $transaction = UnifiedTransactions::where('model', $this->modelReference)->get();
+            $totalTransactions = UnifiedTransactions::where('model', $this->modelReference)->sum('amount_paid');
+            return view('unified_transactions.expenses.index', compact('transaction','totalTransactions'));
         } catch (\Exception $e) {
             Log::error($e->getMessage());
             return redirect()->back()->with('error', 'An error occurred while loading page.');
@@ -58,7 +59,7 @@ class ExpensesController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         try {
             $validator = validator()->make($request->all(), [
                 'transaction_date'  => 'required|date',
