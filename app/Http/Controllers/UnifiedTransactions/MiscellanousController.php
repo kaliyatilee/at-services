@@ -28,7 +28,10 @@ class MiscellanousController extends Controller
     {
         try {
             $transaction = UnifiedTransactions::where('model', $this->modelReference)->get();
-            $totalTransactions = UnifiedTransactions::where('model', $this->modelReference)->sum('amount_paid');
+            $totalTransactions = UnifiedTransactions::where('model', $this->modelReference)
+            ->groupBy('currency')
+            ->select('currency', DB::raw('SUM(amount_paid) as total_amount'))
+            ->get();
             return view('unified_transactions.miscellanous.index', compact('transaction','totalTransactions'));
         } catch (\Exception $e) {
             Log::error($e->getMessage());

@@ -9,9 +9,17 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card my-4">
-                        <div class=" me-3 my-3 text-end">
+                        <div class="d-flex justify-content-between align-items-center p-2">
+                            <div>
+                                {!! implode(' | ', $totalTransactions->map(function($c) {
+                                    return '<span class="fs-6 fw-bold">'.DB::table('currency')->find($c['currency'])->name.' '.$c['total_amount'].'</span>';
+                                })->all()) !!}
+                            </div>
+
                             <a class="btn bg-gradient-dark mb-0" href="{{ route("expenses.create") }}">
                                 <i class="material-icons text-sm">add</i>&nbsp;&nbsp;Add Expenses</a>
+
+
                         </div>
                         <div class="card-body px-0 pb-2">
                             <div class="table-responsive p-0">

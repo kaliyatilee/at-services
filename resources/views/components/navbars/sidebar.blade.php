@@ -233,7 +233,7 @@
                  <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                    <i style="font-size: 1.2rem;" class="fas fa-user-circle ps-2 pe-2 text-center"></i>
                  </div>
-                 <span class="nav-link-text ms-1">Expenses Transactions</span>
+                 <span class="nav-link-text ms-1">Expenses</span>
                 </a>
               </li>
               <li class="nav-item">
@@ -242,7 +242,7 @@
                  <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                    <i style="font-size: 1.2rem;" class="fas fa-user-circle ps-2 pe-2 text-center"></i>
                  </div>
-                 <span class="nav-link-text ms-1">Miscellanous Transactions</span>
+                 <span class="nav-link-text ms-1">Miscellanous</span>
                 </a>
               </li>
               <li class="nav-item">
@@ -251,7 +251,7 @@
                  <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                    <i style="font-size: 1.2rem;" class="fas fa-user-circle ps-2 pe-2 text-center"></i>
                  </div>
-                 <span class="nav-link-text ms-1">Spare Sales Transactions</span>
+                 <span class="nav-link-text ms-1">Spare Sales Book</span>
                 </a>
               </li>
 
