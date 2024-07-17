@@ -25,7 +25,7 @@
                                             Amount Paid
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Date
+                                            Account Balance
                                         </th>
                                         <th class="text-secondary opacity-7"></th>
                                     </tr>
@@ -49,19 +49,19 @@
                                             </td>
                                             <td>
                                                 <div class="d-flex flex-column justify-content-center">
-                                                    <p class="mb-0 text-sm">{{ $transaction->created_at }}</p>
+                                                    <p class="mb-0 text-sm">{{ $transaction->account_balance }}</p>
                                                 </div>
                                             </td>
                                             <td class="align-middle">
                                                 <a rel="tooltip" class="btn btn-success btn-link"
                                                    href="{{ route('agent_transaction_edit', ['id' => $transaction->id]) }}"
-                                                   data-original-title="" title="">
+                                                   data-original-title="" title="Edit">
                                                     <i class="material-icons">edit</i>
                                                     <div class="ripple-container"></div>
                                                 </a>
                                                 <a rel="tooltip" class="btn btn-primary btn-link"
                                                    href="{{ route('agent_transaction_show', ['id' => $transaction->id]) }}"
-                                                   data-original-title="" title="">
+                                                   data-original-title="view" title="View ">
                                                     <i class="material-icons">view_module</i>
                                                     <div class="ripple-container"></div>
                                                 </a>

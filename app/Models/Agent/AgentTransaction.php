@@ -24,21 +24,16 @@ class AgentTransaction extends Model {
 	];
 
 	public function createdBy() {
-		$user = User::find( $this->created_by );
-		if ( $user == null ) {
-			$user = new User();
-		}
-
-		return $user;
+		return $this->belongsTo(User::class, 'created_by');
 	}
 
+	public function agent() {
+		return $this->belongsTo(Agent::class, 'name', 'name');
+	}
 
 	public function calculateAccountBalance() {
-		$amountsPaid = AgentTransaction::where('name', $this->name)->pluck('amount_paid');
-		$totalAmountPaid = $amountsPaid->sum();
-
-		$amountsRemitted = AgentTransaction::where('name', $this->name)->pluck('amount_remmited');
-		$totalAmountRemitted = $amountsRemitted->sum();
+		$totalAmountPaid = $this->agent->amount_paid->sum();
+		$totalAmountRemitted = $this->agent->transactions->sum('amount_remmited');
 
 		return $totalAmountPaid - $totalAmountRemitted;
 	}

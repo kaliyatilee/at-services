@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Agent;
 
 use App\Http\Controllers\Controller;
+use App\Models\Agent\Agent;
 use App\Models\Agent\AgentTransaction;
 use Illuminate\Http\Request;
 
@@ -51,17 +52,17 @@ class AgentTransactionController extends Controller {
 
 	public function show($id) {
 		$transaction = AgentTransaction::findOrFail($id);
-		$agentName = $transaction->name;
-		$accountBalance = AgentTransaction::calculateAccountBalance($agentName);
-		$agent = Agent::where('name', $agentName)->first();
-		$transactions = AgentTransaction::where('name', $agentName)->get();
+		$agent = $transaction->agent;
+
+		if (!$agent) {
+			return redirect()->back()->with('error', 'Agent not found');
+		}
+		$accountBalance = $transaction->calculateAccountBalance();
+
+		$transactions = $agent->transactions;
 
 		return view('agent.transaction.view', compact('agent', 'transactions', 'accountBalance'));
 	}
-
-
-
-
 
 	public function edit( $id ) {
 		$transaction = AgentTransaction::findOrFail( $id );

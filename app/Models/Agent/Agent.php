@@ -26,5 +26,9 @@ class Agent extends Model {
 		"notes",
 		"description"
 	];
-	use HasFactory;
+
+	//An agent has many transactions
+	public function transactions() {
+		return $this->hasMany(AgentTransaction::class, 'name', 'name');
+	}
 }
