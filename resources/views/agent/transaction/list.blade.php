@@ -1,5 +1,4 @@
 <x-layout bodyClass="g-sidenav-show bg-gray-200">
-
     <x-navbars.sidebar activePage="Agent Transactions"></x-navbars.sidebar>
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg">
         <!-- Navbar -->
@@ -61,7 +60,7 @@
                                                     <div class="ripple-container"></div>
                                                 </a>
                                                 <a rel="tooltip" class="btn btn-primary btn-link"
-                                                   href="{{ route('agent_transaction_view', ['id' => $transaction->id]) }}"
+                                                   href="{{ route('agent_transaction_show', ['id' => $transaction->id]) }}"
                                                    data-original-title="" title="">
                                                     <i class="material-icons">view_module</i>
                                                     <div class="ripple-container"></div>
@@ -90,5 +89,4 @@
         </div>
     </main>
     <x-plugins></x-plugins>
-
 </x-layout>

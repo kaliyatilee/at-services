@@ -1,5 +1,4 @@
 <x-layout bodyClass="g-sidenav-show  bg-gray-200">
-
     <x-navbars.sidebar activePage="Agent Transactions"></x-navbars.sidebar>
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         <!-- Navbar -->
@@ -40,7 +39,7 @@
                                     <div class="card-body">
                                         <p>Amount Paid</p>
                                         <hr>
-                                        {{ $agent->amount_paid }}
+                                        {{ $amountPaid }}
                                     </div>
                                 </div>
                             </div>
@@ -48,9 +47,9 @@
                             <div class="mb-3 col-md-6">
                                 <div class="card card-frame">
                                     <div class="card-body">
-                                        <p>Amount remmited</p>
+                                        <p>Amount Remitted</p>
                                         <hr>
-                                        {{ $amounts_remmited }}
+                                        {{ $amountRemitted }}
                                     </div>
                                 </div>
                             </div>
@@ -58,19 +57,42 @@
                             <div class="mb-3 col-md-6">
                                 <div class="card card-frame">
                                     <div class="card-body">
-                                        <p>Account balance</p>
+                                        <p>Account Balance</p>
                                         <hr>
                                         {{ $accountBalance }}
                                     </div>
                                 </div>
                             </div>
                         </div>
+
+                        <h2>Transactions</h2>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Amount Remitted</th>
+                                <th>Account Balance</th>
+                                <th>Created At</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($transactions as $transaction)
+                                <tr>
+                                    <td>{{ $transaction->id }}</td>
+                                    <td>{{ $transaction->name }}</td>
+                                    <td>{{ $transaction->amount_remmited }}</td>
+                                    <td>{{ $transaction->account_balance }}</td>
+                                    <td>{{ $transaction->created_at }}</td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+
                     </div>
                 </div>
             </div>
         </div>
     </main>
     <x-plugins></x-plugins>
-
 </x-layout>
-

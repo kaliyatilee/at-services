@@ -49,24 +49,19 @@ class AgentTransactionController extends Controller {
 			201 );
 	}
 
+	public function show($id) {
+		$transaction = AgentTransaction::findOrFail($id);
+		$agentName = $transaction->name;
+		$accountBalance = AgentTransaction::calculateAccountBalance($agentName);
+		$agent = Agent::where('name', $agentName)->first();
+		$transactions = AgentTransaction::where('name', $agentName)->get();
 
-	public function show( $id ) {
-		$transaction = AgentTransaction::findOrFail( $id );
-
-		$agent = Agent::where('name','=',$transaction->name	)->get();
-		$amounts_paid = $agent->pluck( 'amount_paid' );
-		$total_amount_paid = $amounts_paid->sum();
-
-		$transactions = AgentTransaction::where('name',	'=',$transaction->name)->get();
-		$amounts_remmited = $agent->pluck( 'amount_remmited' );
-		$total_amount_remmited = $amounts_remmited->sum();
-
-		$accountBalance = $total_amount_paid - $total_amount_remmited;
-
-		return view('agent.transaction.view',compact('agent','transactions','accountBalance'
-			)
-		);
+		return view('agent.transaction.view', compact('agent', 'transactions', 'accountBalance'));
 	}
+
+
+
+
 
 	public function edit( $id ) {
 		$transaction = AgentTransaction::findOrFail( $id );

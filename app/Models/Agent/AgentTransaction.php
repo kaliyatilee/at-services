@@ -31,4 +31,16 @@ class AgentTransaction extends Model {
 
 		return $user;
 	}
+
+
+	public function calculateAccountBalance() {
+		$amountsPaid = AgentTransaction::where('name', $this->name)->pluck('amount_paid');
+		$totalAmountPaid = $amountsPaid->sum();
+
+		$amountsRemitted = AgentTransaction::where('name', $this->name)->pluck('amount_remmited');
+		$totalAmountRemitted = $amountsRemitted->sum();
+
+		return $totalAmountPaid - $totalAmountRemitted;
+	}
+
 }
