@@ -143,9 +143,9 @@ Route::delete('agent/delete/{id}',	[ AgentController::class,'delete'])->name( 'a
 Route::get(	'agent_transaction',[ AgentTransactionController::class,'view'])->name( 'agent_transaction' );
 Route::get(	'agent_transaction/add',[ AgentTransactionController::class,'add'])->name( 'agent_transaction_add' );
 Route::get('agent_transaction/edit/{id}',[ AgentTransactionController::class,'agent_transaction_edit'])->name( 'agent_transaction_edit' );
-Route::delete('agent_transaction/delete/{id}',	[ AgentTransactionController::class,'delete'])->name( 'agent_transaction_delete' );
+Route::delete('agent_transaction/delete/{id}',[ AgentTransactionController::class,'delete'])->name( 'agent_transaction_delete' );
 Route::get('agent_transaction/view/{id}', [AgentTransactionController::class, 'view'])->name('agent_transaction_view');
-
+Route::get('/agent_transaction/show/{id}', [AgentTransactionController::class, 'show'])->name('agent_transaction_show');
 /*
  * API
  */
@@ -372,6 +372,7 @@ Route::post('api/agent_transaction/edit/{id}', [AgentTransactionController::clas
 Route::get('api/agent_transaction', [AgentTransactionController::class, 'list_agent_transactions'])->name('api_list_agent_transactions');
 Route::get('api/agent_transaction/view/{id}', [AgentTransactionController::class, 'view_agent_transaction'])->name('api_view_agent_transaction');
 Route::delete('api/agent_transaction/delete/{id}', [AgentTransactionController::class, 'delete_agent_transaction'])->name('api_delete_agent_transaction');
+
 
 Route::get('billing',function () {return view( 'pages.billing' );})->name( 'billing' );
 Route::get('tables',function () {return view( 'pages.tables' );	})->name( 'tables' );
