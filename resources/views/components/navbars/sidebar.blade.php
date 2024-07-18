@@ -213,6 +213,32 @@
             </li>
             {{--            Insurance END--}}
 
+            {{--            ZINARA START--}}
+            <li class="nav-item mt-3">
+                <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">ZINARA</h6>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white {{ $activePage == 'zinara' ? 'active bg-gradient-primary' : '' }} "
+                   href="{{ route('api_get_zinara') }}">
+                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i style="font-size: 1.2rem;" class="fas fa-user-circle ps-2 pe-2 text-center"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Vehicle Transactions</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white {{ $activePage == 'insurance_broker' ? 'active bg-gradient-primary' : '' }} "
+                   href="{{ route('insurance_broker') }}">
+                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i style="font-size: 1.2rem;" class="fas fa-user-circle ps-2 pe-2 text-center"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Remittance Records
+                    </span>
+                </a>
+            </li>
+            {{--            ZINARA END--}}
+
+
             {{--            CURRENCY START--}}
             <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Currency</h6>

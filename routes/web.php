@@ -211,9 +211,13 @@ Route::get('api/rtgs/transaction_type', [RTGSTransactionTypeController::class, "
 Route::delete('api/rtgs/transaction_type/{id}', [RTGSTransactionTypeController::class, "delete_rtgs_transaction_type"])->name("api_delete_rtgs_transaction_type");
 
 Route::post('api/zinara/add', [ZinaraTransactionController::class, "create_zinara_transaction"])->name("api_create_zinara");
-Route::post('api/zinara/add/{id}', [ZinaraTransactionController::class, "update_zinara_transaction"])->name("api_update_zinara");
+Route::get('api/zinara/create', [ZinaraTransactionController::class, "add"])->name("create_zinara_vehicle");
+Route::get('api/zinara/edit/{id}', [ZinaraTransactionController::class, "edit"])->name("api_edit_zinara");
+Route::post('api/zinara/update/{id}', [ZinaraTransactionController::class, "update_zinara_transaction"])->name("api_update_zinara");
+Route::get('api/zinara/detail/{id}', [ZinaraTransactionController::class, "detail"])->name("api_detail_zinara");
 Route::get('api/zinara', [ZinaraTransactionController::class, "list_zinara_transaction"])->name("api_get_zinara");
 Route::get('api/zinara/{user_id}', [ZinaraTransactionController::class, "list_zinara_transaction_by_user_id"])->name("api_get_zinara_by_user");
+Route::get('api/zinara/view/{id}', [ZinaraTransactionController::class, 'view_zinara_transaction'])->name('api_zinara_view');
 Route::delete('api/zinara/{id}', [ZinaraTransactionController::class, "delete_zinara_transaction"])->name("api_delete_zinara");
 
 Route::post('api/general_sales/add', [GeneralSalesController::class, "create_general_sale"])->name("api_create_general_sale");

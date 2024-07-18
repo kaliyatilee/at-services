@@ -12,7 +12,7 @@
             <div class="card card-body mx-3 mx-md-4 mt-n6">
                 <div class="card card-plain h-100">
                     <div class="card-body p-3">
-                        <form id="add_vehicle_licence_transaction_form" method='POST' action='{{ route('vehicle_licence_transactions.store') }}'>
+                        <form id="add_vehicle_licence_transaction_form" method='POST' action='{{ route('api_create_zinara') }}'>
                             @csrf
                             <div class="row">
                                 <div class="mb-3 col-md-6">

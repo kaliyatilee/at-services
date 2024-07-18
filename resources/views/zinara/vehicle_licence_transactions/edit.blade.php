@@ -12,82 +12,82 @@
             <div class="card card-body mx-3 mx-md-4 mt-n6">
                 <div class="card card-plain h-100">
                     <div class="card-body p-3">
-                        <form id="edit_vehicle_form" method="POST" action="{{ route('vehicle_licence_transactions.update', $transaction->id) }}">
+                        <form id="edit_vehicle_form" method="POST" action="{{ route('api_update_zinara', $zinara_transaction->id) }}">
                             @csrf
                             @method('PUT')
                             <div class="row">
                                 <!-- Form fields for Vehicle Licence Transactions -->
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Name</label>
-                                    <input type="text" name="name" class="form-control border border-2 p-2" value="{{ $transaction->name }}">
+                                    <input type="text" name="name" class="form-control border border-2 p-2" value="{{ $zinara_transaction->name }}">
                                 </div>
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Phone</label>
-                                    <input type="text" name="phone" class="form-control border border-2 p-2" value="{{ $transaction->phone }}">
+                                    <input type="text" name="phone" class="form-control border border-2 p-2" value="{{ $zinara_transaction->phone }}">
                                 </div>
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Select Currency</label>
                                     <select class="form-control border border-2 p-2" name="currency">
                                         @foreach($currencies as $currency)
-                                            <option value="{{ $currency->id }}" {{ $transaction->currency_id == $currency->id ? 'selected' : '' }}>{{ $currency->name }}</option>
+                                            <option value="{{ $currency->id }}" {{ $zinara_transaction->currency_id == $currency->id ? 'selected' : '' }}>{{ $currency->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Rate</label>
-                                    <input type="text" name="rate" class="form-control border border-2 p-2" value="{{ $transaction->rate }}">
+                                    <input type="text" name="rate" class="form-control border border-2 p-2" value="{{ $zinara_transaction->rate }}">
                                 </div>
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Registration Number</label>
-                                    <input type="text" name="registration_number" class="form-control border border-2 p-2" value="{{ $transaction->registration_number }}">
+                                    <input type="text" name="registration_number" class="form-control border border-2 p-2" value="{{ $zinara_transaction->registration_number }}">
                                 </div>
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Expiry Date</label>
-                                    <input type="date" name="expiry_date" class="form-control border border-2 p-2" value="{{ isset($transaction->expiry_date) ? \Carbon\Carbon::parse($transaction->expiry_date)->format('Y-m-d') : '' }}">
+                                    <input type="date" name="expiry_date" class="form-control border border-2 p-2" value="{{ isset($zinara_transaction->expiry_date) ? \Carbon\Carbon::parse($zinara_transaction->expiry_date)->format('Y-m-d') : '' }}">
                                 </div>
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Transaction Type</label>
                                     <select class="form-control border border-2 p-2" name="transaction_type">
                                         @foreach($transaction_types as $transaction_type)
-                                            <option value="{{ $transaction_type->id }}" {{ $transaction->transaction_type_id == $transaction_type->id ? 'selected' : '' }}>{{ $transaction_type->name }}</option>
+                                            <option value="{{ $transaction_type->id }}" {{ $zinara_transaction->transaction_type_id == $transaction_type->id ? 'selected' : '' }}>{{ $transaction_type->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Vehicle Class</label>
-                                    <input type="text" name="vehicle_class" class="form-control border border-2 p-2" value="{{ $transaction->vehicle_class }}">
+                                    <input type="text" name="vehicle_class" class="form-control border border-2 p-2" value="{{ $zinara_transaction->vehicle_class }}">
                                 </div>
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Amount Paid ZIG</label>
-                                    <input type="text" name="amount_paid_zig" class="form-control border border-2 p-2" value="{{ $transaction->amount_paid_zig }}">
+                                    <input type="text" name="amount_paid_zig" class="form-control border border-2 p-2" value="{{ $zinara_transaction->amount_paid_zig }}">
                                 </div>
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Amount Paid USD</label>
-                                    <input type="text" name="amount_paid_usd" class="form-control border border-2 p-2" value="{{ $transaction->amount_paid_usd }}">
+                                    <input type="text" name="amount_paid_usd" class="form-control border border-2 p-2" value="{{ $zinara_transaction->amount_paid_usd }}">
                                 </div>
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Expected Amount ZIG</label>
-                                    <input type="text" name="expected_amount_zig" class="form-control border border-2 p-2" value="{{ $transaction->expected_amount_zig }}">
+                                    <input type="text" name="expected_amount_zig" class="form-control border border-2 p-2" value="{{ $zinara_transaction->expected_amount_zig }}">
                                 </div>
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Expected Amount USD</label>
-                                    <input type="text" name="expected_amount_usd" class="form-control border border-2 p-2" value="{{ $transaction->expected_amount_usd }}">
+                                    <input type="text" name="expected_amount_usd" class="form-control border border-2 p-2" value="{{ $zinara_transaction->expected_amount_usd }}">
                                 </div>
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Created By</label>
-                                    <input type="text" name="created_by" class="form-control border border-2 p-2" value="{{ $transaction->created_by }}">
+                                    <input type="text" name="created_by" class="form-control border border-2 p-2" value="{{ $zinara_transaction->created_by }}">
                                 </div>
                             </div>
                             <button type="submit" class="btn bg-gradient-dark">Update</button>
