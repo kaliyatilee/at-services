@@ -55,7 +55,6 @@
                                                     <p class="mb-0 text-sm">{{ $drink->quantity }}</p>
                                                 </div>
                                             </td>
-                                            <td></td>
 
                                             <td class="align-middle">
                                                 <a rel="tooltip" class="btn btn-success btn-link" href="{{ route("edit-drink", $drink->drink_id) }}" data-original-title="" title="">

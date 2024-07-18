@@ -62,7 +62,7 @@
                                 </div>
                                 <div class="mb-3 col-md-4">
                                     <label class="form-label">Date</label>
-                                    <input type="datetime-local" name="date" class="form-control border border-2 p-2">
+                                    <input type="date" name="date" class="form-control border border-2 p-2">
                                 </div>
                                 <div class="mb-3 col-md-4">
                                     <label class="form-label">Description</label>
