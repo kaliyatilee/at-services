@@ -35,7 +35,15 @@
                                         </th>
                                         <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Date
+                                        </th>
+                                        <th
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Currency
+                                        </th>
+                                        <th
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            Transaction Type
                                         </th>
                                         <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -43,7 +51,7 @@
                                         </th>
                                         <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Transaction Type
+                                            Commission
                                         </th>
 
                                         <th class="text-secondary opacity-7"></th>
@@ -80,7 +88,17 @@
                                             </td>
                                             <td>
                                                 <div class="d-flex flex-column justify-content-center">
+                                                    <p class="mb-0 text-sm">{{ (new DateTime($drinkSale->date))->format('d M, Y') }}</p>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex flex-column justify-content-center">
                                                     <p class="mb-0 text-sm">{{ $drinkSale->currency->name }}</p>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <p class="mb-0 text-sm">{{ $drinkSale->type->name }}</p>
                                                 </div>
                                             </td>
                                             <td>
@@ -90,10 +108,9 @@
                                             </td>
                                             <td>
                                                 <div class="d-flex flex-column justify-content-center">
-                                                    <p class="mb-0 text-sm">{{ $drinkSale->type->name }}</p>
+                                                    <p class="mb-0 text-sm">{{ number_format($drinkSale->commission_amount, 2) }}</p>
                                                 </div>
                                             </td>
-                                            <td></td>
 
                                             <td class="align-middle">
                                                 <a rel="tooltip" class="btn btn-success btn-link" href="{{ route("edit-drink-sale", $drinkSale->drink_sale_id) }}" data-original-title="" title="">

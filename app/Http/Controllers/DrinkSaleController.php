@@ -7,6 +7,7 @@ use App\Models\Drink;
 use App\Models\DrinkSale;
 use App\Models\GeneralSales\GeneralSaleTransactionType;
 use App\Models\SalesTransactionType;
+use App\Models\StockEntry;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -32,6 +33,12 @@ class DrinkSaleController extends Controller
     {
         $drinkSales = DrinkSale::all();
         return view('drink-sales.list', compact('drinkSales'));
+    }
+
+    public function entries()
+    {
+        $stockEntries = StockEntry::all();
+        return view('drink-sales.entries', compact('stockEntries'));
     }
 
     public function create()

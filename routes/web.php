@@ -398,6 +398,7 @@ Route::controller(DrinkSaleController::class)->group(function (){
     Route::get("create-drink-sale", 'create')->name("create-drink-sale");
     Route::post("create-drink-sale", 'store')->name("store-drink-sale");
     Route::get("drink-sales", 'list')->name("drink-sales");
+    Route::get("drinks-entries", 'entries')->name("drinks-entries");
     Route::get("view-drink-sale/{drink_id}", 'view')->name("view-drink-sale");
     Route::get("delete-drink-sale/{drink_id}", 'delete')->name("delete-drink-sale");
     Route::post("delete-drink-sale", 'delete')->name("confirm-delete-drink-sale");

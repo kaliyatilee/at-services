@@ -39,7 +39,8 @@ class StockObserver
                 'date' => $drinkSale->date,
                 'description' => $drinkSale->description,
                 'transaction_type' => $drinkSale->payment_type,
-                'quantity' => $drinkSale->quantity
+                'quantity' => $drinkSale->quantity,
+                'amount' => $drinkSale->amount_paid
             ]);
             DB::commit();
         } catch (Exception $e){

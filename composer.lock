@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5618e3b474477b99aaed1e5245431391",
+    "content-hash": "7dc8d87a63fd47c930cf779b7bc19c16",
     "packages": [
         {
             "name": "brick/math",
@@ -207,16 +207,16 @@
         },
         {
             "name": "doctrine/inflector",
-            "version": "2.0.10",
+            "version": "2.1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/inflector.git",
-                "reference": "5817d0659c5b50c9b950feb9af7b9668e2c436bc"
+                "reference": "f587d8c05c6e00f99cbfb32d565e4f6743c07ee4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/inflector/zipball/5817d0659c5b50c9b950feb9af7b9668e2c436bc",
-                "reference": "5817d0659c5b50c9b950feb9af7b9668e2c436bc",
+                "url": "https://api.github.com/repos/doctrine/inflector/zipball/f587d8c05c6e00f99cbfb32d565e4f6743c07ee4",
+                "reference": "f587d8c05c6e00f99cbfb32d565e4f6743c07ee4",
                 "shasum": ""
             },
             "require": {
@@ -278,7 +278,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/inflector/issues",
-                "source": "https://github.com/doctrine/inflector/tree/2.0.10"
+                "source": "https://github.com/doctrine/inflector/tree/2.1.x"
             },
             "funding": [
                 {
@@ -294,7 +294,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-02-18T20:23:39+00:00"
+            "time": "2024-02-18T21:47:00+00:00"
         },
         {
             "name": "doctrine/lexer",
@@ -8491,6 +8491,64 @@
             "time": "2024-05-31T14:57:53+00:00"
         },
         {
+            "name": "tgozo/laravel-codegen",
+            "version": "1.0.7@beta",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tgozo19/laravel-codegen.git",
+                "reference": "bfc8a55e2f2170b93d0726ce8e7371f5fac560aa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tgozo19/laravel-codegen/zipball/bfc8a55e2f2170b93d0726ce8e7371f5fac560aa",
+                "reference": "bfc8a55e2f2170b93d0726ce8e7371f5fac560aa",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/inflector": "2.1.x-dev"
+            },
+            "require-dev": {
+                "pestphp/pest": "^2.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Tgozo\\LaravelCodegen\\CodeGenServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Tgozo\\LaravelCodegen\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Takudzwa Gozo",
+                    "email": "thetakudzwagozo@gmail.com"
+                }
+            ],
+            "description": "A Laravel Code Generator to help you get started with a lot of staff including generating Migrations, Models, Controllers, Factories, Routes, Views, Database Seeders and Request Validation Rules.",
+            "keywords": [
+                "code",
+                "codegen",
+                "framework",
+                "generator",
+                "laravel",
+                "php"
+            ],
+            "support": {
+                "issues": "https://github.com/tgozo19/laravel-codegen/issues",
+                "source": "https://github.com/tgozo19/laravel-codegen/tree/1.0.7@beta"
+            },
+            "time": "2024-02-02T21:55:10+00:00"
+        },
+        {
             "name": "theseer/tokenizer",
             "version": "1.2.3",
             "source": {
@@ -8542,7 +8600,7 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
