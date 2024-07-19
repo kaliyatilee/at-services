@@ -32,6 +32,7 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\Vehicle\VehicleClassController;
 use App\Http\Controllers\Zinara\ZinaraTransactionController;
 use App\Http\Controllers\Zinara\ZinaraTransactionTypeController;
+use App\Http\Controllers\Zinara\RemittanceRecordController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -219,6 +220,13 @@ Route::get('api/zinara', [ZinaraTransactionController::class, "list_zinara_trans
 Route::get('api/zinara/{user_id}', [ZinaraTransactionController::class, "list_zinara_transaction_by_user_id"])->name("api_get_zinara_by_user");
 Route::get('api/zinara/view/{id}', [ZinaraTransactionController::class, 'view_zinara_transaction'])->name('api_zinara_view');
 Route::delete('api/zinara/{id}', [ZinaraTransactionController::class, "delete_zinara_transaction"])->name("api_delete_zinara");
+
+Route::get('api/remittance/create', [RemittanceRecordController::class, "create_record"])->name("create_remittance_record");
+Route::get('api/remittance/edit/{id}', [RemittanceRecordController::class, "edit"])->name("api_edit_remittance_record");
+Route::post('api/remittance/update/{id}', [RemittanceRecordController::class, "update"])->name("api_update_remittance_record");
+Route::get('api/remittance/detail/{id}', [RemittanceRecordController::class, "detail"])->name("api_detail_remittance_record");
+Route::get('api/remittance', [RemittanceRecordController::class, "view"])->name("api_get_remittance_record");
+Route::delete('api/remittance/{id}', [RemittanceRecordController::class, "delete"])->name("api_delete_remittance_record");
 
 Route::post('api/general_sales/add', [GeneralSalesController::class, "create_general_sale"])->name("api_create_general_sale");
 Route::post('api/general_sales/add/{id}', [GeneralSalesController::class, "update_general_sale"])->name("api_update_general_sale");

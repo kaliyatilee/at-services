@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('remittance_records', function (Blueprint $table) {
+        Schema::table('remittance_record', function (Blueprint $table) {
             // Add fields
             $table->string('vehicle_transaction_name')->nullable();
             $table->json('date_of_remittance')->nullable();
@@ -35,7 +35,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('remittance_records', function (Blueprint $table) {
+        Schema::table('remittance_record', function (Blueprint $table) {
             // Drop added fields
             $table->dropColumn('vehicle_transaction_name');
             $table->dropColumn('date_of_remittance');

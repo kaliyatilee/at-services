@@ -102,7 +102,6 @@ public function update_insurance_broker(Request $request, $id)
 
     $insuranceBroker = InsuranceBroker::findOrFail($id);
 
-    // Update name, commission, notes, and total_remittance directly
     $insuranceBroker->name = $data['name'];
     $insuranceBroker->commission = $data['commission'];
     $insuranceBroker->notes = $data['notes'];

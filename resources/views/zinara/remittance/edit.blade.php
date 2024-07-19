@@ -12,49 +12,53 @@
             <div class="card card-body mx-3 mx-md-4 mt-n6">
                 <div class="card card-plain h-100">
                     <div class="card-body p-3">
-                        <form id="edit_remittance_form" method="POST" action="{{ route('remittance_records.update', $remittance->id) }}">
+                        <form id="edit_remittance_form" method="POST" action="{{ route('api_update_remittance_record', $remittance->id) }}">
                             @csrf
-                            @method('PUT')
+                        
                             <div class="row">
                                 <!-- Form fields for Remittance Records -->
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Date</label>
-                                    <input type="date" name="date" class="form-control border border-2 p-2" value="{{ isset($remittance->date) ? \Carbon\Carbon::parse($remittance->date)->format('Y-m-d') : '' }}">
+                                    <input type="date" name="date_of_remittance" class="form-control border border-2 p-2" value="">
                                 </div>
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Name</label>
-                                    <input type="text" name="name" class="form-control border border-2 p-2" value="{{ $remittance->name }}">
+                                    <input type="text" name="vehicle_transaction_name" class="form-control border border-2 p-2" value="{{ $remittance->vehicle_transaction_name ?? '' }}">
                                 </div>
 
                                 <div class="mb-3 col-md-6">
-                                    <label class="form-label">Phone</label>
-                                    <input type="text" name="phone" class="form-control border border-2 p-2" value="{{ $remittance->phone }}">
+                                    <label class="form-label">Method of Remittance</label>
+                                    <input type="text" name="method_of_remittance" class="form-control border border-2 p-2" value="">
                                 </div>
 
                                 <div class="mb-3 col-md-6">
-                                    <label class="form-label">Amount ZIG</label>
-                                    <input type="text" name="amount_zig" class="form-control border border-2 p-2" value="{{ $remittance->amount_zig }}">
+                                    <label class="form-label">Amount Remitted ZIG</label>
+                                    <input type="text" name="amount_remitted_zig" class="form-control border border-2 p-2" value="0">
                                 </div>
 
                                 <div class="mb-3 col-md-6">
-                                    <label class="form-label">Amount USD</label>
-                                    <input type="text" name="amount_usd" class="form-control border border-2 p-2" value="{{ $remittance->amount_usd }}">
+                                    <label class="form-label">Amount Remitted USD</label>
+                                    <input type="text" name="amount_remitted_usd" class="form-control border border-2 p-2" value="0">
                                 </div>
 
                                 <div class="mb-3 col-md-6">
-                                    <label class="form-label">Reference Number</label>
-                                    <input type="text" name="reference_number" class="form-control border border-2 p-2" value="{{ $remittance->reference_number }}">
+                                    <label class="form-label">Account Balance (ZIG)</label>
+                                    <input type="text" name="account_balance_zig" class="form-control border border-2 p-2" value="0">
                                 </div>
 
                                 <div class="mb-3 col-md-6">
-                                    <label class="form-label">Transaction Type</label>
-                                    <input type="text" name="transaction_type" class="form-control border border-2 p-2" value="{{ $remittance->transaction_type }}">
+                                    <label class="form-label">Account Balance (USD)</label>
+                                    <input type="text" name="account_balance_usd" class="form-control border border-2 p-2" value="0">
                                 </div>
 
                                 <div class="mb-3 col-md-6">
-                                    <label class="form-label">Created By</label>
-                                    <input type="text" name="created_by" class="form-control border border-2 p-2" value="{{ $remittance->created_by }}">
+                                    <label class="form-label">Sum of Expected Amount (ZIG)</label>
+                                    <input type="text" name="expected_amount_zig" class="form-control border border-2 p-2" value="{{ $remittance->expected_amount_zig }}">
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Sum of Expected Amount (USD)</label>
+                                    <input type="text" name="expected_amount_usd" class="form-control border border-2 p-2" value="{{ $remittance->expected_amount_usd }}">
                                 </div>
                             </div>
                             <button type="submit" class="btn bg-gradient-dark">Update</button>
@@ -68,9 +72,27 @@
     <x-plugins></x-plugins>
 </x-layout>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        $('#edit_remittance_form').submit(function (e) {
+        function calculateAccountBalances() {
+            var expectedAmountZig = parseFloat($('input[name="expected_amount_zig"]').val()) || 0;
+            var expectedAmountUsd = parseFloat($('input[name="expected_amount_usd"]').val()) || 0;
+            var amountRemittedZig = parseFloat($('input[name="amount_remitted_zig"]').val()) || 0;
+            var amountRemittedUsd = parseFloat($('input[name="amount_remitted_usd"]').val()) || 0;
+
+            var accountBalanceZig = expectedAmountZig - amountRemittedZig;
+            var accountBalanceUsd = expectedAmountUsd - amountRemittedUsd;
+
+            $('input[name="account_balance_zig"]').val(accountBalanceZig.toFixed(2));
+            $('input[name="account_balance_usd"]').val(accountBalanceUsd.toFixed(2));
+        }
+
+        $('input[name="expected_amount_zig"], input[name="expected_amount_usd"], input[name="amount_remitted_zig"], input[name="amount_remitted_usd"]').on('input', calculateAccountBalances);
+
+        calculateAccountBalances();
+
+        $('#edit_remittance_form').one('submit', function (e) {
             $('#success_error_message').html('');
 
             e.preventDefault();

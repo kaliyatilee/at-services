@@ -9,9 +9,7 @@
                 <div class="col-12">
                     <div class="card my-4">
                         <div class="me-3 my-3 text-end">
-                            <a class="btn bg-gradient-dark mb-0" href="#">
-                                <i class="material-icons text-sm">download</i>&nbsp;&nbsp;Export to Excel
-                            </a>
+                           
                             <a class="btn bg-gradient-dark mb-0" href="{{ route("create_zinara_vehicle") }}">
                                 <i class="material-icons text-sm">add</i>&nbsp;&nbsp;Add New
                             </a>
@@ -22,20 +20,20 @@
                                     <thead>
                                         <tr>
                                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Date of Transaction</th>
+                                            <th style="display: none;" class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Date of Transaction</th>
                                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
                                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Phone</th>
-                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Currency</th>
+                                            <th style="display: none;" class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Currency</th>
                                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Rate</th>
                                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Registration Number</th>
                                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Expiry Date</th>
-                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Transaction Type</th>
+                                            <th style="display: none;" class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Transaction Type</th>
                                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Vehicle Class</th>
                                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Amount Paid ZIG</th>
                                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Amount Paid USD</th>
                                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Expected Amount ZIG</th>
                                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Expected Amount USD</th>
-                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Created By</th>
+                                            <th style="display: none;" class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Created By</th>
                                             <th class="text-secondary opacity-7">Actions</th>
                                         </tr>
                                     </thead>
@@ -43,20 +41,20 @@
                                         @forelse($data as $transaction)
                                             <tr>
                                                 <td>{{ $transaction->id }}</td>
-                                                <td>{{ optional($transaction->date_of_transaction)->format('Y-m-d') }}</td>
+                                                <td style="display: none;">{{ optional($transaction->date_of_transaction)->format('Y-m-d') }}</td>
                                                 <td>{{ $transaction->name }}</td>
                                                 <td>{{ $transaction->phone }}</td>
-                                                <td>{{ $transaction->currency }}</td>
+                                                <td style="display: none;">{{ $transaction->currency }}</td>
                                                 <td>{{ $transaction->rate }}</td>
-                                                <td>{{ $transaction->registration_number }}</td>
+                                                <td>{{ $transaction->reg_no }}</td>
                                                 <td>{{ optional($transaction->expiry_date)->format('Y-m-d') }}</td>
-                                                <td>{{ $transaction->transaction_type }}</td>
+                                                <td style="display: none;">{{ $transaction->transaction_type }}</td>
                                                 <td>{{ optional($transaction->getVehicleClass())->name }}</td>
                                                 <td>{{ $transaction->amount_paid_zig }}</td>
-                                                <td>{{ $transaction->amount_paid_usd }}</td>
+                                                <td>{{ $transaction->amount_paid }}</td>
                                                 <td>{{ $transaction->expected_amount_zig }}</td>
-                                                <td>{{ $transaction->expected_amount_usd }}</td>
-                                                <td>{{ optional($transaction->createdBy)->name }}</td>
+                                                <td>{{ $transaction->expected_amount }}</td>
+                                                <td style="display: none;">{{ optional($transaction->createdBy)->name }}</td>
                                                 <td>
                                                     <a rel="tooltip" class="btn btn-success btn-link" href="{{ route('api_edit_zinara', $transaction->id) }}">
                                                         <i class="material-icons">edit</i>

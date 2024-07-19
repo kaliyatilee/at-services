@@ -33,7 +33,7 @@ class ZinaraTransaction extends Model
         'date_of_transaction',
         'currency',
         'transaction_type',
-        'amount_pid_zig',
+        'amount_paid_zig',
         'expected_amount_zig',
         'remittance_table'
     ];

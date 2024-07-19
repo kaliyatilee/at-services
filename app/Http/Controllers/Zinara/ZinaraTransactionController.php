@@ -9,7 +9,9 @@ use App\Models\VehicleClass;
 use App\Models\Currency;
 use App\Models\Zinara\ZinaraTransactionType;
 use App\Models\Zinara\ZinaraTransaction;
+use App\Models\Zinara\RemittanceRecord;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ZinaraTransactionController extends Controller
 {
@@ -24,27 +26,29 @@ class ZinaraTransactionController extends Controller
     }
 
     public function add(Request $request, $id = null)
-{
-    if ($id != null) {
-        $zinara_insurance = ZinaraTransaction::findOrFail($id);
-        $data['zinara_transaction'] = $zinara_insurance;
-    } else {
-        $data['zinara_transaction'] = new ZinaraTransaction();
+    {
+        if ($id != null) {
+            $zinara_insurance = ZinaraTransaction::findOrFail($id);
+            $data['zinara_transaction'] = $zinara_insurance;
+        } else {
+            $data['zinara_transaction'] = new ZinaraTransaction();
+        }
+    
+        $data['vehicle_classes'] = VehicleClass::all();
+        $data['currencies'] = Currency::all();
+        $data['transaction_types'] = ZinaraTransactionType::all();
+    
+        if ($request->wantsJson()) {
+            return response()->json([
+                'data' => $data,
+                'message' => 'Success',
+                'success' => true
+            ]);
+        }
+    
+        return view('zinara.vehicle_licence_transactions.add', $data);
     }
-
-    $data['vehicle_classes'] = VehicleClass::all();
-
-    if ($request->wantsJson()) {
-        return response()->json([
-            'data' => $data,
-            'message' => 'Success',
-            'success' => true
-        ]);
-    }
-
-    return view('zinara.vehicle_licence_transactions.add', $data);
-}
-
+    
     public function create_zinara_transaction(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -74,71 +78,102 @@ class ZinaraTransactionController extends Controller
         }
     
         $data = $validator->validated();
+        $data['created_by'] = auth()->user()->id;
     
-        // Create a new ZinaraTransaction instance
+        $remittanceRecord = RemittanceRecord::create([
+            'vehicle_transaction_name' => $data['name'],
+            'expected_amount_zig' => $data['expected_amount_zig'] ?? null,
+            'expected_amount_usd' => $data['expected_amount'] ?? null,
+          
+            'date_of_remittance' => [],
+            'method_of_remittance' => [],
+            'amount_remitted_zig' => [],
+            'amount_remitted_usd' => [],
+            'account_balance_zig' => [],
+            'account_balance_usd' => [],
+        ]);
+    
+        $data['remittance_table'] = $remittanceRecord->id;
+    
         $zinaraTransaction = ZinaraTransaction::create($data);
     
-        // Log a message to the terminal
-        Log::info('ZinaraTransaction created:', $data);
-    
-        // Return a JSON response
         return response()->json([
             'success' => true,
             'message' => "Saved successfully",
             'zinaraTransaction' => $zinaraTransaction,
+            'remittanceRecord' => $remittanceRecord,
         ], 201);
     }
     
-    public function updateZinaraTransaction(Request $request, $id)
-    {
-        $validator = validator()->make($request->all(), [
-            "name" => ['nullable', 'string'],
-            "phone" => ['nullable', 'string'],
-            "class" => "nullable|numeric",
-            "reg_no" => "nullable|string|min:7|max:7",
-            "expiry_date" => "nullable|date",
-            "amount_paid" => "nullable|numeric",
-            "expected_amount" => "nullable|numeric",
-            "date_of_transaction" => "nullable|date",
-            "currency" => "nullable|string",
-            "transaction_type" => "nullable|string",
-            "amount_paid_zig" => "nullable|numeric",
-            "expected_amount_zig" => "nullable|numeric",
-            "remittance_table" => "nullable|numeric",
-            "rate" => "nullable|numeric",
-            "notes" => "nullable|string"
-        ]);
-    
-        if ($validator->fails()) {
-            return response()->json([
-                'message' => 'The given data was invalid.',
-                'errors' => $validator->errors(),
-            ], 422);
-        }
-    
-        $data = $validator->validated();
-    
-        $zinaraTransaction = ZinaraTransaction::findOrFail($id);
-        $zinaraTransaction->update($data);
-    
+    public function update_zinara_transaction(Request $request, $id)
+{
+    $validator = validator()->make($request->all(), [
+        "name" => ['nullable', 'string'],
+        "phone" => ['nullable', 'string'],
+        "class" => "nullable|numeric",
+        "reg_no" => "nullable|string|min:7|max:7",
+        "expiry_date" => "nullable|date",
+        "amount_paid" => "nullable|numeric",
+        "expected_amount" => "nullable|numeric",
+        "date_of_transaction" => "nullable|date",
+        "currency" => "nullable|string",
+        "transaction_type" => "nullable|string",
+        "amount_paid_zig" => "nullable|numeric",
+        "expected_amount_zig" => "nullable|numeric",
+        "remittance_table" => "nullable|numeric",
+        "rate" => "nullable|numeric",
+        "notes" => "nullable|string"
+    ]);
+
+    if ($validator->fails()) {
         return response()->json([
-            'message' => "Updated successfully",
-            'success' => true
-        ]);
+            'message' => 'The given data was invalid.',
+            'errors' => $validator->errors(),
+        ], 422);
     }
+
+    $data = $validator->validated();
+
+    $zinaraTransaction = ZinaraTransaction::findOrFail($id);
+    $zinaraTransaction->update($data);
+
+    if ($zinaraTransaction->remittance_table) {
+        $remittanceRecord = RemittanceRecord::findOrFail($zinaraTransaction->remittance_table);
+
+        if (isset($data['expected_amount_zig'])) {
+            $remittanceRecord->expected_amount_zig = $remittanceRecord->expected_amount_zig 
+                ? $remittanceRecord->expected_amount_zig + $data['expected_amount_zig']
+                : $data['expected_amount_zig'];
+        }
+
+        if (isset($data['expected_amount'])) {
+            $remittanceRecord->expected_amount_usd = $remittanceRecord->expected_amount_usd 
+                ? $remittanceRecord->expected_amount_usd + $data['expected_amount']
+                : $data['expected_amount'];
+        }
+
+        $remittanceRecord->save();
+    }
+
+    return response()->json([
+        'message' => "Updated successfully",
+        'success' => true,
+        'zinaraTransaction' => $zinaraTransaction,
+        'remittanceRecord' => $remittanceRecord ?? null,
+    ]);
+}
     
 
     public function edit(Request $request, $id)
 {
-    // Fetch the specific ZinaraTransaction to be edited
+  
     $zinara_transaction = ZinaraTransaction::findOrFail($id);
 
-    // Fetch all vehicle classes
     $vehicle_classes = VehicleClass::all();
     $currency_classes = Currency::all();
     $currency_classes = Currency::all();
     $transaction_classes = ZinaraTransactionType::all();
-    // Prepare data to be passed to the view
+ 
     $data = [
         'zinara_transaction' => $zinara_transaction,
         'vehicle_classes' => $vehicle_classes,
@@ -147,7 +182,6 @@ class ZinaraTransactionController extends Controller
 
     ];
 
-    // If the request expects a JSON response, return the data as JSON
     if ($request->wantsJson()) {
         return response()->json([
             'data' => $data,
@@ -156,7 +190,6 @@ class ZinaraTransactionController extends Controller
         ]);
     }
 
-    // Render the view and pass the data
     return view('zinara.vehicle_licence_transactions.edit', $data);
 }
 
@@ -168,8 +201,7 @@ class ZinaraTransactionController extends Controller
         } else {
             $data = ZinaraTransaction::query()->where("id", $id)->first();
         }
-    
-        // Render the view
+
         return view('zinara.vehicle_licence_transactions.list', [
             'data' => $data,
         ]);
@@ -192,15 +224,13 @@ class ZinaraTransactionController extends Controller
 
     public function detail(Request $request, $id)
 {
-    // Fetch the specific ZinaraTransaction by ID
+
     $zinara_transaction = ZinaraTransaction::findOrFail($id);
 
-    // Prepare data to be passed to the view
     $data = [
         'zinara_transaction' => $zinara_transaction
     ];
 
-    // If the request expects a JSON response, return the data as JSON
     if ($request->wantsJson()) {
         return response()->json([
             'data' => $data,
@@ -209,7 +239,6 @@ class ZinaraTransactionController extends Controller
         ]);
     }
 
-    // Render the detail view and pass the data
     return view('zinara.vehicle_licence_transactions.view', $data);
 }
 

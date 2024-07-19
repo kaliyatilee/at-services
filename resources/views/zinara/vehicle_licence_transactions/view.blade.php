@@ -18,9 +18,9 @@
                                 <div class="mb-3 col-md-6">
 									<div class="card card-frame">
 										<div class="card-body">
-										<p> Client Name</p>
+										<p> Name</p>
 										<hr>
-										{{ $zinara_transaction->name }} / {{ $zinara_transaction->phone }}
+										{{ $zinara_transaction->name }}
 										</div>
 									</div>
                                 </div>
@@ -61,15 +61,15 @@
 
 							
 
-								<div class="mb-3 col-md-6">
-									<div class="card card-frame">
-										<div class="card-body">
-										<p>Transaction Date</p>
-										<hr>
-										{{ $zinara_transaction->transaction_date }}
+									<!-- <div class="mb-3 col-md-6">
+										<div class="card card-frame">
+											<div class="card-body">
+											<p>Transaction Date</p>
+											<hr>
+											{{ $zinara_transaction->transaction_date }}
+											</div>
 										</div>
-									</div>
-                                </div>
+									</div> -->
 								<div class="mb-3 col-md-6">
 									<div class="card card-frame">
 										<div class="card-body">
@@ -79,15 +79,7 @@
 										</div>
 									</div>
                                 </div>
-								<div class="mb-3 col-md-6">
-									<div class="card card-frame">
-										<div class="card-body">
-										<p>Received Date</p>
-										<hr>
-										{{ $zinara_transaction->received_date }}
-										</div>
-									</div>
-                                </div>
+							
 								<div class="mb-3 col-md-6">
 									<div class="card card-frame">
 										<div class="card-body">
@@ -100,39 +92,31 @@
 								<div class="mb-3 col-md-6">
 									<div class="card card-frame">
 										<div class="card-body">
+										<p>Amount Paid(USD)</p>
+										<hr>
+										{{ $zinara_transaction->amount_paid }}
+										</div>
+									</div>
+                                </div>
+								<div class="mb-3 col-md-6">
+									<div class="card card-frame">
+										<div class="card-body">
+										<p>Amount Paid(ZIG)</p>
+										<hr>
+										{{ $zinara_transaction->amount_paid_zig }}
+										</div>
+									</div>
+                                </div>
+								<div class="mb-3 col-md-6">
+									<div class="card card-frame">
+										<div class="card-body">
 										<p>Expected Amount(USD)</p>
 										<hr>
 										{{ $zinara_transaction->expected_amount }}
 										</div>
 									</div>
                                 </div>
-								<div class="mb-3 col-md-6">
-									<div class="card card-frame">
-										<div class="card-body">
-										<p>Amount Received(USD)</p>
-										<hr>
-										{{ $zinara_transaction->amount_received_usd }}
-										</div>
-									</div>
-                                </div>
-								<div class="mb-3 col-md-6">
-									<div class="card card-frame">
-										<div class="card-body">
-										<p>Commission(%)</p>
-										<hr>
-										{{ $zinara_transaction->commission_percentage }}%
-										</div>
-									</div>
-                                </div>
-								<div class="mb-3 col-md-6">
-									<div class="card card-frame">
-										<div class="card-body">
-										<p>Commission Amount</p>
-										<hr>
-										{{ $zinara_transaction->commission_amount }} 
-										</div>
-									</div>
-                                </div>
+								
 								<div class="mb-3 col-md-6">
 									<div class="card card-frame">
 										<div class="card-body">
@@ -151,34 +135,7 @@
 										</div>
 									</div>
                                 </div>
-								<div class="mb-3 col-md-6">
-									<div class="card card-frame">
-										<div class="card-body">
-										<p>Amount Received(ZIG)</p>
-										<hr>
-										{{ $zinara_transaction->amount_received_zig }} 
-										</div>
-									</div>
-                                </div>
-								<div class="mb-3 col-md-6">
-									<div class="card card-frame">
-										<div class="card-body">
-										<p>Amount to be Remitted (ZIG)</p>
-										<hr>
-										{{ $zinara_transaction->amount_remitted_zig }} 
-										</div>
-									</div>
-                                </div>
-								<div class="mb-3 col-md-6">
-									<div class="card card-frame">
-										<div class="card-body">
-										<p>Amount to be Remitted(USD)</p>
-										<hr>
-										{{ $zinara_transaction->amount_remitted_usd }} 
-										</div>
-									</div>
-                                </div>
-						
+							
 
 
                             </div>

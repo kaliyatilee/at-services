@@ -14,9 +14,9 @@
                     <div class="card-body p-3">
                         <form id="edit_vehicle_form" method="POST" action="{{ route('api_update_zinara', $zinara_transaction->id) }}">
                             @csrf
-                            @method('PUT')
+                        
                             <div class="row">
-                                <!-- Form fields for Vehicle Licence Transactions -->
+                               
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Name</label>
                                     <input type="text" name="name" class="form-control border border-2 p-2" value="{{ $zinara_transaction->name }}">
@@ -43,7 +43,7 @@
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Registration Number</label>
-                                    <input type="text" name="registration_number" class="form-control border border-2 p-2" value="{{ $zinara_transaction->registration_number }}">
+                                    <input type="text" name="reg_no" class="form-control border border-2 p-2" value="{{ $zinara_transaction->reg_no }}">
                                 </div>
 
                                 <div class="mb-3 col-md-6">
@@ -72,7 +72,7 @@
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Amount Paid USD</label>
-                                    <input type="text" name="amount_paid_usd" class="form-control border border-2 p-2" value="{{ $zinara_transaction->amount_paid_usd }}">
+                                    <input type="text" name="amount_paid" class="form-control border border-2 p-2" value="{{ $zinara_transaction->amount_paid }}">
                                 </div>
 
                                 <div class="mb-3 col-md-6">
@@ -82,13 +82,10 @@
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Expected Amount USD</label>
-                                    <input type="text" name="expected_amount_usd" class="form-control border border-2 p-2" value="{{ $zinara_transaction->expected_amount_usd }}">
+                                    <input type="text" name="expected_amount" class="form-control border border-2 p-2" value="{{ $zinara_transaction->expected_amount }}">
                                 </div>
 
-                                <div class="mb-3 col-md-6">
-                                    <label class="form-label">Created By</label>
-                                    <input type="text" name="created_by" class="form-control border border-2 p-2" value="{{ $zinara_transaction->created_by }}">
-                                </div>
+                               
                             </div>
                             <button type="submit" class="btn bg-gradient-dark">Update</button>
                             <div class="mt-3" id="success_error_message"></div>

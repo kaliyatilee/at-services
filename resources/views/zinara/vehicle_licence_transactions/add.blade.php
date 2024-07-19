@@ -32,8 +32,11 @@
                                 </div>
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Currency</label>
-                                    <input type="text" name="currency" class="form-control border border-2 p-2"
-                                           value='{{ old('currency') }}'>
+                                    <select name="currency" class="form-control border border-2 p-2">
+                                        @foreach($currencies as $currency)
+                                            <option value="{{ $currency->id }}">{{ $currency->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Rate</label>
@@ -47,8 +50,8 @@
                                 </div>
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Registration Number</label>
-                                    <input type="text" name="registration_number" class="form-control border border-2 p-2"
-                                           value='{{ old('registration_number') }}'>
+                                    <input type="text" name="reg_no" class="form-control border border-2 p-2"
+                                           value='{{ old('reg_no') }}'>
                                 </div>
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Expiry Date</label>
@@ -57,13 +60,19 @@
                                 </div>
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Transaction Type</label>
-                                    <input type="text" name="transaction_type" class="form-control border border-2 p-2"
-                                           value='{{ old('transaction_type') }}'>
+                                    <select name="transaction_type" class="form-control border border-2 p-2">
+                                        @foreach($transaction_types as $transaction_type)
+                                            <option value="{{ $transaction_type->id }}">{{ $transaction_type->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Vehicle Class</label>
-                                    <input type="text" name="vehicle_class" class="form-control border border-2 p-2"
-                                           value='{{ old('vehicle_class') }}'>
+                                    <select name="vehicle_class" class="form-control border border-2 p-2">
+                                        @foreach($vehicle_classes as $vehicle_class)
+                                            <option value="{{ $vehicle_class->id }}">{{ $vehicle_class->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Amount Paid ZIG</label>
@@ -72,8 +81,8 @@
                                 </div>
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Amount Paid USD</label>
-                                    <input type="number" step="0.01" name="amount_paid_usd" class="form-control border border-2 p-2"
-                                           value='{{ old('amount_paid_usd') }}'>
+                                    <input type="number" step="0.01" name="amount_paid" class="form-control border border-2 p-2"
+                                           value='{{ old('amount_paid') }}'>
                                 </div>
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Expected Amount ZIG</label>
@@ -82,8 +91,8 @@
                                 </div>
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Expected Amount USD</label>
-                                    <input type="number" step="0.01" name="expected_amount_usd" class="form-control border border-2 p-2"
-                                           value='{{ old('expected_amount_usd') }}'>
+                                    <input type="number" step="0.01" name="expected_amount" class="form-control border border-2 p-2"
+                                           value='{{ old('expected_amount') }}'>
                                 </div>
                             </div>
                             <button type="submit" class="btn bg-gradient-dark">Submit</button>
