@@ -19,11 +19,9 @@
                             @csrf
                             <div class="row">
                                 <div class="mb-3 col-md-6">
-                                    <label class="form-label">Search Client</label>
+                                    <label class="form-label">Name</label>
                                     <input type="text" id="name" name="name" class="form-control border border-2 p-2"
-                                           value='{{ old('client_name') }}'>
-                                    <div id="suggestionsPopup" class="form-control border border-2 p-2" style="z-index: 1"></div>
-                                    <input type="hidden" name="user_id" id="user_id" value="{{ old('user_id') }}" />
+                                           value='{{ old('name') }}'>
                                 </div>
 
                                 <div class="mb-3 col-md-6">
@@ -44,14 +42,34 @@
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Account Number</label>
-                                    <input type="text" name="dstv_account_number"
-                                           class="form-control border border-2 p-2"
-                                           value='{{ old('dstv_account_number') }}'>
+                                    <input type="number" name="dstv_account_number" minlength="8" maxlength="8"
+                                    class="form-control border border-2 p-2" required
+                                    pattern="[0-9]{8}" title="8-digit DSTV account number"
+                                    value='{{ old('dstv_account_number') }}'>
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Description</label>
+                                    <input type="text" name="description" class="form-control border border-2 p-2"
+                                           value='{{ old('description') }}'>
                                 </div>
 
                                 <div class="mb-3 col-md-6">
+                                    <label class="form-label">System Charge</label>
+                                    <select class="form-control border border-2 p-2" name="system_charges" required>
+                                        @foreach($system_charges as $charges)
+                                        <option value="{{ $charges->id }}">{{ $charges->name }}</option>
+                                    @endforeach
+                                    </select>
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Charge Amount</label>
+                                    <input type="number" step=".1" name="system_charge_amount" placeholder="0.00"
+                                           class="form-control border border-2 p-2"
+                                           value='{{ old('system_charge_amount') }}'>
+                                </div>
+                                <div class="mb-3 col-md-6">
                                     <label class="form-label">Select Package</label>
-                                    <select class="form-control border border-2 p-2" name="package_id">
+                                    <select class="form-control border border-2 p-2" name="package">
                                         @foreach($dstv_packages as $package)
                                             <option value="{{ $package->id }}">{{ $package->name }} - R{{ $package->amount_rand }}</option>
                                         @endforeach
@@ -60,7 +78,7 @@
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Currency</label>
-                                    <select class="form-control border border-2 p-2" name="currency_id">
+                                    <select class="form-control border border-2 p-2" name="currency">
                                         @foreach($currencies as $currency)
                                             <option value="{{ $currency->id }}">{{ $currency->name }}</option>
                                         @endforeach
@@ -68,21 +86,21 @@
                                 </div>
 
                                 <div class="mb-3 col-md-6">
-                                    <label class="form-label">Expected Amount</label>
-                                    <input type="text" name="expected_amount" class="form-control border border-2 p-2"
-                                           value='{{ old('expected_amount') }}'>
-                                </div>
-
-                                <div class="mb-3 col-md-6">
                                     <label class="form-label">Amount Paid</label>
-                                    <input type="text" name="amount_paid" class="form-control border border-2 p-2"
+                                    <input type="number" step=".1" name="amount_paid" class="form-control border border-2 p-2" placeholder="0.00"
                                            value='{{ old('amount_paid') }}'>
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Rate</label>
+                                    <input type="number" step=".1" name="rate" class="form-control border border-2 p-2" placeholder="0.00"
+                                           value='{{ old('rate') }}'>
                                 </div>
 								<div class="mb-3 col-md-6">
                                     <label class="form-label">Transaction Date</label>
                                     <input type="date" name="transaction_date" class="form-control border border-2 p-2"
                                            value='{{ old('transaction_date') }}'>
                                 </div>
+
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Notes (Optional)</label>

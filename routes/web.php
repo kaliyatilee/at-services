@@ -41,6 +41,8 @@ use App\Http\Controllers\DryCleaning\RemittancesController;
 use App\Http\Controllers\DryCleaning\SalesBookController;
 use App\Http\Controllers\DryCleaning\ServiceProviderController;
 use App\Http\Controllers\Printing\PrintingController;
+use App\Http\Controllers\BulkAirtime\SalesRecordController;
+use App\Http\Controllers\BulkAirtime\StockRecordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -356,7 +358,7 @@ Route::get('api/summary/ecocash/{user_id}/{start_date}/{end_date}', [EcocashCont
 
 Route::get('api/summary/{user_id}/{start_date}/{end_date}', [SummaryController::class, "summary"])->name("api_summary");
 
-//Dry Cleaning Remittances Routes 
+//Dry Cleaning Remittances Routes
 Route::get('dry-cleaning/remittances', [RemittancesController::class, "index"])->name("api_remittances");
 Route::get('dry-cleaning/remittances/{id}', [RemittancesController::class, "create"])->name("api_remittances_create");
 Route::post('dry-cleaning/remittances/{id}', [RemittancesController::class, "store"])->name("api_remittances_store");
@@ -387,6 +389,34 @@ Route::post('printing/{id}', [PrintingController::class, "update"])->name("api_p
 Route::delete('printing/destroy/{id}', [PrintingController::class, "delete"])->name("api_printing_delete");
 
 Route::get('printing/export/{id}', [PrintingController::class, "export"])->name("api_printing_export");
+
+//Bulk Airtime Sales Routes
+Route::get('bulk-airtime/sales-record', [SalesRecordController::class, "index"])->name("airtime_sales_record");
+Route::get('bulk-airtime/sales-record/create', [SalesRecordController::class, "create"])->name("airtime_sales_record_create");
+Route::post('bulk-airtime/sales-record', [SalesRecordController::class, "store"])->name("airtime_sales_record_store");
+Route::get('bulk-airtime/sales-record/{id}', [SalesRecordController::class, "edit"])->name("airtime_sales_record_edit");
+Route::get('bulk-airtime/sales-record/view/{id}', [SalesRecordController::class, "view"])->name("airtime_sales_record_view");
+Route::post('bulk-airtime/sales-record/{id}', [SalesRecordController::class, "update"])->name("airtime_sales_record_update");
+Route::delete('bulk-airtime/sales-record/destroy/{id}', [SalesRecordController::class, "delete"])->name("airtime_sales_record_delete");
+
+// Bulk Airtime Stock Routes
+Route::get('bulk-airtime/stock', [StockRecordController::class, "index"])->name("airtime_stock_record");
+Route::get('bulk-airtime/stock/create', [StockRecordController::class, "create"])->name("airtime_stock_record_create");
+Route::post('bulk-airtime/stock', [StockRecordController::class, "store"])->name("airtime_stock_record_store");
+Route::get('bulk-airtime/stock/{id}', [StockRecordController::class, "edit"])->name("airtime_stock_record_edit");
+Route::get('bulk-airtime/stock-record/view/{id}', [StockRecordController::class, "view"])->name("airtime_stock_record_view");
+Route::post('bulk-airtime/stock-record/{id}', [StockRecordController::class, "update"])->name("airtime_stock_record_update");
+Route::delete('bulk-airtime/stock-record/destroy/{id}', [StockRecordController::class, "delete"])->name("airtime_stock_record_delete");
+
+
+Route::get("credit/authorized", [ClientController::class, "create_credit_authorized_client_view"])->name("credit_authorized_clients");
+Route::post('api/client/authorized/credit', [ClientController::class, "create_credit_authorized_client"])->name("api_credit_authorized_client");
+Route::get('api/client/authorized/credit/list', [ClientController::class, "create_credit_authorized_client_listview"])->name("api_credit_authorized_client_view");
+Route::get('api/client/authorized/credit/client/{id_number}', [ClientController::class, "credit_authorized_client_view"])->name("api_credit_authorized_client_show");
+Route::get('api/client/authorized/credit/edit/{id_number}', [ClientController::class, "credit_authorized_client_edit"])->name("api_credit_authorized_client_edit");
+Route::delete('api/client/authorized/credit/delete/{id_number}', [ClientController::class, "delete_credit_authorized_client"])->name("api_credit_authorized_client_delete");
+Route::post('api/client/authorized/credit/update/{id_number}', [ClientController::class, "update_credit_authorized_client"])->name("api_credit_authorized_client_update");
+
 
 Route::get('billing', function () {
     return view('pages.billing');

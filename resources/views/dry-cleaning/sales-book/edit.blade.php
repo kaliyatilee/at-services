@@ -12,7 +12,7 @@
             </div>
             <div class="card card-body mx-3 mx-md-4 mt-n6">
                 <div class="card card-plain h-100">
-                    <div class="card-body p-3"> 
+                    <div class="card-body p-3">
                             <form class="" id="form" method='POST' action='{{route('api_sales_book_update',['id' => $salesBook->id])}}'>
                                 @csrf
                             <div class="row">
@@ -50,7 +50,7 @@
                                         title="Must start with 2637 and follow format: 2637*********"
                                         placeholder="Format: 2637*********"
                                         name="phone"
-                                        value="{{ $salesBook->phone }}" 
+                                        value="{{ $salesBook->phone }}"
                                         oninput="this.setCustomValidity('')"
                                         oninvalid="this.setCustomValidity('Invalid phone number. Must start with 2637 and follow format: 2637*********')"
                                     />
@@ -145,7 +145,7 @@
                                         <small class="mt-2 text-sm text-danger">{{ $errors->first('transaction_date') }}</small>
                                     @endif
                                 </div>
-                                
+
                                 <div class="mb-3 col-12">
                                     <label class="form-label">Notes</label>
                                     <input type="text" name="notes" class="form-control border border-2 p-2"

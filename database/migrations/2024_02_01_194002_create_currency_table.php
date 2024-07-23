@@ -19,6 +19,12 @@ return new class extends Migration
             $table->float("exchange_rate",5);
             $table->timestamps();
         });
+
+        Schema::create('system_charge', function (Blueprint $table) {
+            $table->id();
+            $table->string("name",5);
+            $table->timestamps();
+        });
     }
 
     /**
@@ -29,5 +35,6 @@ return new class extends Migration
     public function down()
     {
         Schema::dropIfExists('currency');
+        Schema::dropIfExists('system_charge');
     }
 };

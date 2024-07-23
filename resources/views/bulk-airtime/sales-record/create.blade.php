@@ -1,6 +1,6 @@
 <x-layout bodyClass="g-sidenav-show  bg-gray-200">
 
-    <x-navbars.sidebar activePage="sales-book"></x-navbars.sidebar>
+    <x-navbars.sidebar activePage="airtime-sales-record"></x-navbars.sidebar>
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         <!-- Navbar -->
         <x-navbars.navs.auth titlePage="Add Sale"></x-navbars.navs.auth>
@@ -14,21 +14,9 @@
             <div class="card card-body mx-3 mx-md-4 mt-n6">
                 <div class="card card-plain h-100">
                     <div class="card-body p-3">
-                        <form class="" id="form" method='POST' action='{{ route('api_sales_book_store') }}'>
+                        <form class="" id="form" method='POST' action='{{ route('airtime_sales_record_store') }}'>
                                 @csrf
                             <div class="row">
-                                <div class="mb-3 col-md-6">
-                                    <label class="form-label">Search Provider</label>
-                                    <select class="form-control border border-2 p-2" name="provider" data-parsley-trigger="focusout" required data-parsley-required-message="Provider is required">
-                                        <option value="">Select Provider</option>
-                                        @foreach($serviceProviders as $provider)
-                                            <option value="{{ $provider->id }}">{{ $provider->provider }}</option>
-                                        @endforeach
-                                    </select>
-                                    @if ($errors->has('provider'))
-                                        <small class="mt-2 text-sm text-danger">{{ $errors->first('provider') }}</small>
-                                    @endif
-                                </div>
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Full Name</label>
@@ -111,27 +99,11 @@
                                     @endif
                                 </div>
                                 <div class="mb-3 col-md-6">
-                                    <label class="form-label">Expense Name</label>
-                                    <input type="text" name="expense_name" class="form-control border border-2 p-2" data-parsley-trigger="focusout" required data-parsley-required-message="Expense name is required"
-                                           value='{{ old('expense_name') }}' placeholder="Litigation services">
-                                           @if ($errors->has('expense_name'))
-                                        <small class="mt-2 text-sm text-danger">{{ $errors->first('expense_name') }}</small>
-                                    @endif
-                                </div>
-                                <div class="mb-3 col-md-6">
-                                    <label class="form-label">Expense Amount</label>
-                                    <input type="number" step=".01" name="expense_amount" class="form-control border border-2 p-2" data-parsley-trigger="focusout" required data-parsley-required-message="Expense amount is required"
-                                           value='{{ old('expense_amount') }}' placeholder="0.00">
-                                           @if ($errors->has('expense_amount'))
-                                        <small class="mt-2 text-sm text-danger">{{ $errors->first('expense_amount') }}</small>
-                                    @endif
-                                </div>
-                                <div class="mb-3 col-md-6">
-                                    <label class="form-label">Commission %age</label>
-                                    <input type="number" step=".01" name="commission_percentage" max="100" min="0" class="form-control border border-2 p-2" data-parsley-trigger="focusout" required data-parsley-required-message="Commission percentage is required"
-                                           value='{{ old('commission_percentage') }}' placeholder="0.00">
-                                           @if ($errors->has('commission_percentage'))
-                                        <small class="mt-2 text-sm text-danger">{{ $errors->first('commission_percentage') }}</small>
+                                    <label class="form-label">Percentage</label>
+                                    <input type="number" step=".01" name="percentage" max="100" min="0" class="form-control border border-2 p-2" data-parsley-trigger="focusout" required data-parsley-required-message="Commission percentage is required"
+                                           value='{{ old('percentage') }}' placeholder="0.00">
+                                           @if ($errors->has('percentage'))
+                                        <small class="mt-2 text-sm text-danger">{{ $errors->first('percentage') }}</small>
                                     @endif
                                 </div>
 
@@ -144,7 +116,7 @@
                                     @endif
                                 </div>
 
-                                <div class="mb-3 col-12">
+                                <div class="mb-3 col-md-6">
                                     <label class="form-label">Notes</label>
                                     <input type="text" name="notes" class="form-control border border-2 p-2"
                                            value='{{ old('notes') }}'>

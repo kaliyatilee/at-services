@@ -16,18 +16,22 @@ class DSTVTransaction extends Model
     ];
 
     protected $fillable = [
-        'package_id',
-        'created_by',
-        'rate',
-        'amount_paid',
-        'commission_usd',
-        'notes',
         'name',
         'phone',
-        'expected_amount',
-        'currency_id',
         'dstv_account_number',
-		'transaction_date'
+        'description',
+        'system_charges',
+        'system_charge_amount',
+        'package',
+        'currency',
+        'expected_amount',
+        'amount_paid',
+        'amount_paid_usd',
+        'rate',
+        'transaction_date',
+        'notes',
+        'created_by',
+        'commission_usd',
     ];
 
     public function getUser(){
@@ -77,4 +81,6 @@ class DSTVTransaction extends Model
 
         return $currency;
     }
+
+
 }
