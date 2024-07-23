@@ -55,14 +55,25 @@
                                         <small class="mt-2 text-sm text-danger">{{ $errors->first('description') }}</small>
                                     @endif
                                 </div>
-
                                 <div class="mb-3 col-md-6">
-                                    <label class="form-label">Amount Paid</label>
-                                    <input type="number" step=".01" name="amount_paid" class="form-control border border-2 p-2" data-parsley-trigger="focusout" required data-parsley-required-message="Amount is required"
-                                           value='{{ old('amount_paid') }}' placeholder="0.00">
-                                           @if ($errors->has('amount_paid'))
-                                           <small class="mt-2 text-sm text-danger">{{ $errors->first('amount_paid') }}</small>
-                                       @endif
+                                    <div class="row">
+                                        <div class="mb-3 col-md-6">
+                                            <label class="form-label">Amount Paid</label>
+                                            <input type="number" step=".01" name="amount_paid" class="form-control border border-2 p-2" data-parsley-trigger="focusout" required data-parsley-required-message="Amount is required"
+                                                value='{{ old('amount_paid') }}' placeholder="0.00">
+                                                @if ($errors->has('amount_paid'))
+                                                <small class="mt-2 text-sm text-danger">{{ $errors->first('amount_paid') }}</small>
+                                            @endif
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label class="form-label">Quantity</label>
+                                            <input type="number" step=".01" name="quantity" class="form-control border border-2 p-2" data-parsley-trigger="focusout" required data-parsley-required-message="Amount is required"
+                                                value='{{ old('quantity') }}' placeholder="0.00">
+                                                @if ($errors->has('quantity'))
+                                                <small class="mt-2 text-sm text-danger">{{ $errors->first('quantity') }}</small>
+                                            @endif
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="mb-3 col-md-6">

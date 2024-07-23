@@ -20,6 +20,7 @@ class SalesRecord extends Model
         'notes',
         'full_name',
         'phone',
+        'quantity',
         'currency',
         'rate',
         'amount_paid',

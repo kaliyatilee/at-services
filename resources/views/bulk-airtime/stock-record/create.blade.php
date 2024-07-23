@@ -1,6 +1,6 @@
 <x-layout bodyClass="g-sidenav-show  bg-gray-200">
 
-    <x-navbars.sidebar activePage="airtime-sales-record"></x-navbars.sidebar>
+    <x-navbars.sidebar activePage="airtime-stock-record"></x-navbars.sidebar>
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         <!-- Navbar -->
         <x-navbars.navs.auth titlePage="Add Stock"></x-navbars.navs.auth>
@@ -20,7 +20,7 @@
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Transaction Date</label>
-                                    <input type="date" name="transaction_date" class="form-control border border-2 p-2" data-parsley-trigger="focusout" required data-parsley-required-message="Transaction date is required"
+                                    <input type="date" name="transaction_date" class="form-control border border-2 p-2"
                                             value='{{ old('transaction_date') }}'>
                                             @if ($errors->has('transaction_date'))
                                         <small class="mt-2 text-sm text-danger">{{ $errors->first('transaction_date') }}</small>
@@ -29,7 +29,7 @@
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Description</label>
-                                    <input type="text" name="description" class="form-control border border-2 p-2" data-parsley-trigger="focusout" required data-parsley-required-message="Description is required"
+                                    <input type="text" name="description" class="form-control border border-2 p-2"
                                             value='{{ old('description') }}'>
                                             @if ($errors->has('description'))
                                         <small class="mt-2 text-sm text-danger">{{ $errors->first('description') }}</small>
@@ -37,35 +37,31 @@
                                 </div>
 
                                 <div class="mb-3 col-md-6">
-                                    <label class="form-label">In</label>
-                                    <input type="text" name="in" class="form-control border border-2 p-2" data-parsley-trigger="focusout" required data-parsley-required-message="Description is required"
-                                            value='{{ old('in') }}'>
-                                            @if ($errors->has('in'))
-                                        <small class="mt-2 text-sm text-danger">{{ $errors->first('in') }}</small>
-                                    @endif
-                                </div>
+                                    <div class="row">
+                                        <div class="mb-3 col-md-6">
+                                            <label class="form-label">In</label>
+                                            <input step=".1" placeholder="0.00" type="number" name="in" class="form-control border border-2 p-2"
+                                                    value='{{ old('in') }}'>
+                                                    @if ($errors->has('in'))
+                                                <small class="mt-2 text-sm text-danger">{{ $errors->first('in') }}</small>
+                                            @endif
+                                        </div>
 
-                                <div class="mb-3 col-md-6">
-                                    <label class="form-label">Out</label>
-                                    <input type="text" name="out" class="form-control border border-2 p-2" data-parsley-trigger="focusout" required data-parsley-required-message="Description is required"
-                                            value='{{ old('out') }}'>
-                                            @if ($errors->has('out'))
-                                        <small class="mt-2 text-sm text-danger">{{ $errors->first('out') }}</small>
-                                    @endif
-                                </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label class="form-label">Out</label>
+                                            <input step=".1" placeholder="0.00" type="number" name="out" class="form-control border border-2 p-2"
+                                                    value='{{ old('out') }}'>
+                                                    @if ($errors->has('out'))
+                                                <small class="mt-2 text-sm text-danger">{{ $errors->first('out') }}</small>
+                                            @endif
+                                        </div>
+                                    </div>
 
-                                <div class="mb-3 col-md-6">
-                                    <label class="form-label">Balance</label>
-                                    <input type="text" name="balance" class="form-control border border-2 p-2" data-parsley-trigger="focusout" required data-parsley-required-message="Description is required"
-                                            value='{{ old('balance') }}'>
-                                            @if ($errors->has('balance'))
-                                        <small class="mt-2 text-sm text-danger">{{ $errors->first('balance') }}</small>
-                                    @endif
                                 </div>
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Shortages</label>
-                                    <input type="text" name="shortages" class="form-control border border-2 p-2"
+                                    <input step=".1" placeholder="0.00" type="number" name="shortages" class="form-control border border-2 p-2"
                                             value='{{ old('shortages') }}'>
                                             @if ($errors->has('shortages'))
                                         <small class="mt-2 text-sm text-danger">{{ $errors->first('shortages') }}</small>

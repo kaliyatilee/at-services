@@ -23,6 +23,7 @@ return new class extends Migration
             $table->unsignedInteger('currency')->required()->comment('Currency used for the transaction');
             $table->decimal('rate', 10, 2)->required()->comment('Exchange rate');
             $table->decimal('amount_paid', 10, 2)->comment('Amount paid by the customer');
+            $table->unsignedInteger('quantity')->required()->comment('Quantity given by the customer');
             $table->string('payment_type')->required()->comment('Type of payment (e.g. cash, credit card)');
             $table->decimal('percentage', 10, 2)->required()->comment('Commission percentage');
             $table->decimal('commission_usd', 10, 2)->nullable()->comment('Commission in USD');
@@ -33,10 +34,10 @@ return new class extends Migration
             $table->id();
             $table->date('transaction_date')->required()->comment('Date of the transaction');
             $table->text('description')->required()->comment('Description of the transaction');
-            $table->string('in', 80)->required()->comment('Newly recieved stock');
-            $table->string('out', 20)->required()->comment('Stock going out');
-            $table->string('shortages', 20)->required()->comment('Shortages of the stock');
-            $table->string('balance', 20)->required()->comment('Current Balance');
+            $table->decimal('in', 10, 2)->nullable()->default(null)->comment('Newly recieved stock');
+            $table->decimal('out', 10, 2)->nullable()->default(null)->comment('Stock going out');
+            $table->decimal('shortages', 10, 2)->nullable()->default(null)->comment('Shortages of the stock');
+            $table->decimal('balance', 10, 2)->required()->comment('Current Balance');
             $table->timestamps();
         });
     }

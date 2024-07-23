@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\BulkAirtime;
 
+use App\Models\Currency;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Models\BulkAirtime\StockRecord;
-use App\Models\Currency;
-use Illuminate\Support\Facades\DB;
+use App\Models\BulkAirtime\BulkAirtimeBalance;
 
 class StockRecordController extends Controller
 {
@@ -19,7 +20,9 @@ class StockRecordController extends Controller
     public function index(){
         try {
             $stockRecord = StockRecord::all();
-            return view('bulk-airtime.stock-record.index', compact('stockRecord'));
+            $StockBalance = BulkAirtimeBalance::firstOrFail()->current_balance;
+
+            return view('bulk-airtime.stock-record.index', compact('stockRecord','StockBalance'));
         } catch (\Exception $e) {
             Log::error($e->getMessage());
             return redirect()->back()->with('error', 'An error occurred while retrieving sales books.');
@@ -54,17 +57,17 @@ class StockRecordController extends Controller
             $validator = validator()->make($request->all(), [
                 'transaction_date'  => 'required|date',
                 'description'       => 'required|string',
-                'in'                => 'nullable',
-                'out'               => 'nullable|string|max:30',
-                'shortages'         => 'required'
+                'in'                => 'required_without:out',
+                'out'               => 'required_without:in',
+                'shortages'         => 'nullable'
             ], [
                 'transaction_date.required' => 'The transaction date is required.',
                 'transaction_date.date'     => 'The transaction date must be a valid date.',
                 'description.required'      => 'The description is required.',
                 'in.required_without'       => 'Either In or Out is required.',
                 'out.required_without'      => 'Either In or Out is required.',
-                'shotages.required'         => 'The shortages field is required.',
             ]);
+
 
             if ($validator->fails()) {
                 return redirect()->back()->withErrors($validator)->withInput();
@@ -73,13 +76,32 @@ class StockRecordController extends Controller
             DB::beginTransaction();
 
             try {
+                $balance = $request->in ?: $request->out - $request->shortages;
+
+                $currentBalance = BulkAirtimeBalance::firstOrFail()->current_balance ?? 0;
+
+                if($request->in){
+                    $newBalance = $request->in + $currentBalance;
+
+                    BulkAirtimeBalance::updateOrCreate(['id' => 1], [
+                        'current_balance' => number_format($newBalance, 2)
+                    ]);
+                }else{
+                   if($request->out > $currentBalance){
+                        return response()->json([
+                            'message' => "Stock out can not be greater than available stock.",
+                            'success' => false
+                        ]);
+                   }
+                }
+
                 $stockRecord = StockRecord::create([
                     'transaction_date'  =>  $request->transaction_date,
                     'description'       =>  $request->description,
-                    'in'                =>  $request->in,
-                    'out'               =>  $request->out,
-                    'shortages'         =>  $request->shortages,
-                    'balance'           =>  $request->balance,
+                    'in'                =>  number_format($request->in, 2),
+                    'out'               =>  number_format($request->out, 2),
+                    'shortages'         =>  number_format($request->shortages, 2),
+                    'balance'           =>  number_format($balance, 2),
                 ]);
 
                 DB::commit();
@@ -150,16 +172,15 @@ class StockRecordController extends Controller
             $validator = validator()->make($request->all(), [
                 'transaction_date'  => 'required|date',
                 'description'       => 'required|string',
-                'in'                => 'nullable',
-                'out'               => 'nullable|string|max:30',
-                'shortages'         => 'required'
+                'in'                => 'required_without:out',
+                'out'               => 'required_without:in',
+                'shortages'         => 'nullable'
             ], [
                 'transaction_date.required' => 'The transaction date is required.',
                 'transaction_date.date'     => 'The transaction date must be a valid date.',
                 'description.required'      => 'The description is required.',
                 'in.required_without'       => 'Either In or Out is required.',
                 'out.required_without'      => 'Either In or Out is required.',
-                'shotages.required'         => 'The shortages field is required.',
             ]);
 
             if ($validator->fails()) {
@@ -169,14 +190,32 @@ class StockRecordController extends Controller
             DB::beginTransaction();
 
             try {
+                $balance = $request->in ?: $request->out - $request->shortages;
+
+                $currentBalance = BulkAirtimeBalance::firstOrFail()->current_balance ?? 0;
+
+                if($request->in){
+                    $newBalance = $request->in + $currentBalance;
+
+                    BulkAirtimeBalance::updateOrCreate(['id' => 1], [
+                        'current_balance' => number_format($newBalance, 2)
+                    ]);
+                }else{
+                   if($request->out > $currentBalance){
+                        return response()->json([
+                            'message' => "Stock out can not be greater than available stock.",
+                            'success' => false
+                        ]);
+                   }
+                }
 
                 $stockRecord->update([
                     'transaction_date'  =>  $request->transaction_date,
                     'description'       =>  $request->description,
-                    'in'                =>  $request->in,
-                    'out'               =>  $request->out,
-                    'shortages'         =>  $request->shortages,
-                    'balance'           =>  $request->in,
+                    'in'                =>  number_format($request->in, 2),
+                    'out'               =>  number_format($request->out, 2),
+                    'shortages'         =>  number_format($request->shortages, 2),
+                    'balance'           =>  number_format($balance, 2),
                 ]);
 
                 DB::commit();
@@ -210,6 +249,21 @@ class StockRecordController extends Controller
                 // Check if the resource exists
                 if (!$record) {
                     return back()->with('error', 'Record not found. Try again!');
+                }
+                $currentBalance = BulkAirtimeBalance::firstOrFail()->current_balance ?? 0;
+
+                if($record->in){
+                    $newBalance = $currentBalance - $record->in;
+
+                    BulkAirtimeBalance::updateOrCreate(['id' => 1], [
+                        'current_balance' => number_format($newBalance, 2)
+                    ]);
+                }else{
+                    $newBalance = $currentBalance + $record->out;
+
+                    BulkAirtimeBalance::updateOrCreate(['id' => 1], [
+                        'current_balance' => number_format($newBalance, 2)
+                    ]);
                 }
 
                 $record->delete();
