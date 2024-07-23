@@ -133,7 +133,7 @@
                 <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Clients</h6>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white {{ $activePage == 'clients' ? 'active bg-gradient-primary' : '' }} "
+                <a class="nav-link text-white {{ $activePage == 'client' ? 'active bg-gradient-primary' : '' }} "
                    href="{{ route('client') }}">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i style="font-size: 1.2rem;" class="fas fa-user-circle ps-2 pe-2 text-center"></i>
@@ -148,15 +148,6 @@
                         <i style="font-size: 1.2rem;" class="fas fa-user-circle ps-2 pe-2 text-center"></i>
                     </div>
                     <span class="nav-link-text ms-1">Credit Authorized</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white {{ $activePage == 'clients_add' ? 'active bg-gradient-primary' : '' }} "
-                   href="{{ route('client_add') }}">
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i style="font-size: 1.2rem;" class="fas fa-user-circle ps-2 pe-2 text-center"></i>
-                    </div>
-                    <span class="nav-link-text ms-1">Add Client</span>
                 </a>
             </li>
             <li class="nav-item">
