@@ -13,18 +13,7 @@ use Illuminate\Validation\Rule;
 
 class ClientController extends Controller
 {
-	// CREATE TABLE `clients` (
-	// 	`id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-	// 	`id_number` varchar(20) NOT NULL,
-	// 	`name` varchar(50) NOT NULL,
-	// 	`phone1` varchar(20) NOT NULL,
-	// 	`phone2` varchar(20) DEFAULT NULL,
-	// 	`credit_allowed` int(11) NOT NULL DEFAULT 0 COMMENT '0 is false, 1 is true',
-	// 	`created_by` int(11) NOT NULL,
-	// 	`created_at` timestamp NULL DEFAULT NULL,
-	// 	`updated_at` timestamp NULL DEFAULT NULL,
-	// 	PRIMARY KEY (`id`)
-	//   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
     public function view(Request $request){
 
         $clients = Client::all();
@@ -67,7 +56,7 @@ class ClientController extends Controller
             "phone2" => "nullable|numeric|min:5",
         ]);
 
-        $data['created_by'] = Auth::user()->id;
+        $data['created_by'] = Auth::id();;
 
         $client = new Client();
         $client->create($data);
