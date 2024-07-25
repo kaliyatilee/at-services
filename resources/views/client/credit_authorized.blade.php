@@ -154,7 +154,7 @@
                                 </div>
                                 <div class="mb-3 col-12">
                                     <label class="form-label">Notes</label>
-                                    <textarea  class="form-control border border-2 p-2" name="notes" value="{{ old('notes') }}" id="editor" cols="30" rows="10"></textarea>
+                                    <textarea  class="form-control border border-2 p-2" name="notes" value="{{ old('notes') }}" id="" cols="30" rows="5"></textarea>
 
                                     <div id="phone_success_error_message" class="text-danger text-xs"></div>
                                 </div>
