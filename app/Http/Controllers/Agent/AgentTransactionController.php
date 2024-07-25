@@ -57,12 +57,17 @@ class AgentTransactionController extends Controller {
 		if (!$agent) {
 			return redirect()->back()->with('error', 'Agent not found');
 		}
-		$accountBalance = $transaction->calculateAccountBalance();
+
+		// Calculate account balance
+		$totalAmountPaid = $agent->amount_paid->sum();
+		$totalAmountRemitted = $agent->transactions->sum('amount_remmited');
+		$accountBalance = $totalAmountPaid - $totalAmountRemitted;
 
 		$transactions = $agent->transactions;
 
 		return view('agent.transaction.view', compact('agent', 'transactions', 'accountBalance'));
 	}
+
 
 	public function edit( $id ) {
 		$transaction = AgentTransaction::findOrFail( $id );

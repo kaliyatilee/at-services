@@ -31,11 +31,4 @@ class AgentTransaction extends Model {
 		return $this->belongsTo(Agent::class, 'name', 'name');
 	}
 
-	public function calculateAccountBalance() {
-		$totalAmountPaid = $this->agent->amount_paid->sum();
-		$totalAmountRemitted = $this->agent->transactions->sum('amount_remmited');
-
-		return $totalAmountPaid - $totalAmountRemitted;
-	}
-
 }
