@@ -150,7 +150,7 @@
                     <span class="nav-link-text ms-1">Credit Authorized</span>
                 </a>
             </li>
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link text-white {{ $activePage == 'add_client_credit_authorized' ? 'active bg-gradient-primary' : '' }} "
                    href="{{ route('credit_authorized_clients') }}">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -158,7 +158,7 @@
                     </div>
                     <span class="nav-link-text ms-1">Add Credit Authorized</span>
                 </a>
-            </li>
+            </li> --}}
             {{--            CLIENTS END--}}
 
 {{--            DSTV START--}}
