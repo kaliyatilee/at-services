@@ -20,7 +20,7 @@
                                     <tr>
                                         <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            ID
+                                            Title
                                         </th>
                                         <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -39,21 +39,21 @@
                                             <td>
                                                 <div class="d-flex px-2 py-1">
                                                     <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm">{{ $note->id }}</h6>
+                                                        <p class="mb-0 text-sm">{{ $note->title }}</p>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="d-flex px-2 py-1">
                                                     <div class="d-flex flex-column justify-content-center">
-                                                        <p class="mb-0 text-sm">{{ $note->notes }}</p> 
+                                                        <p class="mb-0 text-sm text-truncate">{{ $note->notes }}</p>
                                                     </div>
                                                 </div>
                                             </td>
 											<td>
                                                 <div class="d-flex px-2 py-1">
                                                     <div class="d-flex flex-column justify-content-center">
-                                                        <p class="mb-0 text-sm">{{ $note->date }}</p> 
+                                                        <p class="mb-0 text-sm">{{ $note->date }}</p>
                                                     </div>
                                                 </div>
                                             </td>

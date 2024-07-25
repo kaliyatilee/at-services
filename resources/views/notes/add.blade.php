@@ -1,6 +1,6 @@
 <x-layout bodyClass="g-sidenav-show  bg-gray-200">
 
-    <x-navbars.sidebar activePage="notes_add"></x-navbars.sidebar>
+    <x-navbars.sidebar activePage="notes"></x-navbars.sidebar>
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         <!-- Navbar -->
         <x-navbars.navs.auth titlePage="Add Notes"></x-navbars.navs.auth>
@@ -22,11 +22,15 @@
                                     <input type="date" name="date" class="form-control border border-2 p-2"
                                            value='{{ old('date') }}'>
                                 </div>
-
                                 <div class="mb-3 col-md-6">
+                                    <label class="form-label">Title</label>
+                                    <input type="text" name="title" class="form-control border border-2 p-2"
+                                           value='{{ old('title') }}'>
+                                </div>
+
+                                <div class="mb-3 col-md-12">
                                     <label class="form-label">Notes</label>
-                                    <input type="text" name="notes" class="form-control border border-2 p-2"
-                                           value='{{ old('notes') }}'>
+                                    <textarea type="text" name="notes" class="form-control border border-2 p-2">{{ old('notes') }}</textarea>
                                 </div>
 
 

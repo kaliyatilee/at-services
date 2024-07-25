@@ -43,7 +43,8 @@ class NotesController extends Controller
     public function create_notes(Request $request)
     {
         $validator = validator()->make($request->all(), [
-            "notes" => ["nullable","string"],
+            "title" => "required",
+            "notes" => "nullable|string",
             "date" => "nullable|date"
 			]
 		);
@@ -84,7 +85,8 @@ class NotesController extends Controller
 	public function update_notes(Request $request, $id)
     {
         $data = $request->validate([
-			"notes" => ["nullable","string"],
+			"title" => "required",
+            "notes" => "nullable|string",
             "date" => "nullable|date"
         ]);
 
