@@ -13,16 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('currency', function (Blueprint $table) {
+        Schema::create('bulk_airtime_balance', function (Blueprint $table) {
             $table->id();
-            $table->string("name",20);
-            $table->float("exchange_rate",5);
-            $table->timestamps();
-        });
-
-        Schema::create('system_charge', function (Blueprint $table) {
-            $table->id();
-            $table->string("name",5);
+            $table->decimal('current_balance', 10, 2)->required()->default(0.00)->comment('Total airtime balance USD');
             $table->timestamps();
         });
     }
@@ -34,7 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('currency');
-        Schema::dropIfExists('system_charge');
+        Schema::dropIfExists('bulk_airtime_balance');
     }
 };

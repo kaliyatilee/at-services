@@ -2,19 +2,22 @@
 
 namespace App\Http\Controllers\DSTV;
 
-use App\Http\Controllers\Controller;
 use App\Models\Client;
+use function response;
 use App\Models\Currency;
 use App\Models\DSTVPackage;
-use App\Models\DSTVTransaction;
+use App\Models\SystemCharge;
 use Illuminate\Http\Request;
+use App\Models\DSTVTransaction;
 use Illuminate\Validation\Rule;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use function response;
 use Modules\Messaging\Http\Controllers\DigitalReceiptsMessagingController;
 
 class DSTVTransactionController extends Controller
 {
+
+
     public function view(Request $request){
         $dstv_transactions = DSTVTransaction::all();
         $data['dstv_transactions'] = $dstv_transactions;
@@ -31,6 +34,7 @@ class DSTVTransactionController extends Controller
 
         $data['dstv_packages'] = DSTVPackage::all();
         $data['currencies'] = Currency::all();
+        $data['system_charges'] = SystemCharge::all();
 
         return view('dstv.transaction.add',$data);
     }
@@ -41,6 +45,7 @@ class DSTVTransactionController extends Controller
         $data['dstv_transaction'] = $dstv_transaction;
         $data['dstv_packages'] = DSTVPackage::all();
         $data['currencies'] = Currency::all();
+        $data['system_charges'] = SystemCharge::all();
         return view('dstv.transaction.edit',$data);
 
 	}
@@ -49,11 +54,9 @@ class DSTVTransactionController extends Controller
 
         $dstv_transaction = DSTVTransaction::findOrFail($id);
         $data['dstv_transaction'] = $dstv_transaction;
-        $dstv_packages = DSTVPackage::all();
-        $currency = Currency::all();
-
-		$data['selected_currency']  = $currency->firstWhere('id', $dstv_transaction->currency_id);
-		$data['selected_dstv_package']  = $dstv_packages->firstWhere('id', $dstv_transaction->package_id);
+        $data['currencies'] = Currency::all();
+        $data['dstv_packages'] = DSTVPackage::all();
+        $data['system_charges'] = SystemCharge::all();
 
         return view('dstv.transaction.view',$data);
 
@@ -61,20 +64,24 @@ class DSTVTransactionController extends Controller
 
     public function create_dstv_transaction(Request $request)
     {
+
         $validator = validator()->make($request->all(), [
-            "name" => "required|min:1",
-            "phone" => "required|string|min:1",
-            "amount_paid" => "required|string|min:1",
-            "expected_amount" => "nullable|string|min:1",
-            "rate" => "nullable|string",
-            "currency_id" => "nullable|numeric|min:1",
-            "dstv_account_number" => "nullable|string",
-            "package_id" => "nullable|numeric",
-            "notes" => "nullable|string",
-			"transaction_date" => "nullable|date"
+            'name' => 'required|string|max:255',
+            'phone' => 'required|string|max:20',
+            'dstv_account_number' => 'required|string|max:20',
+            'description' => 'nullable|string|max:255',
+            'system_charges' => 'required|integer',
+            'system_charge_amount' => 'required|integer',
+            'package' => 'required|integer',
+            'currency' => 'required|integer',
+            'amount_paid' => 'required|numeric|between:0,999999.99',
+            'rate' => 'required|numeric|between:0,999999.99',
+            'transaction_date' => 'required|date',
+            'notes' => 'nullable|string|max:255'
         ]);
 
-// Check if validation fails
+
+        // Check if validation fails
         if ($validator->fails()) {
             // Return validation errors as JSON response
             return response()->json([
@@ -84,12 +91,71 @@ class DSTVTransactionController extends Controller
         }
 
         $data = $validator->validated();
-        $data['created_by'] = Auth::user()->id;
-        //$data['created_by'] = 1;
-		$dstv_packages = DSTVPackage::findOrfail($data['package_id']);
+        //$data['created_by'] = Auth::user()->id;
+        $data['created_by'] = 1;
+		$dstv_packages = DSTVPackage::findOrfail($data['package']);
 
-        $data['commission_usd'] = $dstv_packages['commission_usd'];
-        $currency = Currency::findOrFail($request->currency_id);
+        if (!$dstv_packages) {
+            return response()->json([
+                'message' => "Package not found.",
+                'success' => false
+            ]);
+        }
+
+        $expectedAmount = $request->currency === 'USD'
+        ? $dstv_packages->amount_rand / Currency::find(2)->exchange_rate
+        : $dstv_packages->amount_rand;
+
+        if ($request->amount_paid < $expectedAmount) {
+            return response()->json([
+                'message' => "Amount Paid should not be less than package cost.",
+                'success' => false
+            ]);
+        }
+
+        $currency = Currency::findOrFail($request->currency);
+        if (!$currency) {
+            return response()->json([
+                'message' => "Currency not found.",
+                'success' => false
+            ]);
+        }
+
+        $data['amount_paid_usd'] = $request->amount_paid / $currency->exchange_rate;
+
+        try {
+            $systemCharge = SystemCharge::find($request->system_charges);
+            $currency = Currency::find($request->currency);
+
+            if (!$systemCharge || !$currency) {
+                return response()->json([
+                    'message' => 'System charge or currency not found',
+                    'success' => false
+                ]);
+            }
+
+            $CurrencyId = 2; // Define a named constant or variable
+            if ($systemCharge->name === 'ZAR' && $currency->name === 'USD') {
+                $exchangeRate = Currency::find($CurrencyId)->exchange_rate;
+                if ($exchangeRate === 0) {
+                    throw new \Exception('Exchange rate cannot be zero');
+                }
+
+                $data['commission_usd'] = round(($request->amount_paid * $exchangeRate) - $request->system_charge_amount / $exchangeRate, 2);
+            } elseif ($systemCharge->name === 'USD' && $currency->name === 'USD') {
+                $data['commission_usd'] = round($request->amount_paid - $request->system_charge_amount, 2);
+            } else {
+                return response()->json([
+                    'message' => "The given data is incorrect. Please check System Charge and Your Payment Currency.",
+                    'success' => false
+                ]);
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage(),
+                'success' => false
+            ], 500);
+        }
 
         $dstvTransaction = new DSTVTransaction();
         $dstvTransaction->create($data);
@@ -115,16 +181,18 @@ class DSTVTransactionController extends Controller
     public function update_dstv_transaction(Request $request,$id)
     {
         $validator = validator()->make($request->all(), [
-            "name" => "required|string|min:1",
-            "phone" => "required|string|min:1",
-            "amount_paid" => "required|string|min:1",
-            "expected_amount" => "nullable|string|min:1",
-            "rate" => "nullable|string",
-            "currency_id" => "nullable|numeric|min:1",
-            "dstv_account_number" => "nullable|string|min:5",
-            "package_id" => "nullable|numeric",
-            "notes" => "nullable|string",
-			"transaction_date" => "required|date"
+            'name' => 'required|string|max:255',
+            'phone' => 'required|string|max:20',
+            'dstv_account_number' => 'required|string|max:20',
+            'description' => 'nullable|string|max:255',
+            'system_charges' => 'required|integer',
+            'system_charge_amount' => 'required|integer',
+            'package' => 'required|integer',
+            'currency' => 'required|integer',
+            'amount_paid' => 'required|numeric|between:0,999999.99',
+            'rate' => 'required|numeric|between:0,999999.99',
+            'transaction_date' => 'required|date',
+            'notes' => 'nullable|string|max:255'
         ]);
 
         // Check if validation fails
@@ -137,9 +205,72 @@ class DSTVTransactionController extends Controller
         }
 
         $data = $validator->validated();
-        $dstv_packages = DSTVPackage::findOrfail($data['package_id']);
+        $dstv_packages = DSTVPackage::findOrfail($data['package']);
 
         $dstvTransaction = DSTVTransaction::findOrFail($id);
+        $dstv_packages = DSTVPackage::findOrfail($data['package']);
+
+        if (!$dstv_packages) {
+            return response()->json([
+                'message' => "Package not found.",
+                'success' => false
+            ]);
+        }
+
+        $expectedAmount = $request->currency === 'USD'
+        ? $dstv_packages->amount_rand / Currency::find(2)->exchange_rate
+        : $dstv_packages->amount_rand;
+
+        if ($request->amount_paid < $expectedAmount) {
+            return response()->json([
+                'message' => "Amount Paid should not be less than package cost.",
+                'success' => false
+            ]);
+        }
+
+        $currency = Currency::findOrFail($request->currency);
+        if (!$currency) {
+            return response()->json([
+                'message' => "Currency not found.",
+                'success' => false
+            ]);
+        }
+
+        $data['amount_paid_usd'] = $request->amount_paid / $currency->exchange_rate;
+
+        try {
+            $systemCharge = SystemCharge::find($request->system_charges);
+            $currency = Currency::find($request->currency);
+
+            if (!$systemCharge || !$currency) {
+                return response()->json([
+                    'message' => 'System charge or currency not found',
+                    'success' => false
+                ]);
+            }
+
+            $CurrencyId = 2; // Define a named constant or variable
+            if ($systemCharge->name === 'ZAR' && $currency->name === 'USD') {
+                $exchangeRate = Currency::find($CurrencyId)->exchange_rate;
+                if ($exchangeRate === 0) {
+                    throw new \Exception('Exchange rate cannot be zero');
+                }
+                $data['commission_usd'] = round(($request->amount_paid * $exchangeRate) - $request->system_charge_amount / $exchangeRate, 2);
+            } elseif ($systemCharge->name === 'USD' && $currency->name === 'USD') {
+                $data['commission_usd'] = round($request->amount_paid - $request->system_charge_amount, 2);
+            } else {
+                return response()->json([
+                    'message' => "The given data is incorrect. Please check System Charge and Your Payment Currency.",
+                    'success' => false
+                ]);
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage(),
+                'success' => false
+            ], 500);
+        }
+
         $dstvTransaction->update($data);
 
        // $message = '$'.$request->amount_paid.' on DSTV Account '.$request->dstv_account_number.' with Package '.$dstv_packages->name;

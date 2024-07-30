@@ -13,16 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('currency', function (Blueprint $table) {
+        Schema::create('system_charges', function (Blueprint $table) {
             $table->id();
-            $table->string("name",20);
-            $table->float("exchange_rate",5);
-            $table->timestamps();
-        });
-
-        Schema::create('system_charge', function (Blueprint $table) {
-            $table->id();
-            $table->string("name",5);
+            $table->string('name', 25)->required();
             $table->timestamps();
         });
     }
@@ -34,7 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('currency');
-        Schema::dropIfExists('system_charge');
+        Schema::dropIfExists('system_charges');
     }
 };

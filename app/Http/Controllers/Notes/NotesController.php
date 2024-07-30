@@ -43,7 +43,8 @@ class NotesController extends Controller
     public function create_notes(Request $request)
     {
         $validator = validator()->make($request->all(), [
-            "notes" => ["nullable","string"],
+            "title" => "required",
+            "notes" => "nullable|string",
             "date" => "nullable|date"
 			]
 		);
@@ -63,6 +64,9 @@ class NotesController extends Controller
             $data['date'] = date('Y-m-d');
         }
 
+        // Save the notes with line breaks
+        $data['notes'] = nl2br($data['notes']);
+
         $notes = Notes::query()->where("date",$data['date'])->first();
 
         if($notes === null){
@@ -81,7 +85,8 @@ class NotesController extends Controller
 	public function update_notes(Request $request, $id)
     {
         $data = $request->validate([
-			"notes" => ["nullable","string"],
+			"title" => "required",
+            "notes" => "nullable|string",
             "date" => "nullable|date"
         ]);
 

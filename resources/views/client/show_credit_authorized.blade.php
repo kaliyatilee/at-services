@@ -1,9 +1,9 @@
 <x-layout bodyClass="g-sidenav-show  bg-gray-200">
 
-    <x-navbars.sidebar activePage="client"></x-navbars.sidebar>
+    <x-navbars.sidebar activePage="list_client_credit_authorized"></x-navbars.sidebar>
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         <!-- Navbar -->
-        <x-navbars.navs.auth titlePage="View Client"></x-navbars.navs.auth>
+        <x-navbars.navs.auth titlePage="View Client Credit Authorized"></x-navbars.navs.auth>
         <!-- End Navbar -->
         <div class="container-fluid px-2 px-md-4">
             <div class="page-header min-height-300 border-radius-xl mt-4"
@@ -49,6 +49,45 @@
 										<p>Phone 2</p>
 										<hr>
 										{{ $client->phone2 }}
+										</div>
+									</div>
+                                </div>
+                                <div class="mb-3 col-md-6">
+									<div class="card card-frame">
+										<div class="card-body">
+										<p>Collateral</p>
+										<hr>
+										{{ $client->collateral }}
+										</div>
+									</div>
+                                </div>
+
+                                <div class="mb-3 col-md-6">
+									<div class="card card-frame">
+										<div class="card-body">
+										<p>Guarantor Name</p>
+										<hr>
+										{{ $client->guarantor_name }}
+										</div>
+									</div>
+                                </div>
+
+                                <div class="mb-3 col-md-6">
+									<div class="card card-frame">
+										<div class="card-body">
+										<p>National Identification</p>
+										<hr>
+                                        <img class="w-60 h-auto img-circle" src="{{ asset('uploads/'.$client->national_id)}}">
+										</div>
+									</div>
+                                </div>
+
+                                <div class="mb-3 col-md-6">
+									<div class="card card-frame">
+										<div class="card-body">
+										<p>Proof of Residence</p>
+										<hr>
+                                        <img class="w-60 h-auto img-circle" src="{{ asset('uploads/'.$client->proof_of_residence)}}">
 										</div>
 									</div>
                                 </div>

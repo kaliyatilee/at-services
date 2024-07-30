@@ -15,14 +15,22 @@ return new class extends Migration
     {
         Schema::create('dstv_transaction', function (Blueprint $table) {
             $table->id();
-            $table->string("user_id",20);
-            $table->string("dstv_account_number");
-            $table->integer("package_id");
-            $table->float("rand_usd_rate");
-            $table->float("balance");
+            $table->string("name")->required();
+            $table->string("phone")->required();
+            $table->string("dstv_account_number")->required();
+            $table->string("description");
+            $table->integer("system_charges")->required();
+            $table->integer("system_charge_amount")->required();
+            $table->integer("package")->required();
+            $table->integer("currency")->required();
+            $table->decimal("expected_amount", 10,2);
+            $table->decimal("amount_paid", 10,2)->required();
+            $table->decimal("amount_paid_usd", 10,2);
+            $table->decimal("commission_usd", 10,2);
+            $table->decimal("rate", 10,2)->required();
+            $table->date("transaction_date")->required();
+            $table->text("notes")->nullable();
             $table->integer("created_by");
-            $table->float("commission_usd");
-            $table->text("notes");
             $table->timestamps();
         });
     }

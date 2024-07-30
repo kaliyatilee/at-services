@@ -142,14 +142,23 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white {{ $activePage == 'client/add' ? 'active bg-gradient-primary' : '' }} "
-                   href="{{ route('client_add') }}">
+                <a class="nav-link text-white {{ $activePage == 'list_client_credit_authorized' ? 'active bg-gradient-primary' : '' }} "
+                   href="{{ route('api_credit_authorized_client_view') }}">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i style="font-size: 1.2rem;" class="fas fa-user-circle ps-2 pe-2 text-center"></i>
                     </div>
-                    <span class="nav-link-text ms-1">Add Client</span>
+                    <span class="nav-link-text ms-1">Credit Authorized</span>
                 </a>
             </li>
+            {{-- <li class="nav-item">
+                <a class="nav-link text-white {{ $activePage == 'add_client_credit_authorized' ? 'active bg-gradient-primary' : '' }} "
+                   href="{{ route('credit_authorized_clients') }}">
+                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i style="font-size: 1.2rem;" class="fas fa-user-circle ps-2 pe-2 text-center"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Add Credit Authorized</span>
+                </a>
+            </li> --}}
             {{--            CLIENTS END--}}
 
 {{--            DSTV START--}}
@@ -234,6 +243,28 @@
                         <i style="font-size: 1.2rem;" class="fas fa-user-circle ps-2 pe-2 text-center"></i>
                     </div>
                     <span class="nav-link-text ms-1">Sales Transactions</span>
+                </a>
+            </li>
+
+            <li class="nav-item mt-3">
+                <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">BULK AIRTIME</h6>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white {{ $activePage == 'airtime-sales-record' ? 'active bg-gradient-primary' : '' }} "
+                   href="{{ route('airtime_sales_record') }}">
+                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i style="font-size: 1.2rem;" class="fas fa-user-circle ps-2 pe-2 text-center"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Sales Record</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white {{ $activePage == 'airtime-stock-record' ? 'active bg-gradient-primary' : '' }} "
+                   href="{{ route('airtime_stock_record') }}">
+                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i style="font-size: 1.2rem;" class="fas fa-user-circle ps-2 pe-2 text-center"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Stock Record</span>
                 </a>
             </li>
 

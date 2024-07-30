@@ -1,17 +1,17 @@
 <x-layout bodyClass="g-sidenav-show  bg-gray-200">
 
-    <x-navbars.sidebar activePage="dstv"></x-navbars.sidebar>
+    <x-navbars.sidebar activePage="airtime-sales-record"></x-navbars.sidebar>
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         <!-- Navbar -->
-        <x-navbars.navs.auth titlePage="DSTV Subscriptions"></x-navbars.navs.auth>
+        <x-navbars.navs.auth titlePage="Bulk Airtime > Sales Record"></x-navbars.navs.auth>
         <!-- End Navbar -->
         <div class="container-fluid py-4">
             <div class="row">
                 <div class="col-12">
                     <div class="card my-4">
                         <div class=" me-3 my-3 text-end">
-                            <a class="btn bg-gradient-dark mb-0" href="{{ route("dstv_subscription_add") }}"><i
-                                    class="material-icons text-sm">add</i>&nbsp;&nbsp;Add New Subscription</a>
+                            <a class="btn bg-gradient-dark mb-0" href="{{ route("airtime_sales_record_create") }}"><i
+                                    class="material-icons text-sm">add</i>&nbsp;&nbsp;Add Sale</a>
                         </div>
                         <div class="card-body px-0 pb-2">
                             <div class="table-responsive p-0">
@@ -20,11 +20,11 @@
                                     <tr>
                                         <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Transaction date
+                                            Transaction Date
                                         </th>
                                         <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Descritption
+                                            Description
                                         </th>
                                         <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
@@ -32,7 +32,7 @@
                                         </th>
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Name
+                                            Full Name
                                         </th>
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -40,23 +40,7 @@
                                         </th>
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Samrt Card #
-                                        </th>
-                                        <th
-                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Package
-                                        </th>
-                                        <th
-                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Currency
-                                        </th>
-                                        <th
-                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            System Charge
-                                        </th>
-                                        <th
-                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            System Charge USD
                                         </th>
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -68,129 +52,100 @@
                                         </th>
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Amount Paid USD
+                                            Payment Type
+                                        </th>
+                                        <th
+                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Precentage
                                         </th>
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Commission USD
                                         </th>
-                                        <th
-                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Created By
-                                        </th>
                                         <th class="text-secondary opacity-7"></th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($dstv_transactions as $subscription)
+                                    @foreach($salesRecord as $sales)
                                         <tr>
                                             <td>
-                                                <div class="d-flex px-2 py-1">
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm">{{ $subscription->transaction_date }}</h6>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="d-flex px-2 py-1">
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <p class="mb-0 text-sm">{{ $subscription->description }}</p>
-                                                    </div>
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <p class="mb-0 text-sm">{{ $sales->transaction_date }}</p>
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="d-flex flex-column justify-content-center">
-                                                 <p class="mb-0 text-sm">{{ $subscription->notes}}</p>
+                                                    <p class="mb-0 text-sm">{{ $sales->description }}</p>
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="d-flex flex-column justify-content-center">
-                                                 <p class="mb-0 text-sm">{{ $subscription->name}}</p>
+                                                    <p class="mb-0 text-sm">{{ $sales->notes }}</p>
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="d-flex flex-column justify-content-center">
-                                                 <p class="mb-0 text-sm">{{ $subscription->phone}}</p>
+                                                    <p class="mb-0 text-sm">{{ $sales->full_name }}</p>
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="d-flex flex-column justify-content-center">
-                                                 <p class="mb-0 text-sm">{{ $subscription->dstv_account_number}}</p>
+                                                    <p class="mb-0 text-sm">{{ $sales->phone }}</p>
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="d-flex flex-column justify-content-center">
-                                                 <p class="mb-0 text-sm">{{ DB::table('dstv_packages')->find($subscription->package)->name }} - R {{ DB::table('dstv_packages')->find($subscription->package)->amount_rand }} </p>
+                                                    <p class="mb-0 text-sm">{{ DB::table('currency')->find($sales->currency)->name }}</p>
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="d-flex flex-column justify-content-center">
-                                                 <p class="mb-0 text-sm">{{ DB::table('currency')->find($subscription->currency)->name }}</p>
+                                                    <p class="mb-0 text-sm">{{ $sales->rate }}</p>
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="d-flex flex-column justify-content-center">
-                                                 <p class="mb-0 text-sm">{{ DB::table('system_charges')->find($subscription->system_charges)->name }}</p>
+                                                    <p class="mb-0 text-sm">{{ $sales->amount_paid }}</p>
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="d-flex flex-column justify-content-center">
-                                                 <p class="mb-0 text-sm">{{ $subscription->system_charge_amount }}</p>
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <div class="d-flex flex-column justify-content-center">
-                                                 <p class="mb-0 text-sm">{{ $subscription->rate}}</p>
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <div class="d-flex flex-column justify-content-center">
-                                                 <p class="mb-0 text-sm">{{ $subscription->amount_paid}}</p>
+                                                    <p class="mb-0 text-sm">{{ $sales->payment_type }}</p>
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="d-flex flex-column justify-content-center">
-                                                 <p class="mb-0 text-sm">{{ $subscription->amount_paid_usd}}</p>
+                                                    <p class="mb-0 text-sm">{{ $sales->percentage }}</p>
                                                 </div>
                                             </td>
-
                                             <td>
                                                 <div class="d-flex flex-column justify-content-center">
-                                                 <p class="mb-0 text-sm">{{ $subscription->commission_usd}}</p>
+                                                    <p class="mb-0 text-sm">{{ $sales->commission_usd }}</p>
                                                 </div>
                                             </td>
-                                            <td class="align-middle text-center">
-                                                <div class="d-flex flex-column justify-content-center">
-                                                    <p class="mb-0 text-sm">{{ $subscription->createdBy()->name}}</p>
-                                                </div>
-                                            </td>
-
                                             <td class="align-middle">
                                                 <a rel="tooltip" class="btn btn-success btn-link"
-												href="{{ route("dstv_transaction_edit", $subscription->id) }} " data-original-title=""
+												href="{{ route("airtime_sales_record_edit", $sales->id) }}" data-original-title=""
                                                    title="">
                                                     <i class="material-icons">edit</i>
                                                     <div class="ripple-container"></div>
                                                 </a>
-												<a class="btn btn-primary btn-link "
-													href="{{ route("dstv_transaction_view", ['id' => $subscription->id]) }}"
-													data-subscription-id="{{ $subscription->id }}"
+                                                <a class="btn btn-primary btn-link "
+													href="{{ route("airtime_sales_record_view", ['id' => $sales->id]) }}"
 													data-original-title=""
 													title="">
 														<i class="material-icons">view_module</i>
 														<div class="ripple-container"></div>
 												</a>
 
-												<a class="btn btn-danger btn-link delete-button"
-													href="{{ route("api_delete_dstv_transaction", ['id' => $subscription->id]) }}"
-													data-subscription-id="{{ $subscription->id }}"
-													data-original-title=""
-													title="">
-														<i class="material-icons">close</i>
-														<div class="ripple-container"></div>
-												</a>
+                                                <form action="{{ route('airtime_sales_record_delete', $sales->id) }}" method="post" style="display:inline">
+                                                    @method('DELETE')
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-danger btn-link">
+                                                        <i class="material-icons">close</i>
+                                                        <div class="ripple-container"></div>
+                                                    </button>
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach
