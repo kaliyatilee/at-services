@@ -39,7 +39,7 @@
                                     <div class="card-body">
                                         <p>Amount Paid</p>
                                         <hr>
-                                        {{ $amountPaid }}
+                                        {{ $totalAmountPaid }}
                                     </div>
                                 </div>
                             </div>
@@ -49,7 +49,7 @@
                                     <div class="card-body">
                                         <p>Amount Remitted</p>
                                         <hr>
-                                        {{ $amountRemitted }}
+                                        {{ $totalAmountRemitted }}
                                     </div>
                                 </div>
                             </div>

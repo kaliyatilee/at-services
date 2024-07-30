@@ -59,14 +59,15 @@ class AgentTransactionController extends Controller {
 		}
 
 		// Calculate account balance
-		$totalAmountPaid = $agent->amount_paid->sum();
-		$totalAmountRemitted = $agent->transactions->sum('amount_remmited');
+		$totalAmountPaid = $agent->transactions->sum('amount_paid');
+		$totalAmountRemitted = $agent->transactions->sum('amount_remmitted');
 		$accountBalance = $totalAmountPaid - $totalAmountRemitted;
 
 		$transactions = $agent->transactions;
 
-		return view('agent.transaction.view', compact('agent', 'transactions', 'accountBalance'));
+		return view('agent.transaction.view', compact('agent', 'totalAmountRemitted','totalAmountPaid', 'transactions', 'accountBalance'));
 	}
+
 
 
 	public function edit( $id ) {

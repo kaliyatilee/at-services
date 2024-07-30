@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Agent;
 
 use App\Http\Controllers\Controller;
-use App\Models\Agent;
+use App\Models\Agent\Agent;
 use Illuminate\Http\Request;
 
 class AgentController extends Controller {
-	public function view( Request $request ) {
+	public function view( ) {
 		$agents = Agent::all();
 
 		$data['agents'] = $agents;
@@ -47,7 +47,7 @@ class AgentController extends Controller {
 			"phone" => "nullable|string|min:5",
 			"currency" => "string",
 			"rate" => "required|numeric|min:1",
-			"sales" => "required",
+			"sales" => "required|string",
 			"payment_type" => "required|string",
 			"amount_paid" => "required|numeric",
 			"transaction_date" => "required|date",
@@ -72,7 +72,7 @@ class AgentController extends Controller {
 			"phone" => "nullable|string|min:5",
 			"currency" => "required'|string",
 			"rate" => "required|numeric|min:1",
-			"sales" => " ",
+			"sales" => "string",
 			"payment_type" => "required|string",
 			"amount_paid" => "required|numeric",
 			"transaction_date" => "required|date",
