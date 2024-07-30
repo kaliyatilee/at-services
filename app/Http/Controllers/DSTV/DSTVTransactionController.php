@@ -71,7 +71,7 @@ class DSTVTransactionController extends Controller
             'dstv_account_number' => 'required|string|max:20',
             'description' => 'nullable|string|max:255',
             'system_charges' => 'required|integer',
-            'system_charge_amount' => 'required|integer',
+            'system_charge_amount' => 'required|numeric',
             'package' => 'required|integer',
             'currency' => 'required|integer',
             'amount_paid' => 'required|numeric|between:0,999999.99',
