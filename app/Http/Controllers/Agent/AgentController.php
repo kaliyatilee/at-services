@@ -7,6 +7,7 @@ use App\Models\Agent\Agent;
 use Illuminate\Http\Request;
 
 class AgentController extends Controller {
+
 	public function view( ) {
 		$agents = Agent::all();
 

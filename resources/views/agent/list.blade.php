@@ -100,11 +100,16 @@
                                                     <div class="ripple-container"></div>
                                                 </a>
 
-                                                <button type="button" class="btn btn-danger btn-link"
-                                                        data-original-title="" title="">
-                                                    <i class="material-icons">close</i>
-                                                    <div class="ripple-container"></div>
-                                                </button>
+                                                <form action="{{ route('api_delete_agent', ['id' => $agent->id]) }}"
+                                                      method="POST" style="display:inline;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger btn-link"
+                                                            data-original-title="" title="">
+                                                        <i class="material-icons">delete</i>
+                                                        <div class="ripple-container"></div>
+                                                    </button>
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach

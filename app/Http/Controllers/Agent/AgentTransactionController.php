@@ -8,6 +8,7 @@ use App\Models\Agent\AgentTransaction;
 use Illuminate\Http\Request;
 
 class AgentTransactionController extends Controller {
+
 	public function view() {
 		$agent_transaction = AgentTransaction::all();
 
@@ -33,24 +34,44 @@ class AgentTransactionController extends Controller {
 		return view('agent.transaction.edit',$data);
 	}
 
-	public function create_agent_transaction( Request $request ) {
-		$data = $request->validate( [
-			'name' => 'required',
+	public function create_agent_transaction(Request $request) {
+		$data = $request->validate([
+			'agent_id' => 'required|exists:agents,id',
+			'name' => 'required|string',
 			'amount_remmited' => 'required|numeric',
-			'account_balance' => 'required|numeric',
-		] );
-		$data['created_by'] = auth()->user()->id;
-		$transaction = AgentTransaction::create( $data );
+			'amount_paid' => 'required|numeric'
+		]);
 
-		return response()->json( [
+		$data['created_by'] = auth()->user()->id;
+
+		// Get the agent
+		$agent = Agent::find($data['agent_id']);
+
+		$currentBalance = $agent->account_balance;
+
+		$accountBalance = $currentBalance + $data['amount_paid'] - $data['amount_remmited'];
+
+		$data['account_balance'] = $accountBalance;
+
+		$transaction = AgentTransaction::create($data);
+
+
+		$agent->update(['account_balance' => $accountBalance]);
+
+		return response()->json([
 			'data' => $transaction,
 			'message' => 'Transaction created successfully',
-			'success' => true
-		],
-			201 );
+			'success' => true,
+		]);
+	}
+
+	public function getAgents() {
+		$agents = Agent::all();
+		return response()->json($agents);
 	}
 
 	public function show($id) {
+
 		$transaction = AgentTransaction::findOrFail($id);
 		$agent = $transaction->agent;
 
@@ -58,24 +79,19 @@ class AgentTransactionController extends Controller {
 			return redirect()->back()->with('error', 'Agent not found');
 		}
 
-		// Calculate account balance
 		$totalAmountPaid = $agent->transactions->sum('amount_paid');
-		$totalAmountRemitted = $agent->transactions->sum('amount_remmitted');
-		$accountBalance = $totalAmountPaid - $totalAmountRemitted;
-
+		$totalAmountRemitted = $agent->transactions->sum('amount_remitted');
+		$accountBalance = $agent->account_balance + $totalAmountPaid - $totalAmountRemitted;
 		$transactions = $agent->transactions;
 
-		return view('agent.transaction.view', compact('agent', 'totalAmountRemitted','totalAmountPaid', 'transactions', 'accountBalance'));
+		return view('agent.transaction.view', compact('agent', 'transactions', 'accountBalance'));
 	}
-
-
 
 	public function edit( $id ) {
 		$transaction = AgentTransaction::findOrFail( $id );
 
 		return view('agent.transaction.edit',compact( 'transaction' ));
 	}
-
 	public function update_agent_transaction( Request $request, $id ) {
 		$validatedData = $request->validate( [
 			'name' => 'required',
@@ -90,7 +106,7 @@ class AgentTransactionController extends Controller {
 
 		return response()->json( [
 			'message' => "Updated successfully",
-			'success' => true
+			'success' => true,
 		] );
 	}
 
@@ -114,7 +130,7 @@ class AgentTransactionController extends Controller {
 
 		return response()->json( [
 			'message' => "Deleted successfully",
-			'success' => true
+			'success' => true,
 		] );
 	}
 }

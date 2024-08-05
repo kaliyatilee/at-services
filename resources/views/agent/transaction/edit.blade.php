@@ -20,19 +20,13 @@
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Client Name</label>
                                     <input type="text" name="name" class="form-control border border-2 p-2"
-                                           value="{{ $transaction->name}}">
+                                            value="{{ $transaction->name}}">
                                 </div>
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Amount Remitted</label>
                                     <input type="text" name="amount_remmited" class="form-control border border-2 p-2"
                                            value="{{ $transaction->amount_remmited }}">
-                                </div>
-
-                                <div class="mb-3 col-md-6">
-                                    <label class="form-label">Account Balance</label>
-                                    <input type="number" name="account_balance" class="form-control border border-2 p-2"
-                                           value="{{ $transaction->account_balance }}">
                                 </div>
 
                             </div>

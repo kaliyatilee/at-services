@@ -37,26 +37,6 @@
                             <div class="mb-3 col-md-6">
                                 <div class="card card-frame">
                                     <div class="card-body">
-                                        <p>Amount Paid</p>
-                                        <hr>
-                                        {{ $totalAmountPaid }}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="mb-3 col-md-6">
-                                <div class="card card-frame">
-                                    <div class="card-body">
-                                        <p>Amount Remitted</p>
-                                        <hr>
-                                        {{ $totalAmountRemitted }}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="mb-3 col-md-6">
-                                <div class="card card-frame">
-                                    <div class="card-body">
                                         <p>Account Balance</p>
                                         <hr>
                                         {{ $accountBalance }}

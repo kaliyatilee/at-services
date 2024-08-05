@@ -372,7 +372,7 @@ Route::post('api/agent_transaction/edit/{id}', [AgentTransactionController::clas
 Route::get('api/agent_transaction', [AgentTransactionController::class, 'list_agent_transactions'])->name('api_list_agent_transactions');
 Route::get('api/agent_transaction/view/{id}', [AgentTransactionController::class, 'view_agent_transaction'])->name('api_view_agent_transaction');
 Route::delete('api/agent_transaction/delete/{id}', [AgentTransactionController::class, 'delete_agent_transaction'])->name('api_delete_agent_transaction');
-
+Route::get('api/agents', [AgentTransactionController::class, 'getAgents'])->name('api_get_agents');
 
 Route::get('billing',function () {return view( 'pages.billing' );})->name( 'billing' );
 Route::get('tables',function () {return view( 'pages.tables' );	})->name( 'tables' );
