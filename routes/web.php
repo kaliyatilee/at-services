@@ -41,6 +41,9 @@ use App\Http\Controllers\DryCleaning\RemittancesController;
 use App\Http\Controllers\DryCleaning\SalesBookController;
 use App\Http\Controllers\DryCleaning\ServiceProviderController;
 use App\Http\Controllers\Printing\PrintingController;
+use App\Http\Controllers\UnifiedTransactions\MiscellanousController;
+use App\Http\Controllers\UnifiedTransactions\ExpensesController;
+use App\Http\Controllers\UnifiedTransactions\SpareSalesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -387,6 +390,31 @@ Route::post('printing/{id}', [PrintingController::class, "update"])->name("api_p
 Route::delete('printing/destroy/{id}', [PrintingController::class, "delete"])->name("api_printing_delete");
 
 Route::get('printing/export/{id}', [PrintingController::class, "export"])->name("api_printing_export");
+
+//Unified Transactions Routes
+Route::get('miscellanous', [MiscellanousController::class, "index"])->name("miscellanous");
+Route::get('miscellanous/create', [MiscellanousController::class, "create"])->name("miscellanous.create");
+Route::post('miscellanous', [MiscellanousController::class, "store"])->name("miscellanous.store");
+Route::get('miscellanous/{id}', [MiscellanousController::class, "edit"])->name("miscellanous.edit");
+Route::get('miscellanous/view/{id}', [MiscellanousController::class, "view"])->name("miscellanous.view");
+Route::post('miscellanous/{id}', [MiscellanousController::class, "update"])->name("miscellanous.update");
+Route::delete('miscellanous/destroy/{id}', [MiscellanousController::class, "delete"])->name("miscellanous.destroy");
+
+Route::get('expenses', [ExpensesController::class, "index"])->name("expenses");
+Route::get('expenses/create', [ExpensesController::class, "create"])->name("expenses.create");
+Route::post('expenses', [ExpensesController::class, "store"])->name("expenses.store");
+Route::get('expenses/{id}', [ExpensesController::class, "edit"])->name("expenses.edit");
+Route::get('expenses/view/{id}', [ExpensesController::class, "view"])->name("expenses.view");
+Route::post('expenses/{id}', [ExpensesController::class, "update"])->name("expenses.update");
+Route::delete('expenses/destroy/{id}', [ExpensesController::class, "delete"])->name("expenses.destroy");
+
+Route::get('spare-sales', [SpareSalesController::class, "index"])->name("spare_sales");
+Route::get('spare-sales/create', [SpareSalesController::class, "create"])->name("spare_sales.create");
+Route::post('spare-sales', [SpareSalesController::class, "store"])->name("spare_sales.store");
+Route::get('spare-sales/{id}', [SpareSalesController::class, "edit"])->name("spare_sales.edit");
+Route::get('spare-sales/view/{id}', [SpareSalesController::class, "view"])->name("spare_sales.view");
+Route::post('spare-sales/{id}', [SpareSalesController::class, "update"])->name("spare_sales.update");
+Route::delete('spare-sales/destroy/{id}', [SpareSalesController::class, "delete"])->name("spare_sales.destroy");
 
 Route::get('billing', function () {
     return view('pages.billing');

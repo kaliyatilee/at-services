@@ -224,6 +224,37 @@
             </li>
             {{--            DRY CLEANING END--}}
 
+		<li class="nav-item mt-3">
+                <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Transactions</h6>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-white {{ $activePage == 'expenses' ? 'active bg-gradient-primary' : '' }} "
+                 href="{{ route('expenses') }}">
+                 <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                   <i style="font-size: 1.2rem;" class="fas fa-user-circle ps-2 pe-2 text-center"></i>
+                 </div>
+                 <span class="nav-link-text ms-1">Expenses</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-white {{ $activePage == 'miscellanous' ? 'active bg-gradient-primary' : '' }} "
+                 href="{{ route('miscellanous') }}">
+                 <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                   <i style="font-size: 1.2rem;" class="fas fa-user-circle ps-2 pe-2 text-center"></i>
+                 </div>
+                 <span class="nav-link-text ms-1">Miscellanous</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-white {{ $activePage == 'spare_sales' ? 'active bg-gradient-primary' : '' }} "
+                 href="{{ route('spare_sales') }}">
+                 <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                   <i style="font-size: 1.2rem;" class="fas fa-user-circle ps-2 pe-2 text-center"></i>
+                 </div>
+                 <span class="nav-link-text ms-1">Spare Sales Book</span>
+                </a>
+              </li>
+
             <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">PRINTING SERVICES</h6>
             </li>
