@@ -19,4 +19,9 @@ class Currency extends Model
         'name',
         'exchange_rate',
     ];
+
+    public function getRateAttribute()
+    {
+        return $this->exchange_rate;
+    }
 }

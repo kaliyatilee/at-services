@@ -5,6 +5,8 @@ use App\Http\Controllers\Company\CompanyRegistrationController;
 use App\Http\Controllers\Company\CompanyRegistrationSupplierController;
 use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DrinkController;
+use App\Http\Controllers\DrinkSaleController;
 use App\Http\Controllers\DSTV\DSTVPackageController;
 use App\Http\Controllers\DSTV\DSTVPaymentController;
 use App\Http\Controllers\DSTV\DSTVTransactionController;
@@ -443,3 +445,27 @@ Route::get('user-management', function () {
 Route::get('user-profile', function () {
     return view('pages.laravel-examples.user-profile');
 })->name('user-profile');
+
+
+Route::controller(DrinkController::class)->group(function (){
+    Route::get("create-drink", 'create')->name("create-drink");
+    Route::post("create-drink", 'store')->name("store-drink");
+    Route::get("drinks", 'view')->name("drinks");
+    Route::get("drink/{drink:drink_id}", 'edit')->name("edit-drink");
+    Route::post("update-drink", 'update')->name("update-drink");
+    Route::get("delete-drink/{drink_id}", 'delete')->name("delete-drink");
+    Route::post("delete-drink", 'delete')->name("confirm-delete-drink");
+    Route::get("view-drink/{drink_id}", 'viewTransactions')->name("view-drink");
+});
+
+Route::controller(DrinkSaleController::class)->group(function (){
+    Route::get("create-drink-sale", 'create')->name("create-drink-sale");
+    Route::post("create-drink-sale", 'store')->name("store-drink-sale");
+    Route::get("drink-sales", 'list')->name("drink-sales");
+    Route::get("drinks-entries", 'entries')->name("drinks-entries");
+    Route::get("view-drink-sale/{drink_id}", 'view')->name("view-drink-sale");
+    Route::get("delete-drink-sale/{drink_id}", 'delete')->name("delete-drink-sale");
+    Route::post("delete-drink-sale", 'delete')->name("confirm-delete-drink-sale");
+    Route::get("drink-sale/{drink_sale_id}", 'edit')->name("edit-drink-sale");
+    Route::post("update-drink-sale", 'update')->name("update-drink-sale");
+});
